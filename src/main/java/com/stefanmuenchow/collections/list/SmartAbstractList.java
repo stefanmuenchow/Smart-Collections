@@ -1,8 +1,10 @@
-package com.stefanmuenchow.collections;
+package com.stefanmuenchow.collections.list;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
+
+import com.stefanmuenchow.collections.SmartAbstractCollection;
 
 public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> implements ISmartList<E> {
 	

@@ -1,6 +1,8 @@
-package com.stefanmuenchow.collections;
+package com.stefanmuenchow.collections.set;
 
 import java.util.Set;
+
+import com.stefanmuenchow.collections.SmartAbstractCollection;
 
 public class SmartAbstractSet<E> extends SmartAbstractCollection<E> implements ISmartSet<E> {
 

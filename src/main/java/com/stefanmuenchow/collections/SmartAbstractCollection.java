@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-public abstract class SmartAbstractCollection<E> implements Collection<E>, ISmartCollection<E> {
+public abstract class SmartAbstractCollection<E> implements ISmartCollection<E> {
 	protected final Collection<E> internalColl;
 	
 	protected SmartAbstractCollection(Collection<E> coll) {

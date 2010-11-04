@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections;
+package com.stefanmuenchow.collections.map;
 
 import java.util.Map;
 

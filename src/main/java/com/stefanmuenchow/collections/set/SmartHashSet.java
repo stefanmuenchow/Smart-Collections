@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections;
+package com.stefanmuenchow.collections.set;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections;
+package com.stefanmuenchow.collections.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +17,25 @@ public class SmartArrayList<E> extends SmartAbstractList<E> {
 	public SmartArrayList(Collection<E> coll) {
 		super(new ArrayList<E>(coll));
 	}
+	
+	@Override
+	protected ArrayList<E> getInternalList() {
+		return (ArrayList<E>)internalColl;
+	}
 
 	@Override
 	public ISmartList<E> subSmartList(int from, int to) {
-		ISmartList<E> result = new SmartArrayList<E>(getInternalList().subList(from, to));
+		SmartArrayList<E> result = new SmartArrayList<E>(getInternalList().subList(from, to));
 		return result;
+	}
+	
+	/** ArrayList specific methods */
+	
+	public void ensureCapacity(int minCapacity) {
+		getInternalList().ensureCapacity(minCapacity);
+	}
+	
+	public void trimToSize() {
+		getInternalList().trimToSize();
 	}
 }

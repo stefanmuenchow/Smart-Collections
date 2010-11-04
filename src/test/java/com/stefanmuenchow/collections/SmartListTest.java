@@ -2,6 +2,10 @@ package com.stefanmuenchow.collections;
 
 import java.util.Arrays;
 
+import com.stefanmuenchow.collections.list.ISmartList;
+import com.stefanmuenchow.collections.list.SmartArrayList;
+import com.stefanmuenchow.collections.list.SmartLinkedList;
+
 import junit.framework.TestCase;
 
 public class SmartListTest extends TestCase {

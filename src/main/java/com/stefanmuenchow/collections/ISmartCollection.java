@@ -2,7 +2,7 @@ package com.stefanmuenchow.collections;
 
 import java.util.Collection;
 
-public interface ISmartCollection<E> {
+public interface ISmartCollection<E> extends Collection<E> {
 	ISmartCollection<E> addElem(E elem);
 	ISmartCollection<E> addAllElems(Collection<E> coll);
 	ISmartCollection<E> addAllElems(E... elems);
