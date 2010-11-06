@@ -79,22 +79,23 @@ public interface ISmartCollection<E> extends Collection<E> {
 	<R> ISmartCollection<R> map(IUnaryFunction<R, E> function);
 	
 	/**
-	 * Combines the elements of this list from left to right using a binary function.
-	 * @param funct		Binary Functin
-	 * @see				IBinaryFunction
-	 * @return			A single value
-	 */
-	<R> R reduce(IBinaryFunction<R, R, E> funct);
-	
-	/**
 	 * Combines the elements of this list from left to right using a binary function and
-	 * an initial value.
+	 * an initial value. If the collection is empty, the initial value is returned.
 	 * @param initial	Initial value
 	 * @param funct		Binary Function
 	 * @see				IBinaryFunction
 	 * @return			A single value
 	 */
 	<R> R reduce(R initial, IBinaryFunction<R, R, E> funct);
+	
+	/**
+	 * Combines the elements of this list from left to right using a binary function. If
+	 * the collection is empty, null is returned.
+	 * @param funct		Binary Function
+	 * @see				IBinaryFunction
+	 * @return			A single value
+	 */
+	E reduce(IBinaryFunction<E, E, E> funct);
 	
 	/**
 	 * Calls the toString() method of each element in the collection and intersperses

@@ -2,6 +2,7 @@ package com.stefanmuenchow.collections.map;
 
 import java.util.Map;
 
+import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
 import com.stefanmuenchow.collections.function.IBinaryFunction;
 import com.stefanmuenchow.collections.function.IMapPredicate;
 import com.stefanmuenchow.collections.function.IUnaryFunction;
@@ -133,4 +134,19 @@ public interface ISmartMap<K, V> extends Map<K, V> {
 	 * @return				true / false
 	 */
 	boolean forall(IMapPredicate<K, V> predicate);
+	
+	/**
+	 * Checks if this map describes a bijective mapping. This is the case
+	 * when each value in the map is unique. 
+	 * @return	true / false
+	 */
+	boolean isBijective();
+	
+	/**
+	 * Swaps keys and values. If this map is bijective (can be checked with
+	 * isBijective() method) operation will be successful and return the
+	 * new map, otherwise a BadOperationException will be thrown.
+	 * @return
+	 */
+	ISmartMap<V, K> swap() throws PreconditionViolatedException;
 }
