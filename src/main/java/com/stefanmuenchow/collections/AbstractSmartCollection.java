@@ -9,7 +9,7 @@ import com.stefanmuenchow.collections.function.IBinaryFunction;
 import com.stefanmuenchow.collections.function.IPredicate;
 
 public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> {
-	protected final Collection<E> internalColl;
+	protected Collection<E> internalColl;
 	
 	protected AbstractSmartCollection(Collection<E> collection) {
 		internalColl = collection;
@@ -87,7 +87,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	@Override
 	public E find(IPredicate<E> pred) {
 		for (E elem : internalColl) {
-			if(pred.check(elem)) {
+			if (pred.check(elem)) {
 				return elem;
 			}
 		}
@@ -99,7 +99,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	public ISmartCollection<E> filter(IPredicate<E> predicate) {
 		List<E> toRemove = new ArrayList<E>();
 		
-		for(E elem : toRemove) {
+		for (E elem : toRemove) {
 			if (!predicate.check(elem)) {
 				toRemove.add(elem);
 			}
@@ -113,7 +113,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	public ISmartCollection<E> remove(IPredicate<E> predicate) {
 		List<E> toRemove = new ArrayList<E>();
 		
-		for(E elem : toRemove) {
+		for (E elem : toRemove) {
 			if (predicate.check(elem)) {
 				toRemove.add(elem);
 			}
@@ -139,16 +139,15 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	public ISmartCollection<E> replace(IPredicate<E> predicate, E replacement) {
 		List<E> tempList = new ArrayList<E>();
 		
-		for(E elem : internalColl) {
-			if(predicate.check(elem)) {
+		for (E elem : internalColl) {
+			if (predicate.check(elem)) {
 				tempList.add(replacement);
 			} else {
 				tempList.add(elem);
 			}
 		}
 		
-		internalColl.clear();
-		internalColl.addAll(tempList);
+		internalColl = tempList;
 		return this;
 	}
 
@@ -182,7 +181,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	@Override
 	public String join(String delimiter) {
 		StringBuffer result = new StringBuffer();
-		for(E elem : internalColl) {
+		for (E elem : internalColl) {
 			result.append(elem.toString());
 			result.append(delimiter);
 		}
@@ -194,8 +193,8 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 	@Override
 	public int count(IPredicate<E> predicate) {
 		int counter = 0;
-		for(E elem : internalColl) {
-			if(predicate.check(elem)) {
+		for (E elem : internalColl) {
+			if (predicate.check(elem)) {
 				counter++;
 			}
 		}
@@ -205,8 +204,8 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 
 	@Override
 	public boolean exists(IPredicate<E> pred) {
-		for(E elem : internalColl) {
-			if(pred.check(elem)) {
+		for (E elem : internalColl) {
+			if (pred.check(elem)) {
 				return true;
 			}
 		}
@@ -223,5 +222,15 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return internalColl.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return internalColl.hashCode();
 	}
 }

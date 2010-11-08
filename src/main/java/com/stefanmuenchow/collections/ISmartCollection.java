@@ -130,11 +130,11 @@ public interface ISmartCollection<E> extends Collection<E> {
 	boolean forall(IPredicate<E> pred);
 	
 	/**
-	 * If the collection contains other collections, then the values of
-	 * all collections are collected recursively and put into the resulting
-	 * list. If it is already a "flat" collection, nothing is done. 
-	 * The original list is changed.
-	 * @return		Flat collection not containing any other collection
-	 */
+	* If the collection contains other collections, then the values of
+	* all collections are collected recursively and put into the resulting
+	* list. If it is already a "flat" collection, nothing is done.
+	* The original list is changed.
+	* @return Flat collection not containing any other collection
+	*/
 	ISmartCollection<E> flatten();
 }
