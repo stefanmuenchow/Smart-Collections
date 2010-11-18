@@ -13,7 +13,7 @@ import com.stefanmuenchow.collections.map.ISmartMap;
  * interface, but add some functionality to them. They are implemented
  * as simple decorators (see Gang of Four).
  * 
- * @author Stefan MÃ¼nchow
+ * @author Stefan Münchow
  */
 public interface ISmartList<E> extends List<E>, ISmartCollection<E> {
 	
