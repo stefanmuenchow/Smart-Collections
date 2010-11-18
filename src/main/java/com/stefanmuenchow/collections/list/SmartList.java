@@ -98,7 +98,7 @@ public class SmartList<E> extends AbstractSmartCollection<E> implements ISmartLi
 	
 	@Override
 	public ISmartCollection<E> flatten() {
-		List<E> resultList = new ArrayList<E>();
+		ISmartList<E> resultList = new SmartList<E>();
 		
 		if (!isEmpty() && first() instanceof Collection) {
 			for (E elem : getInternalList()) {
@@ -106,11 +106,9 @@ public class SmartList<E> extends AbstractSmartCollection<E> implements ISmartLi
 				Collection<? extends E> innerList = (Collection<? extends E>)elem;
 				resultList.addAll(new SmartList<E>(innerList).flatten());
 			}
-			
-			internalColl = resultList;
 		}
 
-		return this;
+		return resultList;
 	}
 
 	/** ISmartList methods */
@@ -139,19 +137,19 @@ public class SmartList<E> extends AbstractSmartCollection<E> implements ISmartLi
 
 	@Override
 	public ISmartList<E> take(int n) {
-		internalColl = subList(0, n);
-		return this;
+		ISmartList<E> result = new SmartList<E>(subList(0, n));
+		return result;
 	}
 
 	@Override
 	public ISmartList<E> drop(int n) {
-		internalColl = subList(n, size());
-		return this;
+		ISmartList<E> result = new SmartList<E>(subList(n, size()));
+		return result;
 	}
 
 	@Override
 	public ISmartList<E> takeWhile(IPredicate<E> pred) {
-		List<E> resultList = new ArrayList<E>();
+		ISmartList<E> resultList = new SmartList<E>();
 		for (E elem : this) {
 			if (pred.check(elem)) {
 				resultList.add(elem);
@@ -160,13 +158,12 @@ public class SmartList<E> extends AbstractSmartCollection<E> implements ISmartLi
 			}
 		}
 
-		internalColl = resultList;
-		return this;
+		return resultList;
 	}
 
 	@Override
 	public ISmartList<E> dropWhile(IPredicate<E> pred) {
-		List<E> resultList = new ArrayList<E>(this);
+		ISmartList<E> resultList = new SmartList<E>(this);
 		for (E elem : this) {
 			if (pred.check(elem)) {
 				resultList.remove(0);
@@ -175,8 +172,7 @@ public class SmartList<E> extends AbstractSmartCollection<E> implements ISmartLi
 			}
 		}
 
-		internalColl = resultList;
-		return this;
+		return resultList;
 	}
 
 	@Override

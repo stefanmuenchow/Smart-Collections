@@ -43,7 +43,7 @@ public interface ISmartList<E> extends List<E>, ISmartCollection<E> {
 	
 	/**
 	 * Takes the first n elements of the collection and returns the result.
-	 * The original list is changed. Similar to 
+	 * A new list is created. Similar to 
 	 * <pre>aList.subList(0, n)</pre>
 	 * @param n		Number of elements to take from beginning of list
 	 * @return		Prefix list
@@ -52,7 +52,7 @@ public interface ISmartList<E> extends List<E>, ISmartCollection<E> {
 	
 	/**
 	 * Removes the first n elements of the collection and returns the result.
-	 * The original list is changed. Similar to 
+	 * A new list is created. Similar to 
 	 * <pre>aList.subList(n, aList.size())</pre>
 	 * @param n		Number of elements to remove from beginning of list
 	 * @return		Postfix list
@@ -61,7 +61,7 @@ public interface ISmartList<E> extends List<E>, ISmartCollection<E> {
 	
 	/**
 	 * Takes elements from the List until the predicate evaluates to false
-	 * the first time. The original list is changed.
+	 * the first time. A new list is created.
 	 * @param pred	Predicate
 	 * @return		Prefix list
 	 */
@@ -69,20 +69,21 @@ public interface ISmartList<E> extends List<E>, ISmartCollection<E> {
 	
 	/**
 	 * Removes elements from the List until the predicate evaluates to false
-	 * the first time. The original list is changed.
+	 * the first time. A new list is created.
 	 * @param pred	Predicate
 	 * @return		Postfix list
 	 */
 	ISmartList<E> dropWhile(IPredicate<E> pred);
 	
 	/**
-	 * Removes all duplicate values from the List.
+	 * Removes all duplicate values from the List. Changes the original list.
 	 * @return	List without duplicates
 	 */
 	ISmartList<E> removeDuplicates();	
 	
 	/**
 	 * Inserts the specified elem between each two elements of the list.
+	 * Changes the original list.
 	 * @param elem	Element to insert
 	 * @return		List with elem at each 2nd index
 	 */

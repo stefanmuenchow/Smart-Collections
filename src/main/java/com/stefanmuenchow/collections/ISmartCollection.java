@@ -71,7 +71,7 @@ public interface ISmartCollection<E> extends Collection<E> {
 	 * Calls a given function for each element in the collection with the
 	 * element as the one and only parameter. Each element is replaced
 	 * by the return value of the function and the resulting collection is 
-	 * returned. Changes the original collection.
+	 * returned. Creates a new Collection.
 	 * @param function		Unary function
 	 * @see					IUnaryFunction
 	 * @return				Altered collection
@@ -133,7 +133,7 @@ public interface ISmartCollection<E> extends Collection<E> {
 	* If the collection contains other collections, then the values of
 	* all collections are collected recursively and put into the resulting
 	* list. If it is already a "flat" collection, nothing is done.
-	* The original list is changed.
+	* A new collection is created.
 	* @return Flat collection not containing any other collection
 	*/
 	ISmartCollection<E> flatten();
