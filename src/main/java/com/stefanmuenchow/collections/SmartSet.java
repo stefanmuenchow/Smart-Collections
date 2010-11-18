@@ -1,14 +1,11 @@
-package com.stefanmuenchow.collections.set;
+package com.stefanmuenchow.collections;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.stefanmuenchow.collections.AbstractSmartCollection;
-import com.stefanmuenchow.collections.ISmartCollection;
 import com.stefanmuenchow.collections.function.IUnaryFunction;
-import com.stefanmuenchow.collections.list.SmartList;
 
 public class SmartSet<E> extends AbstractSmartCollection<E> implements
         ISmartSet<E> {

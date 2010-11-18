@@ -1,10 +1,8 @@
-package com.stefanmuenchow.collections.list;
+package com.stefanmuenchow.collections;
 
 import java.util.List;
 
-import com.stefanmuenchow.collections.ISmartCollection;
 import com.stefanmuenchow.collections.function.IPredicate;
-import com.stefanmuenchow.collections.map.ISmartMap;
 
 /**
  * Specifies the operations of SmartLists.

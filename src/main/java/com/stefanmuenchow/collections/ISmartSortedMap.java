@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections.map;
+package com.stefanmuenchow.collections;
 
 import java.util.SortedMap;
 

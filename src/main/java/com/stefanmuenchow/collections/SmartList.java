@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections.list;
+package com.stefanmuenchow.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,14 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.stefanmuenchow.collections.AbstractSmartCollection;
-import com.stefanmuenchow.collections.ISmartCollection;
 import com.stefanmuenchow.collections.function.IPredicate;
 import com.stefanmuenchow.collections.function.IUnaryFunction;
-import com.stefanmuenchow.collections.map.ISmartMap;
-import com.stefanmuenchow.collections.map.SmartMap;
-import com.stefanmuenchow.collections.set.ISmartSet;
-import com.stefanmuenchow.collections.set.SmartSet;
 
 public class SmartList<E> extends AbstractSmartCollection<E> implements
         ISmartList<E> {

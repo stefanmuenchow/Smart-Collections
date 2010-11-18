@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections.set;
+package com.stefanmuenchow.collections;
 
 import java.util.SortedSet;
 

@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections.map;
+package com.stefanmuenchow.collections;
 
 import java.util.Map;
 
@@ -29,9 +29,8 @@ public interface ISmartMap<K, V> extends Map<K, V> {
      * @see IBinaryFunction
      * @return Merged map
      */
-    <W> ISmartMap<K, W> mergeWith(
-            ISmartMap<K, V> anotherMap,
-            IBinaryFunction<Map.Entry<K, W>, Map.Entry<K, V>, Map.Entry<K, V>> mergeFunct);
+    ISmartMap<K, V> mergeWith(ISmartMap<K, V> anotherMap,
+            IBinaryFunction<V, V, V> mergeFunct);
 
     /**
      * Gets the value to the given key if it exists. Else returns defaultVal.

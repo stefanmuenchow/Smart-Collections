@@ -1,8 +1,6 @@
-package com.stefanmuenchow.collections.set;
+package com.stefanmuenchow.collections;
 
 import java.util.Set;
-
-import com.stefanmuenchow.collections.ISmartCollection;
 
 /**
  * Specifies the operations of SmartSets.

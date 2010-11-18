@@ -1,8 +1,6 @@
-package com.stefanmuenchow.collections.queue;
+package com.stefanmuenchow.collections;
 
 import java.util.Queue;
-
-import com.stefanmuenchow.collections.ISmartCollection;
 
 /**
  * Specifies the operations of SmartQueues.
