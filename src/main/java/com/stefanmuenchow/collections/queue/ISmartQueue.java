@@ -7,9 +7,9 @@ import com.stefanmuenchow.collections.ISmartCollection;
 /**
  * Specifies the operations of SmartQueues.
  * 
- * SmartQueues are compatible with the standard Queue
- * interface, but add some functionality to them. They are implemented
- * as simple decorators (see Gang of Four).
+ * SmartQueues are compatible with the standard Queue interface, but add some
+ * functionality to them. They are implemented as simple decorators (see Gang of
+ * Four).
  * 
  * @author Stefan Münchow
  */
