@@ -1,5 +1,6 @@
 package com.stefanmuenchow.collections;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +10,10 @@ public class SmartHashSet<E> extends SmartAbstractCollection<E> implements
 
     public SmartHashSet() {
         this(new HashSet<E>());
+    }
+
+    public SmartHashSet(final E... elems) {
+        this(Arrays.asList(elems));
     }
 
     public SmartHashSet(final Collection<E> collection) {

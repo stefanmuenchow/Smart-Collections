@@ -1,5 +1,6 @@
 package com.stefanmuenchow.collections;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,6 +10,10 @@ public class SmartLinkedList<E> extends SmartAbstractList<E> implements
 
     public SmartLinkedList() {
         this(new LinkedList<E>());
+    }
+
+    public SmartLinkedList(final E... elems) {
+        this(Arrays.asList(elems));
     }
 
     public SmartLinkedList(final Collection<E> collection) {

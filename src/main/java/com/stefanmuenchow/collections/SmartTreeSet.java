@@ -1,5 +1,6 @@
 package com.stefanmuenchow.collections;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
@@ -9,7 +10,11 @@ public class SmartTreeSet<E> extends SmartHashSet<E> implements
         SmartSortedSet<E> {
 
     public SmartTreeSet() {
-        super(new TreeSet<E>());
+        this(new TreeSet<E>());
+    }
+
+    public SmartTreeSet(final E... elems) {
+        this(Arrays.asList(elems));
     }
 
     public SmartTreeSet(final Collection<E> collection) {

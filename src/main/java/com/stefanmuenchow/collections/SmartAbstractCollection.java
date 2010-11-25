@@ -107,7 +107,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     public SmartCollection<E> filter(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
-        for (E elem : toRemove) {
+        for (E elem : internalColl) {
             if (!predicate.check(elem)) {
                 toRemove.add(elem);
             }
@@ -121,7 +121,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     public SmartCollection<E> remove(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
-        for (E elem : toRemove) {
+        for (E elem : internalColl) {
             if (predicate.check(elem)) {
                 toRemove.add(elem);
             }
