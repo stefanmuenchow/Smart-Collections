@@ -7,7 +7,7 @@ package com.stefanmuenchow.collections.function;
  * 
  * @author Stefan Münchow
  */
-public interface IBinaryFunction<R, E, T> {
+public interface BinaryFunction<R, E, T> {
 
     /**
      * Executes this function.

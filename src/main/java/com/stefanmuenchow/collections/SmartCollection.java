@@ -2,9 +2,9 @@ package com.stefanmuenchow.collections;
 
 import java.util.Collection;
 
-import com.stefanmuenchow.collections.function.IBinaryFunction;
-import com.stefanmuenchow.collections.function.IPredicate;
-import com.stefanmuenchow.collections.function.IUnaryFunction;
+import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.Predicate;
+import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
  * Specifies the operations of all smart collections. Lists, Sets, SortedSets
@@ -17,7 +17,7 @@ import com.stefanmuenchow.collections.function.IUnaryFunction;
  * 
  * @author Stefan Münchow
  */
-public interface ISmartCollection<E> extends Collection<E> {
+public interface SmartCollection<E> extends Collection<E> {
 
     /**
      * Seeks a single element based on a predicate. The first element for which
@@ -28,7 +28,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return Element or null
      */
-    E find(IPredicate<E> pred);
+    E find(Predicate<E> pred);
 
     /**
      * Retains all elements in the collection for which the predicate is true.
@@ -38,7 +38,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      * @return Collection containing only elements for which predicate returns
      *         true
      */
-    ISmartCollection<E> filter(IPredicate<E> predicate);
+    SmartCollection<E> filter(Predicate<E> predicate);
 
     /**
      * Removes all elements in the collection for which the predicate is true.
@@ -48,7 +48,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      * @return Collection containing only elements for which predicate returns
      *         false
      */
-    ISmartCollection<E> remove(IPredicate<E> predicate);
+    SmartCollection<E> remove(Predicate<E> predicate);
 
     /**
      * Replaces each occurence of an element in the collection with a
@@ -61,7 +61,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Replacement
      * @return List with replaced elements
      */
-    ISmartCollection<E> replace(E seek, E replacement);
+    SmartCollection<E> replace(E seek, E replacement);
 
     /**
      * Replaces each element in the collection, for which the predicate returns
@@ -74,7 +74,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Replacement
      * @return List with replaced elements
      */
-    ISmartCollection<E> replace(IPredicate<E> predicate, E replacement);
+    SmartCollection<E> replace(Predicate<E> predicate, E replacement);
 
     /**
      * Calls a given function for each element in the collection with the
@@ -84,10 +84,10 @@ public interface ISmartCollection<E> extends Collection<E> {
      * 
      * @param function
      *            Unary function
-     * @see IUnaryFunction
+     * @see UnaryFunction
      * @return Altered collection
      */
-    <R> ISmartCollection<R> map(IUnaryFunction<R, E> function);
+    <R> SmartCollection<R> map(UnaryFunction<R, E> function);
 
     /**
      * Combines the elements of this list from left to right using a binary
@@ -98,10 +98,10 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Initial value
      * @param funct
      *            Binary Function
-     * @see IBinaryFunction
+     * @see BinaryFunction
      * @return A single value
      */
-    <R> R reduce(R initial, IBinaryFunction<R, R, E> funct);
+    <R> R reduce(R initial, BinaryFunction<R, R, E> funct);
 
     /**
      * Combines the elements of this list from left to right using a binary
@@ -109,10 +109,10 @@ public interface ISmartCollection<E> extends Collection<E> {
      * 
      * @param funct
      *            Binary Function
-     * @see IBinaryFunction
+     * @see BinaryFunction
      * @return A single value
      */
-    E reduce(IBinaryFunction<E, E, E> funct);
+    E reduce(BinaryFunction<E, E, E> funct);
 
     /**
      * Calls the toString() method of each element in the collection and
@@ -132,7 +132,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return Number of elements in collection for which predicate is true
      */
-    int count(IPredicate<E> predicate);
+    int count(Predicate<E> predicate);
 
     /**
      * Checks if the predicate evaluates to true for any element in the
@@ -142,7 +142,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return true / false
      */
-    boolean exists(IPredicate<E> pred);
+    boolean exists(Predicate<E> pred);
 
     /**
      * Checks if the predicate evaluates to true for all elements in the
@@ -152,7 +152,7 @@ public interface ISmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return true / false
      */
-    boolean forall(IPredicate<E> pred);
+    boolean forall(Predicate<E> pred);
 
     /**
      * If the collection contains other collections, then the values of all
@@ -162,5 +162,5 @@ public interface ISmartCollection<E> extends Collection<E> {
      * 
      * @return Flat collection not containing any other collection
      */
-    ISmartCollection<E> flatten();
+    SmartCollection<E> flatten();
 }

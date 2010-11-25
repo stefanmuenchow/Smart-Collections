@@ -7,7 +7,7 @@ package com.stefanmuenchow.collections.function;
  * 
  * @author Stefan Münchow
  */
-public interface IPredicate<E> {
+public interface Predicate<E> {
 
     /**
      * Checks a predicate based on a single value.

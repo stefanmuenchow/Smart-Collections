@@ -1,238 +1,171 @@
 package com.stefanmuenchow.collections;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import com.stefanmuenchow.collections.function.IPredicate;
-import com.stefanmuenchow.collections.function.IUnaryFunction;
+import com.stefanmuenchow.collections.function.Predicate;
 
-public class SmartList<E> extends AbstractSmartCollection<E> implements
-        ISmartList<E> {
+/**
+ * Specifies the operations of SmartLists.
+ * 
+ * SmartLists are compatible with the standard List interface, but add some
+ * functionality to them. They are implemented as simple decorators (see Gang of
+ * Four).
+ * 
+ * @author Stefan Münchow
+ */
+public interface SmartList<E> extends List<E>, SmartCollection<E> {
 
-    public SmartList() {
-        super(new ArrayList<E>());
-    }
+    /**
+     * Returns the first element in the List. Similar to
+     * 
+     * <pre>
+     * aList.get(0)
+     * </pre>
+     * 
+     * @return First element
+     */
+    E head();
 
-    public SmartList(final Collection<? extends E> innerList) {
-        super(new ArrayList<E>(innerList));
-    }
+    /**
+     * Returns a new list without the first element.
+     * 
+     * @return Rest list
+     */
+    SmartList<E> tail();
 
-    /** Helper methods */
+    /**
+     * Returns the last element of the list. Similar to
+     * 
+     * <pre>
+     * aList.get(aList.size() - 1)
+     * </pre>
+     * 
+     * @return Last element
+     */
+    E last();
 
-    private List<E> getInternalList() {
-        return (List<E>) internalColl;
-    }
+    /**
+     * Gets the element at the specified index. If the index is not into the
+     * range od valid indices, the default value is returned.
+     * 
+     * @param index
+     *            Index of element to get
+     * @param defaultVal
+     *            Default value
+     * @return Element at index or defaultVal, if index is out of bounds.
+     */
+    E get(int index, E defaultVal);
 
-    /** List methods */
+    /**
+     * Takes the first n elements of the collection and returns the result. A
+     * new list is created. Similar to
+     * 
+     * <pre>
+     * aList.subList(0, n)
+     * </pre>
+     * 
+     * @param n
+     *            Number of elements to take from beginning of list
+     * @return Prefix list
+     */
+    SmartList<E> take(int n);
 
-    @Override
-    public boolean addAll(final int index, final Collection<? extends E> c) {
-        return getInternalList().addAll(index, c);
-    }
+    /**
+     * Removes the first n elements of the collection and returns the result. A
+     * new list is created. Similar to
+     * 
+     * <pre>
+     * aList.subList(n, aList.size())
+     * </pre>
+     * 
+     * @param n
+     *            Number of elements to remove from beginning of list
+     * @return Postfix list
+     */
+    SmartList<E> drop(int n);
 
-    @Override
-    public E get(final int index) {
-        return getInternalList().get(index);
-    }
+    /**
+     * Takes elements from the List until the predicate evaluates to false the
+     * first time. A new list is created.
+     * 
+     * @param pred
+     *            Predicate
+     * @return Prefix list
+     */
+    SmartList<E> takeWhile(Predicate<E> pred);
 
-    @Override
-    public E set(final int index, final E element) {
-        return getInternalList().set(index, element);
-    }
+    /**
+     * Removes elements from the List until the predicate evaluates to false the
+     * first time. A new list is created.
+     * 
+     * @param pred
+     *            Predicate
+     * @return Postfix list
+     */
+    SmartList<E> dropWhile(Predicate<E> pred);
 
-    @Override
-    public void add(final int index, final E element) {
-        getInternalList().add(index, element);
-    }
+    /**
+     * Removes all duplicate values from the List. Changes the original list.
+     * 
+     * @return List without duplicates
+     */
+    SmartList<E> removeDuplicates();
 
-    @Override
-    public E remove(final int index) {
-        return getInternalList().remove(index);
-    }
+    /**
+     * Inserts the specified elem between each two elements of the list. Changes
+     * the original list.
+     * 
+     * @param elem
+     *            Element to insert
+     * @return List with elem at each 2nd index
+     */
+    SmartList<E> intersperse(E elem);
 
-    @Override
-    public int indexOf(final Object o) {
-        return getInternalList().indexOf(o);
-    }
+    /**
+     * Creates a SmartMap from two lists. Elements in the first list are the
+     * keys, elements with corresponding indices in the second list the values.
+     * If one of the lists has less elements than the other one, the elements
+     * are discarded.
+     * 
+     * @param anotherList
+     *            List to zip with
+     * @return Map
+     */
+    <T> SmartMap<E, T> zipWith(List<T> anotherList);
 
-    @Override
-    public int lastIndexOf(final Object o) {
-        return getInternalList().indexOf(o);
-    }
+    /**
+     * Returns a list of the indices. This is the same as the range from 0 to
+     * 
+     * <pre>
+     * list.size() - 1
+     * </pre>
+     * 
+     * . The original list remains unchanged.
+     * 
+     * @return List of indices
+     */
+    SmartList<Integer> getIndicesList();
 
-    @Override
-    public ListIterator<E> listIterator() {
-        return getInternalList().listIterator();
-    }
+    /**
+     * Creates a Map with the elements of the list as keys and the number of
+     * their occurences in the list as values.
+     * 
+     * @return Map<E, Integer>
+     */
+    SmartMap<E, Integer> getOccurenceCountMap();
 
-    @Override
-    public ListIterator<E> listIterator(final int index) {
-        return getInternalList().listIterator(index);
-    }
+    /**
+     * Reverses the ordering of the elements in the list.
+     * 
+     * @return Reversed list
+     */
+    SmartList<E> reverse();
 
-    @Override
-    public List<E> subList(final int fromIndex, final int toIndex) {
-        return getInternalList().subList(fromIndex, toIndex);
-    }
-
-    /** ISmartCollection methods */
-
-    @Override
-    public <R> ISmartCollection<R> map(final IUnaryFunction<R, E> function) {
-        ISmartList<R> resultList = new SmartList<R>();
-        for (E elem : getInternalList()) {
-            resultList.add(function.execute(elem));
-        }
-
-        return resultList;
-    }
-
-    @Override
-    public ISmartCollection<E> flatten() {
-        ISmartList<E> resultList = new SmartList<E>();
-
-        if (!isEmpty() && first() instanceof Collection) {
-            for (E elem : getInternalList()) {
-                @SuppressWarnings("unchecked")
-                Collection<? extends E> innerList = (Collection<? extends E>) elem;
-                resultList.addAll(new SmartList<E>(innerList).flatten());
-            }
-        }
-
-        return resultList;
-    }
-
-    /** ISmartList methods */
-
-    @Override
-    public E first() {
-        return getInternalList().get(0);
-    }
-
-    @Override
-    public E last() {
-        return getInternalList().get(getInternalList().size() - 1);
-    }
-
-    @Override
-    public E get(final int index, final E defaultVal) {
-        E result = null;
-        try {
-            result = get(index);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            result = defaultVal;
-        }
-
-        return result;
-    }
-
-    @Override
-    public ISmartList<E> take(final int n) {
-        ISmartList<E> result = new SmartList<E>(subList(0, n));
-        return result;
-    }
-
-    @Override
-    public ISmartList<E> drop(final int n) {
-        ISmartList<E> result = new SmartList<E>(subList(n, size()));
-        return result;
-    }
-
-    @Override
-    public ISmartList<E> takeWhile(final IPredicate<E> pred) {
-        ISmartList<E> resultList = new SmartList<E>();
-        for (E elem : this) {
-            if (pred.check(elem)) {
-                resultList.add(elem);
-            } else {
-                break;
-            }
-        }
-
-        return resultList;
-    }
-
-    @Override
-    public ISmartList<E> dropWhile(final IPredicate<E> pred) {
-        ISmartList<E> resultList = new SmartList<E>(this);
-        for (E elem : this) {
-            if (pred.check(elem)) {
-                resultList.remove(0);
-            } else {
-                break;
-            }
-        }
-
-        return resultList;
-    }
-
-    @Override
-    public ISmartList<E> removeDuplicates() {
-        ISmartSet<E> resultSet = new SmartSet<E>(this);
-        internalColl = new ArrayList<E>(resultSet);
-        return this;
-    }
-
-    @Override
-    public ISmartList<E> intersperse(final E elem) {
-        for (int i = 1; i < size(); i += 2) {
-            add(i, elem);
-        }
-
-        return this;
-    }
-
-    @Override
-    public <T> ISmartMap<E, T> zipWith(final List<T> anotherList) {
-        ISmartMap<E, T> resultMap = new SmartMap<E, T>();
-        Iterator<E> keys = iterator();
-        Iterator<T> vals = anotherList.iterator();
-
-        while (keys.hasNext() && vals.hasNext()) {
-            resultMap.put(keys.next(), vals.next());
-        }
-
-        return resultMap;
-    }
-
-    @Override
-    public ISmartList<Integer> getIndicesList() {
-        ISmartList<Integer> result = new SmartList<Integer>();
-        for (int i = 0; i < size(); i++) {
-            result.add(i);
-        }
-
-        return result;
-    }
-
-    @Override
-    public ISmartMap<E, Integer> getOccurenceCountMap() {
-        ISmartMap<E, Integer> result = new SmartMap<E, Integer>();
-        for (E elem : this) {
-            if (result.containsKey(elem)) {
-                result.put(elem, result.get(elem) + 1);
-            } else {
-                result.put(elem, 1);
-            }
-        }
-
-        return result;
-    }
-
-    @Override
-    public ISmartList<E> reverse() {
-        Collections.reverse(getInternalList());
-        return this;
-    }
-
-    @Override
-    public int sizeWithoutNulls() {
-        List<E> temp = new ArrayList<E>(getInternalList());
-        temp.removeAll(null);
-        return temp.size();
-    }
+    /**
+     * Returns the list size without all null elements. If there are no null
+     * elements in list, it is equal to list.size().
+     * 
+     * @return List size without null elements
+     */
+    int sizeWithoutNulls();
 }

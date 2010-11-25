@@ -5,15 +5,23 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.stefanmuenchow.collections.function.IBinaryFunction;
-import com.stefanmuenchow.collections.function.IPredicate;
+import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.Predicate;
+import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> {
+public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     protected Collection<E> internalColl;
 
-    protected AbstractSmartCollection(final Collection<E> collection) {
+    protected SmartAbstractCollection(final Collection<E> collection) {
         internalColl = collection;
     }
+
+    /** Helper methods */
+
+    protected abstract SmartCollection<E> createNewInstance();
+
+    protected abstract <T> SmartCollection<T> createNewInstance(
+            Collection<T> aColl);
 
     /** Collection methods */
 
@@ -85,7 +93,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     /** ISmartCollection methods */
 
     @Override
-    public E find(final IPredicate<E> pred) {
+    public E find(final Predicate<E> pred) {
         for (E elem : internalColl) {
             if (pred.check(elem)) {
                 return elem;
@@ -96,7 +104,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public ISmartCollection<E> filter(final IPredicate<E> predicate) {
+    public SmartCollection<E> filter(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : toRemove) {
@@ -110,7 +118,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public ISmartCollection<E> remove(final IPredicate<E> predicate) {
+    public SmartCollection<E> remove(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : toRemove) {
@@ -124,10 +132,10 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public ISmartCollection<E> replace(final E seek, final E replacement) {
+    public SmartCollection<E> replace(final E seek, final E replacement) {
         final E seekVar = seek;
 
-        return this.replace(new IPredicate<E>() {
+        return this.replace(new Predicate<E>() {
             @Override
             public boolean check(final E input) {
                 return input.equals(seekVar);
@@ -136,7 +144,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public ISmartCollection<E> replace(final IPredicate<E> predicate,
+    public SmartCollection<E> replace(final Predicate<E> predicate,
             final E replacement) {
         List<E> tempList = new ArrayList<E>();
 
@@ -153,7 +161,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public <R> R reduce(final R initial, final IBinaryFunction<R, R, E> funct) {
+    public <R> R reduce(final R initial, final BinaryFunction<R, R, E> funct) {
         R result = initial;
 
         for (E elem : internalColl) {
@@ -164,7 +172,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public E reduce(final IBinaryFunction<E, E, E> funct) {
+    public E reduce(final BinaryFunction<E, E, E> funct) {
         Iterator<E> it = internalColl.iterator();
         E result = null;
 
@@ -192,7 +200,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public int count(final IPredicate<E> predicate) {
+    public int count(final Predicate<E> predicate) {
         int counter = 0;
         for (E elem : internalColl) {
             if (predicate.check(elem)) {
@@ -204,7 +212,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public boolean exists(final IPredicate<E> pred) {
+    public boolean exists(final Predicate<E> pred) {
         for (E elem : internalColl) {
             if (pred.check(elem)) {
                 return true;
@@ -215,7 +223,7 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     }
 
     @Override
-    public boolean forall(final IPredicate<E> pred) {
+    public boolean forall(final Predicate<E> pred) {
         for (E elem : internalColl) {
             if (!pred.check(elem)) {
                 return false;
@@ -233,5 +241,37 @@ public abstract class AbstractSmartCollection<E> implements ISmartCollection<E> 
     @Override
     public int hashCode() {
         return internalColl.hashCode();
+    }
+
+    @Override
+    public <R> SmartCollection<R> map(final UnaryFunction<R, E> function) {
+        SmartCollection<R> resultList = createNewInstance(new ArrayList<R>());
+        for (E elem : internalColl) {
+            resultList.add(function.execute(elem));
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public SmartCollection<E> flatten() {
+        SmartCollection<E> resultList = createNewInstance();
+
+        Iterator<E> iterator = this.iterator();
+        E first = null;
+
+        if (iterator.hasNext()) {
+            first = iterator.next();
+        }
+
+        if (first != null && first instanceof Collection) {
+            for (E elem : internalColl) {
+                @SuppressWarnings("unchecked")
+                Collection<E> innerList = (Collection<E>) elem;
+                resultList.addAll(createNewInstance(innerList).flatten());
+            }
+        }
+
+        return resultList;
     }
 }

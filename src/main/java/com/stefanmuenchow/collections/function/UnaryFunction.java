@@ -7,7 +7,7 @@ package com.stefanmuenchow.collections.function;
  * 
  * @author Stefan Münchow
  */
-public interface IUnaryFunction<R, E> {
+public interface UnaryFunction<R, E> {
 
     /**
      * Executes this function.

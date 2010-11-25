@@ -1,267 +1,188 @@
 package com.stefanmuenchow.collections;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
-import com.stefanmuenchow.collections.function.IBinaryFunction;
-import com.stefanmuenchow.collections.function.IMapPredicate;
-import com.stefanmuenchow.collections.function.IUnaryFunction;
+import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.MapPredicate;
+import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public class SmartMap<K, V> implements ISmartMap<K, V> {
-    protected final Map<K, V> internalMap;
+/**
+ * Specifies the operations of SmartMaps.
+ * 
+ * Smart Maps are compatible with the standard Map interface, but add some
+ * functionality to them. They are implemented as simple decorators (see Gang of
+ * Four).
+ * 
+ * @author Stefan Münchow
+ */
+public interface SmartMap<K, V> extends Map<K, V> {
 
-    public SmartMap() {
-        internalMap = new HashMap<K, V>();
-    }
+    /**
+     * Merges this map with anotherMap using the given merging function. The
+     * original map is changed.
+     * 
+     * @param anotherMap
+     *            Map to merge with
+     * @param mergeFunct
+     *            Merging function
+     * @see BinaryFunction
+     * @return Merged map
+     */
+    SmartMap<K, V> mergeWith(SmartMap<K, V> anotherMap,
+            BinaryFunction<V, V, V> mergeFunct);
 
-    public SmartMap(final Map<K, V> map) {
-        internalMap = map;
-    }
+    /**
+     * Gets the value to the given key if it exists. Else returns defaultVal.
+     * 
+     * @param key
+     *            Key to get value to
+     * @param defaultVal
+     *            Default value
+     * @return Value to given key or defaultVal
+     */
+    V get(K key, V defaultVal);
 
-    /** Map Methods */
+    /**
+     * Returns the first value for which the predicate evaluates to true. If the
+     * predicate evaluates to false for all elements in the map, null is
+     * returned.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return Value satisfying predicate or null
+     */
+    V find(MapPredicate<K, V> predicate);
 
-    @Override
-    public int size() {
-        return internalMap.size();
-    }
+    /**
+     * Retains all entries in map for which the predicate evaluates to true.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return Map containing only elements for which predicate returns true
+     */
+    SmartMap<K, V> filter(MapPredicate<K, V> predicate);
 
-    @Override
-    public boolean isEmpty() {
-        return internalMap.isEmpty();
-    }
+    /**
+     * Removes all entries in map for which the predicate evaluates to true.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return Map containing only elements for which predicate returns false
+     */
+    SmartMap<K, V> remove(MapPredicate<K, V> predicate);
 
-    @Override
-    public boolean containsKey(final Object key) {
-        return internalMap.containsKey(key);
-    }
+    /**
+     * Seeks the map for a given key-value-pair and replaces it with the
+     * specified pair. The equals() method is used to compare items. If the pair
+     * is not found, nothing is changed.
+     * 
+     * @param seekKey
+     *            Key to replace
+     * @param seekValue
+     *            Value to replace
+     * @param newKey
+     *            Replacement key
+     * @param newValue
+     *            Replacement value
+     * @return Map with entries replaced
+     */
+    SmartMap<K, V> replace(K seekKey, V seekValue, K newKey, V newValue);
 
-    @Override
-    public boolean containsValue(final Object value) {
-        return internalMap.containsValue(value);
-    }
+    /**
+     * Same as replace(K seekKey, V seekValue, K newKey, V newValue) but using a
+     * predicate to find the entry to replace.
+     * 
+     * @param predicate
+     *            Predicate
+     * @param newKey
+     *            Replacement key
+     * @param newValue
+     *            Replacement value
+     * @return Map with entries replaced
+     */
+    SmartMap<K, V> replace(MapPredicate<K, V> predicate, K newKey, V newValue);
 
-    @Override
-    public V get(final Object key) {
-        return internalMap.get(key);
-    }
+    /**
+     * Applies the function to all entries of map replacing each original entry
+     * with the result of function. Return the resulting map.
+     * 
+     * @param function
+     *            Function
+     * @return Changed map
+     */
+    <S, R> SmartMap<S, R> map(
+            UnaryFunction<Map.Entry<S, R>, Map.Entry<K, V>> function);
 
-    @Override
-    public V put(final K key, final V value) {
-        return internalMap.put(key, value);
-    }
+    /**
+     * Combines the elements of this map using a binary function and an initial
+     * value.
+     * 
+     * @param initial
+     *            Initial value
+     * @param funct
+     *            Binary Function
+     * @see BinaryFunction
+     * @return A single value
+     */
+    <R> R reduce(R initial, BinaryFunction<R, R, Map.Entry<K, V>> funct);
 
-    @Override
-    public V remove(final Object key) {
-        return internalMap.remove(key);
-    }
+    /**
+     * Calls the toString() method for the key and value of each entry in the
+     * map and inserts keyValDelimiter between them. Then it intersperses the
+     * resulting strings with entryDelimiter and returns the result.
+     * 
+     * @param entryDelimiter
+     *            String to insert between each two entries
+     * @param keyValDelimiter
+     *            String to insert between key and value of each map entry
+     * @return Resulting string representation
+     */
+    String join(String entryDelimiter, String keyValDelimiter);
 
-    @Override
-    public void putAll(final Map<? extends K, ? extends V> m) {
-        internalMap.putAll(m);
-    }
+    /**
+     * Counts all entries for which the predicate evaluates to true.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return Number of elements in map for which predicate is true
+     */
+    int count(MapPredicate<K, V> predicate);
 
-    @Override
-    public void clear() {
-        internalMap.clear();
-    }
+    /**
+     * Checks if the predicate evaluates to true for any element in the map. If
+     * not, the result is false.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return true / false
+     */
+    boolean exists(MapPredicate<K, V> predicate);
 
-    @Override
-    public Set<K> keySet() {
-        return internalMap.keySet();
-    }
+    /**
+     * Checks if the predicate evaluates to true for all elements in the map. If
+     * not, the result is false.
+     * 
+     * @param predicate
+     *            Predicate
+     * @return true / false
+     */
+    boolean forall(MapPredicate<K, V> predicate);
 
-    @Override
-    public Collection<V> values() {
-        return internalMap.values();
-    }
+    /**
+     * Checks if this map describes a bijective mapping. This is the case when
+     * each value in the map is unique.
+     * 
+     * @return true / false
+     */
+    boolean isBijective();
 
-    @Override
-    public Set<java.util.Map.Entry<K, V>> entrySet() {
-        return internalMap.entrySet();
-    }
-
-    /** ISmartMap methods */
-
-    @Override
-    public ISmartMap<K, V> mergeWith(final ISmartMap<K, V> anotherMap,
-            final IBinaryFunction<V, V, V> mergeFunct) {
-
-        ISmartMap<K, V> resultMap = new SmartMap<K, V>(internalMap);
-
-        for (Map.Entry<K, V> entry : anotherMap.entrySet()) {
-            if (resultMap.containsKey(entry.getKey())) {
-                V mergedVal = mergeFunct.execute(resultMap.get(entry.getKey()),
-                        entry.getValue());
-                resultMap.put(entry.getKey(), mergedVal);
-            } else {
-                resultMap.put(entry.getKey(), entry.getValue());
-            }
-        }
-
-        return resultMap;
-    }
-
-    @Override
-    public V get(final K key, final V defaultVal) {
-        V value = internalMap.get(key);
-        return value != null ? value : defaultVal;
-    }
-
-    @Override
-    public V find(final IMapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (predicate.check(entry.getKey(), entry.getValue())) {
-                return entry.getValue();
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public ISmartMap<K, V> filter(final IMapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (!predicate.check(entry.getKey(), entry.getValue())) {
-                internalMap.remove(entry.getKey());
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public ISmartMap<K, V> remove(final IMapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (predicate.check(entry.getKey(), entry.getValue())) {
-                internalMap.remove(entry.getKey());
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public ISmartMap<K, V> replace(final K seekKey, final V seekValue,
-            final K newKey, final V newValue) {
-        V foundVal = internalMap.get(seekKey);
-
-        if (foundVal.equals(seekValue)) {
-            internalMap.remove(seekKey);
-            internalMap.put(newKey, newValue);
-        }
-
-        return this;
-    }
-
-    @Override
-    public ISmartMap<K, V> replace(final IMapPredicate<K, V> predicate,
-            final K newKey, final V newValue) {
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (predicate.check(entry.getKey(), entry.getValue())) {
-                internalMap.remove(entry.getKey());
-                internalMap.put(newKey, newValue);
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public <S, R> ISmartMap<S, R> map(
-            final IUnaryFunction<java.util.Map.Entry<S, R>, java.util.Map.Entry<K, V>> function) {
-        ISmartMap<S, R> resultMap = new SmartMap<S, R>();
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            Map.Entry<S, R> mappedEntry = function.execute(entry);
-            resultMap.put(mappedEntry.getKey(), mappedEntry.getValue());
-        }
-
-        return resultMap;
-    }
-
-    @Override
-    public <R> R reduce(final R initial,
-            final IBinaryFunction<R, R, java.util.Map.Entry<K, V>> funct) {
-
-        R result = null;
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            result = funct.execute(result, entry);
-        }
-
-        return result;
-    }
-
-    @Override
-    public String join(final String entryDelimiter, final String keyValDelimiter) {
-        StringBuffer sb = new StringBuffer();
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            sb.append(entry.getKey() + keyValDelimiter + entry.getKey());
-            sb.append(entryDelimiter);
-        }
-        sb.setLength(sb.length() - entryDelimiter.length());
-
-        return sb.toString();
-    }
-
-    @Override
-    public int count(final IMapPredicate<K, V> predicate) {
-        int counter = 0;
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (predicate.check(entry.getKey(), entry.getValue())) {
-                counter++;
-            }
-        }
-
-        return counter;
-    }
-
-    @Override
-    public boolean exists(final IMapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (predicate.check(entry.getKey(), entry.getValue())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean forall(final IMapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            if (!predicate.check(entry.getKey(), entry.getValue())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean isBijective() {
-        return new HashSet<V>(values()).size() == size();
-    }
-
-    @Override
-    public ISmartMap<V, K> swap() throws PreconditionViolatedException {
-        if (!isBijective()) {
-            throw new PreconditionViolatedException("Map is not bijective!");
-        }
-
-        ISmartMap<V, K> swappedMap = new SmartMap<V, K>();
-
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            swappedMap.put(entry.getValue(), entry.getKey());
-        }
-
-        return swappedMap;
-    }
+    /**
+     * Swaps keys and values. If this map is bijective (can be checked with
+     * isBijective() method) operation will be successful and return the new
+     * map, otherwise a BadOperationException will be thrown.
+     * 
+     * @return
+     */
+    SmartMap<V, K> swap() throws PreconditionViolatedException;
 }

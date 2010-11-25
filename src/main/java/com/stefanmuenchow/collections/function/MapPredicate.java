@@ -7,7 +7,7 @@ package com.stefanmuenchow.collections.function;
  * 
  * @author Stefan Münchow
  */
-public interface IMapPredicate<K, V> {
+public interface MapPredicate<K, V> {
 
     /**
      * Checks a predicate based on the key and value of a map entry.

@@ -7,7 +7,7 @@ package com.stefanmuenchow.collections.function;
  * 
  * @author Stefan Münchow
  */
-public interface ITertiaryFunction<R, E, T, F> {
+public interface TertiaryFunction<R, E, T, F> {
 
     /**
      * Executes this function.
