@@ -3,6 +3,7 @@ package com.stefanmuenchow.collections;
 import java.util.List;
 
 import com.stefanmuenchow.collections.function.Predicate;
+import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
  * Specifies the operations of SmartLists.
@@ -168,4 +169,10 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      * @return List size without null elements
      */
     int sizeWithoutNulls();
+
+    @Override
+    <R> SmartList<R> map(UnaryFunction<R, E> function);
+
+    @Override
+    SmartList<Object> flatten();
 }

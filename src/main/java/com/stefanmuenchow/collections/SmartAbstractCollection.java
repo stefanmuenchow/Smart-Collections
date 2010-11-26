@@ -234,16 +234,6 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return internalColl.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return internalColl.hashCode();
-    }
-
-    @Override
     public <R> SmartCollection<R> map(final UnaryFunction<R, E> function) {
         SmartCollection<R> resultList = createNewInstance(new ArrayList<R>());
         for (E elem : internalColl) {
@@ -254,8 +244,8 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> flatten() {
-        SmartCollection<E> resultList = createNewInstance();
+    public SmartCollection<Object> flatten() {
+        SmartCollection<Object> resultList = createNewInstance(new ArrayList<Object>());
 
         Iterator<E> iterator = this.iterator();
         E first = null;
@@ -267,11 +257,28 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         if (first != null && first instanceof Collection) {
             for (E elem : internalColl) {
                 @SuppressWarnings("unchecked")
-                Collection<E> innerList = (Collection<E>) elem;
+                Collection<Object> innerList = (Collection<Object>) elem;
                 resultList.addAll(createNewInstance(innerList).flatten());
             }
+        } else {
+            resultList.addAll(internalColl);
         }
 
         return resultList;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return internalColl.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return internalColl.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return internalColl.toString();
     }
 }

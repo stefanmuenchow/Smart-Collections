@@ -162,5 +162,5 @@ public interface SmartCollection<E> extends Collection<E> {
      * 
      * @return Flat collection not containing any other collection
      */
-    SmartCollection<E> flatten();
+    SmartCollection<Object> flatten();
 }

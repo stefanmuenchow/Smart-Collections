@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.stefanmuenchow.collections.function.Predicate;
+import com.stefanmuenchow.collections.function.UnaryFunction;
 
 public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
         implements SmartList<E> {
@@ -81,6 +82,18 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     }
 
     /** ISmartList methods */
+
+    @Override
+    public <R> SmartList<R> map(final UnaryFunction<R, E> function) {
+        SmartCollection<R> result = super.map(function);
+        return (SmartList<R>) result;
+    }
+
+    @Override
+    public SmartList<Object> flatten() {
+        SmartCollection<Object> result = super.flatten();
+        return (SmartList<Object>) result;
+    }
 
     @Override
     public E head() {
