@@ -266,6 +266,17 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
 
         return resultList;
     }
+    
+    @Override
+	public <T> SmartCollection<T> castAllElementsTo(Class<T> clazz) {
+    	SmartCollection<T> result = createNewInstance(new ArrayList<T>());
+    	
+    	for (E elem : internalColl) {
+    		result.add(clazz.cast(elem));
+    	}
+    	
+    	return result;
+    }
 
     @Override
     public boolean equals(final Object obj) {

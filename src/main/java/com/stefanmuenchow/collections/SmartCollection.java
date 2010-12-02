@@ -163,4 +163,14 @@ public interface SmartCollection<E> extends Collection<E> {
      * @return Flat collection not containing any other collection
      */
     SmartCollection<Object> flatten();
+    
+    /**
+     * Casts all elements of the collecion to a specified type.
+     * @param <T> Element type of the resulting collection
+     * @param clazz Class to which all elements should be casted
+     * 
+     * @throws ClassCastException
+     * @return Collection with changed element type
+     */
+    <T> SmartCollection<T> castAllElementsTo(Class<T> clazz);
 }
