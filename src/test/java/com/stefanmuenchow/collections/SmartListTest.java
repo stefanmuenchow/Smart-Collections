@@ -1,5 +1,13 @@
 package com.stefanmuenchow.collections;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.NoSuchElementException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +25,8 @@ public class SmartListTest {
         smartList1 = new SmartArrayList<Integer>(9, 56, 23, 11, 67, 12, 9, 10);
         smartList2 = new SmartArrayList<Integer>(87, 13, 11, 56, 85, 19);
     }
+
+    /** Test SmartCollection methods */
 
     @Test
     public void testFind() {
@@ -36,8 +46,8 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertEquals(56, value1);
-        Assert.assertNull(value2);
+        assertEquals(56, value1);
+        assertNull(value2);
     }
 
     @Test
@@ -49,7 +59,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertEquals(new SmartArrayList<Integer>(56), smartList2);
+        assertEquals(new SmartArrayList<Integer>(56), smartList2);
     }
 
     @Test
@@ -61,7 +71,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertEquals(new SmartArrayList<Integer>(56), smartList2);
+        assertEquals(new SmartArrayList<Integer>(56), smartList2);
     }
 
     @Test
@@ -70,7 +80,7 @@ public class SmartListTest {
         smartList1.replace(9, 10);
         smartList1.replace(90, 91);
 
-        Assert.assertEquals(new SmartArrayList<Integer>(10, 56, 23, 11, 67, 12,
+        assertEquals(new SmartArrayList<Integer>(10, 56, 23, 11, 67, 12,
                 10, 10), smartList1);
 
         // Replace value that fits predicate
@@ -81,8 +91,7 @@ public class SmartListTest {
             }
         }, 10);
 
-        Assert.assertEquals(
-                new SmartArrayList<Integer>(10, 13, 11, 56, 10, 19), smartList2);
+        assertEquals(new SmartArrayList<Integer>(10, 13, 11, 56, 10, 19), smartList2);
     }
 
     @Test
@@ -97,7 +106,7 @@ public class SmartListTest {
                     }
                 });
 
-        Assert.assertEquals(197, result);
+        assertEquals(197, result);
 
         // With initial value
         String stringList = smartList2.reduce("ArrayList:",
@@ -109,7 +118,7 @@ public class SmartListTest {
                     }
                 });
 
-        Assert.assertEquals("ArrayList: 87 13 11 56 85 19", stringList);
+        assertEquals("ArrayList: 87 13 11 56 85 19", stringList);
     }
 
     @Test
@@ -126,7 +135,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertEquals(3, count);
+        assertEquals(3, count);
     }
 
     @Test
@@ -139,7 +148,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertTrue(exist);
+        assertTrue(exist);
 
         // Predicate that doesn't match
         exist = smartList2.exists(new Predicate<Integer>() {
@@ -149,7 +158,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertFalse(exist);
+        assertFalse(exist);
     }
 
     @Test
@@ -162,7 +171,7 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertTrue(allTrue);
+        assertTrue(allTrue);
 
         // Predicate that doesn't match
         allTrue = smartList2.forall(new Predicate<Integer>() {
@@ -172,15 +181,15 @@ public class SmartListTest {
             }
         });
 
-        Assert.assertFalse(allTrue);
+        assertFalse(allTrue);
     }
 
     @Test
     public void testEquals() {
-        Assert.assertTrue(smartList2.equals(smartList2));
-        Assert.assertTrue(smartList2.equals(new SmartArrayList<Integer>(87, 13,
+        assertTrue(smartList2.equals(smartList2));
+        assertTrue(smartList2.equals(new SmartArrayList<Integer>(87, 13,
                 11, 56, 85, 19)));
-        Assert.assertFalse(smartList2.equals(smartList1));
+        assertFalse(smartList2.equals(smartList1));
     }
 
     @Test
@@ -193,7 +202,7 @@ public class SmartListTest {
                     }
                 });
 
-        Assert.assertEquals(new SmartArrayList<Double>(87d, 13d, 11d, 56d, 85d,
+        assertEquals(new SmartArrayList<Double>(87d, 13d, 11d, 56d, 85d,
                 19d), doubleList);
     }
 
@@ -211,7 +220,66 @@ public class SmartListTest {
                         new SmartArrayList<Integer>(1, 3),
                         new SmartArrayList<Integer>(8)));
 
-        Assert.assertEquals(new SmartArrayList<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
+        assertEquals(new SmartArrayList<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
                 5, 4, 1, 3, 8), deepList.flatten());
+    }
+
+    @Test
+    public void testCastAllElements() {
+        SmartCollection<Object> aColl = new SmartArrayList<Object>(3, 6, 8);
+        SmartCollection<Integer> castedColl = aColl.castAllElements(Integer.class);
+
+        assertEquals(new SmartArrayList<Integer>(3, 6, 8), castedColl);
+    }
+
+    @Test
+    public void testToArray() {
+        Integer[] anArray = smartList2.ToArray(Integer.class);
+        assertArrayEquals(new Integer[] { 87, 13, 11, 56, 85, 19 }, anArray);
+    }
+
+    /** Test SmartList methods */
+
+    @Test
+    public void testHead() {
+        assertEquals(Integer.valueOf(9), smartList1.head());
+    }
+
+    @Test(expected= NoSuchElementException.class)
+    public void testHeadFail() {
+        new SmartArrayList<Object>().head();
+    }
+
+    @Test
+    public void testTail() {
+        assertEquals(new SmartArrayList<Integer>(56, 23, 11, 67, 12, 9, 10), smartList1.tail());
+    }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void testTailFail() {
+        new SmartArrayList<Object>().tail();
+    }
+
+    @Test
+    public void testLast() {
+        assertEquals(new Integer(10), smartList1.last());
+    }
+
+    @Test(expected= NoSuchElementException.class)
+    public void testLastFail() {
+        new SmartArrayList<Object>().last();
+    }
+
+    @Test
+    public void testGet() {
+        assertEquals(Integer.valueOf(11), smartList1.get(3, -100));
+        assertEquals(Integer.valueOf(-100), smartList1.get(20, -100));
+    }
+
+    @Test
+    public void testTake() {
+        assertEquals(new SmartArrayList<Integer>(87, 13, 11), smartList2.take(3));
+        assertEquals(new SmartArrayList<Integer>(1, 2), new SmartArrayList<Integer>(1, 2).take(8));
+        assertEquals(new SmartArrayList<Integer>(), new SmartArrayList<Integer>().take(8));
     }
 }

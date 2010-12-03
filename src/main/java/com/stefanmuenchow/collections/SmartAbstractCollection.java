@@ -1,5 +1,6 @@
 package com.stefanmuenchow.collections;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -266,16 +267,22 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
 
         return resultList;
     }
-    
+
     @Override
-	public <T> SmartCollection<T> castAllElementsTo(Class<T> clazz) {
+	public <T> SmartCollection<T> castAllElements(final Class<T> clazz) {
     	SmartCollection<T> result = createNewInstance(new ArrayList<T>());
-    	
+
     	for (E elem : internalColl) {
     		result.add(clazz.cast(elem));
     	}
-    	
+
     	return result;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T[] ToArray(final Class<T> clazz) {
+        return toArray((T[]) Array.newInstance(clazz, size()));
     }
 
     @Override

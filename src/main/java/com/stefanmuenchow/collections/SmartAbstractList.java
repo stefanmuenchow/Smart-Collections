@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
@@ -96,17 +97,34 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     }
 
     @Override
+    public <T> SmartList<T> castAllElements(final Class<T> clazz) {
+        SmartCollection<T> result = super.castAllElements(clazz);
+        return (SmartList<T>) result;
+    }
+
+    @Override
     public E head() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
         return getInternalList().get(0);
     }
 
     @Override
     public SmartList<E> tail() {
+        if (isEmpty()) {
+            throw new UnsupportedOperationException("List is empty");
+        }
+
         return drop(1);
     }
 
     @Override
     public E last() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
         return getInternalList().get(getInternalList().size() - 1);
     }
 
@@ -115,7 +133,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
         E result = null;
         try {
             result = get(index);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             result = defaultVal;
         }
 
@@ -124,7 +142,12 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
 
     @Override
     public SmartList<E> take(final int n) {
-        SmartList<E> result = createNewInstance(subList(0, n));
+        int high = n;
+        if (size() < n) {
+            high = size();
+        }
+
+        SmartList<E> result = createNewInstance(subList(0, high));
         return result;
     }
 
