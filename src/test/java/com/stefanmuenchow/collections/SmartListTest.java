@@ -3,7 +3,6 @@ package com.stefanmuenchow.collections;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.NoSuchElementException;
@@ -30,7 +29,6 @@ public class SmartListTest {
 
     @Test
     public void testFind() {
-        // With predicate that matches
         int value1 = smartList1.find(new Predicate<Integer>() {
             @Override
             public boolean check(final Integer input) {
@@ -38,16 +36,17 @@ public class SmartListTest {
             }
         });
 
-        // With predicate that doesn't match
-        Integer value2 = smartList1.find(new Predicate<Integer>() {
+        assertEquals(56, value1);
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void testFindFail() {
+        smartList1.find(new Predicate<Integer>() {
             @Override
             public boolean check(final Integer input) {
                 return input == 66;
             }
         });
-
-        assertEquals(56, value1);
-        assertNull(value2);
     }
 
     @Test
@@ -281,5 +280,88 @@ public class SmartListTest {
         assertEquals(new SmartArrayList<Integer>(87, 13, 11), smartList2.take(3));
         assertEquals(new SmartArrayList<Integer>(1, 2), new SmartArrayList<Integer>(1, 2).take(8));
         assertEquals(new SmartArrayList<Integer>(), new SmartArrayList<Integer>().take(8));
+    }
+
+    @Test
+    public void testDrop() {
+        assertEquals(new SmartArrayList<Integer>(67, 12, 9, 10), smartList1.drop(4));
+        assertEquals(new SmartArrayList<Integer>(), smartList1.drop(50));
+    }
+
+    @Test
+    public void testTakeWhile() {
+        assertEquals(new SmartArrayList<Integer>(87, 13, 11), smartList2.takeWhile(new Predicate<Integer>() {
+            @Override
+            public boolean check(final Integer input) {
+                return input % 2 == 1;
+            }
+        }));
+    }
+
+    @Test
+    public void testDropWhile() {
+        assertEquals(new SmartArrayList<Integer>(56, 85, 19), smartList2.dropWhile(new Predicate<Integer>() {
+            @Override
+            public boolean check(final Integer input) {
+                return input % 2 == 1;
+            }
+        }));
+    }
+
+    @Test
+    public void testRemoveDuplicates() {
+        assertEquals(new SmartArrayList<Integer>(1,2,3,4,5),
+                new SmartArrayList<Integer>(1,1,1,2,3,3,3,4,5).removeDuplicates());
+    }
+
+    @Test
+    public void testIntersperse() {
+        assertEquals(new SmartArrayList<Integer>(1,0,2,0,3), new SmartArrayList<Integer>(1,2,3).intersperse(0));
+        assertEquals(new SmartArrayList<Integer>(), new SmartArrayList<Integer>().intersperse(0));
+    }
+
+    @Test
+    public void testZipWith() {
+        SmartMap<Integer, String> resultMap = new SmartArrayList<Integer>(4,5,6).zipWith(
+                new SmartArrayList<String>("foo", "bar", "baz"));
+
+        SmartMap<Integer, String> expectedMap = new SmartHashMap<Integer, String>();
+        expectedMap.put(4, "foo");
+        expectedMap.put(5, "bar");
+        expectedMap.put(6, "baz");
+
+        assertEquals(expectedMap, resultMap);
+    }
+
+    @Test
+    public void testGetIndicesList() {
+        assertEquals(new SmartArrayList<Integer>(0,1,2,3,4),
+                new SmartArrayList<String>("a", "b", "c", "d", "e").getIndicesList());
+        assertEquals(new SmartArrayList<Integer>(), new SmartArrayList<String>());
+    }
+
+    @Test
+    public void testGetOccurenceCountMap() {
+        SmartMap<Character, Integer> resultMap =
+            new SmartArrayList<Character>('a', 'a', 'c', 'a', 'c', 'x').getOccurenceCountMap();
+
+        SmartMap<Character, Integer> expectedMap = new SmartHashMap<Character, Integer>();
+        expectedMap.put('a', 3);
+        expectedMap.put('c', 2);
+        expectedMap.put('x', 1);
+
+        assertEquals(expectedMap, resultMap);
+    }
+
+    @Test
+    public void testReverse() {
+        assertEquals(new SmartArrayList<Integer>(1,3,2), new SmartArrayList<Integer>(2,3,1).reverse());
+        assertEquals(new SmartArrayList<Integer>(2,3,1), new SmartArrayList<Integer>(2,3,1).reverse().reverse());
+    }
+
+    @Test
+    public void testSizeWithoutNulls() {
+        assertEquals(5, new SmartArrayList<Integer>(1,null,3,2,null).size());
+        assertEquals(3, new SmartArrayList<Integer>(1,null,3,2,null).sizeWithoutNulls());
     }
 }

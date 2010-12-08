@@ -1,18 +1,27 @@
+/**
+* Copyright (c) Stefan Muenchow. All rights reserved.
+* The use and distribution terms for this software are covered by the
+* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+* which can be found in the file epl-v10.html at the root of this distribution.
+* By using this software in any fashion, you are agreeing to be bound by
+* the terms of this license.
+* You must not remove this notice, or any other, from this software.
+**/
+
 package com.stefanmuenchow.collections;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
- * Specifies the operations of SmartLists.
- *
  * SmartLists are compatible with the standard List interface, but add some
  * functionality to them. They are implemented as simple decorators (see Gang of
  * Four).
  *
- * @author Stefan Münchow
+ * @author Stefan Muenchow
  */
 public interface SmartList<E> extends List<E>, SmartCollection<E> {
 
@@ -23,16 +32,18 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      * aList.get(0)
      * </pre>
      *
+     * @throws NoSuchElementException If list is empty
      * @return First element
      */
-    E head();
+    E head() throws NoSuchElementException;
 
     /**
      * Returns a new list without the first element.
      *
+     * @throws UnsupportedOperationException If list is empty
      * @return Rest list
      */
-    SmartList<E> tail();
+    SmartList<E> tail() throws UnsupportedOperationException;
 
     /**
      * Returns the last element of the list. Similar to
@@ -41,9 +52,10 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      * aList.get(aList.size() - 1)
      * </pre>
      *
+     * @throws NoSuchElementException If list is empty
      * @return Last element
      */
-    E last();
+    E last() throws NoSuchElementException;
 
     /**
      * Gets the element at the specified index. If the index is not into the

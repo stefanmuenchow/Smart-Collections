@@ -1,3 +1,13 @@
+/**
+* Copyright (c) Stefan Muenchow. All rights reserved.
+* The use and distribution terms for this software are covered by the
+* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+* which can be found in the file epl-v10.html at the root of this distribution.
+* By using this software in any fashion, you are agreeing to be bound by
+* the terms of this license.
+* You must not remove this notice, or any other, from this software.
+**/
+
 package com.stefanmuenchow.collections;
 
 import java.util.ArrayList;
@@ -105,7 +115,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     @Override
     public E head() {
         if (isEmpty()) {
-            throw new NoSuchElementException("List is empty");
+            throw new NoSuchElementException("List is empty, no head element available");
         }
         return getInternalList().get(0);
     }
@@ -113,7 +123,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     @Override
     public SmartList<E> tail() {
         if (isEmpty()) {
-            throw new UnsupportedOperationException("List is empty");
+            throw new UnsupportedOperationException("List is empty, no tail list available");
         }
 
         return drop(1);
@@ -122,7 +132,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     @Override
     public E last() {
         if (isEmpty()) {
-            throw new NoSuchElementException("List is empty");
+            throw new NoSuchElementException("List is empty, no last element available");
         }
 
         return getInternalList().get(getInternalList().size() - 1);
@@ -153,7 +163,12 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
 
     @Override
     public SmartList<E> drop(final int n) {
-        SmartList<E> result = createNewInstance(subList(n, size()));
+        int lower = n;
+        if (n > size()) {
+            lower = size();
+        }
+
+        SmartList<E> result = createNewInstance(subList(lower, size()));
         return result;
     }
 
@@ -247,8 +262,13 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
 
     @Override
     public int sizeWithoutNulls() {
-        List<E> temp = new ArrayList<E>(getInternalList());
-        temp.removeAll(null);
+        List<E> temp = new ArrayList<E>();
+        for (E elem : getInternalList()) {
+            if (elem != null) {
+                temp.add(elem);
+            }
+        }
+
         return temp.size();
     }
 }

@@ -1,34 +1,41 @@
+/**
+* Copyright (c) Stefan Muenchow. All rights reserved.
+* The use and distribution terms for this software are covered by the
+* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+* which can be found in the file epl-v10.html at the root of this distribution.
+* By using this software in any fashion, you are agreeing to be bound by
+* the terms of this license.
+* You must not remove this notice, or any other, from this software.
+**/
+
 package com.stefanmuenchow.collections;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
- * Specifies the operations of all smart collections. Lists, Sets, SortedSets
- * and Queues are collections. Smart maps are specified in the interface
- * ISmartMap.
- *
  * Smart Collections are compatible with the standard Collection interface, but
  * add some functionality to them. They are implemented as simple decorators
  * (see Gang of Four).
  *
- * @author Stefan Münchow
+ * @author Stefan Muenchow
  */
 public interface SmartCollection<E> extends Collection<E> {
 
     /**
      * Seeks a single element based on a predicate. The first element for which
      * the predicate returns <code>true</code>, is returned. If the predicate is
-     * <code>false</code> for all elements, null is returned.
+     * <code>false</code> for all elements, an Exception is thrown.
      *
-     * @param pred
-     *            Predicate
-     * @return Element or null
+     * @param pred  Predicate
+     * @throws NoSuchElementException If no element matches
+     * @return Element
      */
-    E find(Predicate<E> pred);
+    E find(Predicate<E> pred) throws NoSuchElementException;
 
     /**
      * Retains all elements in the collection for which the predicate is true.
