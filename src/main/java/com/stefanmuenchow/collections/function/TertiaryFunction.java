@@ -30,5 +30,5 @@ public interface TertiaryFunction<R, E, T, F> {
      *            Input parameter 3
      * @return Result
      */
-    R execute(E input1, T input2, F input3);
+    R apply(E input1, T input2, F input3);
 }

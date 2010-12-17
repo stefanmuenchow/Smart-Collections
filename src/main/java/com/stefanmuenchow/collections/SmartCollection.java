@@ -11,6 +11,7 @@
 package com.stefanmuenchow.collections;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
@@ -108,7 +109,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @see BinaryFunction
      * @return A single value
      */
-    <R> R reduce(R initial, BinaryFunction<R, R, E> funct);
+    <R> R reduce(R initial, BinaryFunction<R, E> funct);
 
     /**
      * Combines the elements of this list from left to right using a binary
@@ -119,7 +120,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @see BinaryFunction
      * @return A single value
      */
-    E reduce(BinaryFunction<E, E, E> funct);
+    E reduce(BinaryFunction<E, E> funct);
 
     /**
      * Calls the toString() method of each element in the collection and
@@ -162,6 +163,14 @@ public interface SmartCollection<E> extends Collection<E> {
     boolean forall(Predicate<E> pred);
 
     /**
+     * Replaces each occurence of a key in the specified map with the
+     * corresponding value.
+     * @param replacements Map including all replacements
+     * @return Collection with replaced elements
+     */
+    SmartCollection<E> replace(Map<E, E> replacements);
+
+    /**
      * If the collection contains other collections, then the values of all
      * collections are collected recursively and put into the resulting list. If
      * it is already a "flat" collection, nothing is done. A new collection is
@@ -186,5 +195,5 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param clazz Type of the array elements
      * @return Array holding all elements of this collection
      */
-    <T> T[] ToArray(Class<T> clazz);
+    <T> T[] toArray(Class<T> clazz);
 }

@@ -12,6 +12,8 @@ package com.stefanmuenchow.collections;
 
 import java.util.Queue;
 
+import com.stefanmuenchow.collections.function.UnaryFunction;
+
 /**
  * SmartQueues are compatible with the standard Queue interface, but add some
  * functionality to them. They are implemented as simple decorators (see Gang of
@@ -21,4 +23,12 @@ import java.util.Queue;
  */
 public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 
+    @Override
+    <R> SmartList<R> map(UnaryFunction<R, E> function);
+
+    @Override
+    SmartList<Object> flatten();
+
+    @Override
+    <T> SmartList<T> castAllElements(Class<T> clazz);
 }

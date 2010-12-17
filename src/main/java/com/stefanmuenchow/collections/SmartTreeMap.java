@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class SmartTreeMap<K, V> extends SmartHashMap<K, V> implements
+public class SmartTreeMap<K, V> extends SmartAbstractMap<K, V> implements
         SmartSortedMap<K, V> {
 
     public SmartTreeMap() {
@@ -31,8 +31,6 @@ public class SmartTreeMap<K, V> extends SmartHashMap<K, V> implements
     private SortedMap<K, V> getInternalMap() {
         return (SortedMap<K, V>) internalMap;
     }
-
-    /** Helper methods */
 
     @Override
     protected SmartSortedMap<K, V> createNewInstance() {

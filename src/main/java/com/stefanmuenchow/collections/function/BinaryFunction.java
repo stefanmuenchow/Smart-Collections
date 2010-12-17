@@ -17,7 +17,7 @@ package com.stefanmuenchow.collections.function;
  *
  * @author Stefan Muenchow
  */
-public interface BinaryFunction<R, E, T> {
+public interface BinaryFunction<R, E> {
 
     /**
      * Executes this function.
@@ -28,5 +28,5 @@ public interface BinaryFunction<R, E, T> {
      *            Input parameter 2
      * @return Result
      */
-    R execute(E input1, T input2);
+    R apply(R input1, E input2);
 }

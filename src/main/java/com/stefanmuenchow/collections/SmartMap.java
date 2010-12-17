@@ -11,6 +11,7 @@
 package com.stefanmuenchow.collections;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
 import com.stefanmuenchow.collections.function.BinaryFunction;
@@ -27,8 +28,24 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
 public interface SmartMap<K, V> extends Map<K, V> {
 
     /**
-     * Merges this map with anotherMap using the given merging function. The
-     * original map is changed.
+     * Returns the first element of the Map. If it is not a sorted map, the ordering
+     * is arbitrary.
+     * @throws NoSuchElementException
+     * @return Map.Entry
+     */
+    Map.Entry<K, V> head() throws NoSuchElementException;
+
+    /**
+     * Returns the map without the first element. If it is not a sorted map, the ordering
+     * is arbitrary.
+     * @throws UnsupportedOperationException
+     * @return Map without first element
+     */
+    SmartMap<K, V> tail() throws UnsupportedOperationException;
+
+    /**
+     * Merges this map with anotherMap using the given merging function. A new map is
+     * returned.
      *
      * @param anotherMap
      *            Map to merge with
@@ -37,8 +54,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @see BinaryFunction
      * @return Merged map
      */
-    SmartMap<K, V> mergeWith(SmartMap<K, V> anotherMap,
-            BinaryFunction<V, V, V> mergeFunct);
+    SmartMap<K, V> mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
 
     /**
      * Gets the value to the given key if it exists. Else returns defaultVal.
@@ -53,14 +69,14 @@ public interface SmartMap<K, V> extends Map<K, V> {
 
     /**
      * Returns the first value for which the predicate evaluates to true. If the
-     * predicate evaluates to false for all elements in the map, null is
-     * returned.
+     * predicate evaluates to false for all elements in the map, an exception is
+     * thrown.
      *
-     * @param predicate
-     *            Predicate
-     * @return Value satisfying predicate or null
+     * @param predicate                 Predicate to test entries against
+     * @throws NoSuchElementException   If no element matches
+     * @return                          Value satisfying predicate
      */
-    V find(MapPredicate<K, V> predicate);
+    V find(MapPredicate<K, V> predicate) throws NoSuchElementException;
 
     /**
      * Retains all entries in map for which the predicate evaluates to true.
@@ -98,20 +114,6 @@ public interface SmartMap<K, V> extends Map<K, V> {
     SmartMap<K, V> replace(K seekKey, V seekValue, K newKey, V newValue);
 
     /**
-     * Same as replace(K seekKey, V seekValue, K newKey, V newValue) but using a
-     * predicate to find the entry to replace.
-     *
-     * @param predicate
-     *            Predicate
-     * @param newKey
-     *            Replacement key
-     * @param newValue
-     *            Replacement value
-     * @return Map with entries replaced
-     */
-    SmartMap<K, V> replace(MapPredicate<K, V> predicate, K newKey, V newValue);
-
-    /**
      * Applies the function to all entries of map replacing each original entry
      * with the result of function. Return the resulting map.
      *
@@ -119,8 +121,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Function
      * @return Changed map
      */
-    <S, R> SmartMap<S, R> map(
-            UnaryFunction<Map.Entry<S, R>, Map.Entry<K, V>> function);
+    <S, R> SmartMap<S, R> map(UnaryFunction<KeyValuePair<S, R>, Map.Entry<K, V>> function);
 
     /**
      * Combines the elements of this map using a binary function and an initial
@@ -133,7 +134,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @see BinaryFunction
      * @return A single value
      */
-    <R> R reduce(R initial, BinaryFunction<R, R, Map.Entry<K, V>> funct);
+    <R> R reduce(R initial, BinaryFunction<R, Map.Entry<K, V>> funct);
 
     /**
      * Calls the toString() method for the key and value of each entry in the

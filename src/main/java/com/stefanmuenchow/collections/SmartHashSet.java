@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.stefanmuenchow.collections.function.UnaryFunction;
+
 public class SmartHashSet<E> extends SmartAbstractCollection<E> implements
         SmartSet<E> {
 
@@ -87,5 +89,23 @@ public class SmartHashSet<E> extends SmartAbstractCollection<E> implements
     public SmartSet<E> difference(final Set<E> anotherSet) {
         getInternalSet().removeAll(anotherSet);
         return this;
+    }
+
+    @Override
+    public <R> SmartSet<R> map(final UnaryFunction<R, E> function) {
+        SmartCollection<R> result = super.map(function);
+        return (SmartSet<R>) result;
+    }
+
+    @Override
+    public SmartSet<Object> flatten() {
+        SmartCollection<Object> result = super.flatten();
+        return (SmartSet<Object>) result;
+    }
+
+    @Override
+    public <T> SmartSet<T> castAllElements(final Class<T> clazz) {
+        SmartCollection<T> result = super.castAllElements(clazz);
+        return (SmartSet<T>) result;
     }
 }

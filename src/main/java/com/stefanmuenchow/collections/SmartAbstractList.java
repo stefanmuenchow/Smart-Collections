@@ -176,7 +176,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     public SmartList<E> takeWhile(final Predicate<E> pred) {
         SmartList<E> resultList = createNewInstance();
         for (E elem : this) {
-            if (pred.check(elem)) {
+            if (pred.test(elem)) {
                 resultList.add(elem);
             } else {
                 break;
@@ -190,7 +190,7 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E>
     public SmartList<E> dropWhile(final Predicate<E> pred) {
         SmartList<E> resultList = createNewInstance(getInternalList());
         for (E elem : this) {
-            if (pred.check(elem)) {
+            if (pred.test(elem)) {
                 resultList.remove(0);
             } else {
                 break;

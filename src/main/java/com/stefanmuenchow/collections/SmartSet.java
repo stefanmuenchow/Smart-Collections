@@ -12,6 +12,8 @@ package com.stefanmuenchow.collections;
 
 import java.util.Set;
 
+import com.stefanmuenchow.collections.function.UnaryFunction;
+
 /**
  * SmartSets are compatible with the standard Set interface, but add some
  * functionality to them. They are implemented as simple decorators (see Gang of
@@ -83,4 +85,13 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
      * @return Difference set
      */
     SmartSet<E> difference(Set<E> anotherSet);
+
+    @Override
+    <R> SmartSet<R> map(UnaryFunction<R, E> function);
+
+    @Override
+    SmartSet<Object> flatten();
+
+    @Override
+    <T> SmartSet<T> castAllElements(Class<T> clazz);
 }

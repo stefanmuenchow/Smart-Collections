@@ -26,5 +26,5 @@ public interface UnaryFunction<R, E> {
      *            Input parameter
      * @return Result
      */
-    R execute(E input);
+    R apply(E input);
 }

@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
+
 package com.stefanmuenchow.collections;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -7,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.NoSuchElementException;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +40,7 @@ public class SmartListTest {
     public void testFind() {
         int value1 = smartList1.find(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input > 10;
             }
         });
@@ -43,7 +52,7 @@ public class SmartListTest {
     public void testFindFail() {
         smartList1.find(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input == 66;
             }
         });
@@ -53,7 +62,7 @@ public class SmartListTest {
     public void testFilter() {
         smartList2.filter(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input % 2 == 0;
             }
         });
@@ -65,7 +74,7 @@ public class SmartListTest {
     public void testRemove() {
         smartList2.remove(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input % 2 == 1;
             }
         });
@@ -85,7 +94,7 @@ public class SmartListTest {
         // Replace value that fits predicate
         smartList2.replace(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input > 80;
             }
         }, 10);
@@ -97,39 +106,39 @@ public class SmartListTest {
     public void testReduce() {
         // Without initial value
         int result = smartList1
-                .reduce(new BinaryFunction<Integer, Integer, Integer>() {
-                    @Override
-                    public Integer execute(final Integer input1,
-                            final Integer input2) {
-                        return input1 + input2;
-                    }
-                });
+        .reduce(new BinaryFunction<Integer, Integer>() {
+            @Override
+            public Integer apply(final Integer input1,
+                    final Integer input2) {
+                return input1 + input2;
+            }
+        });
 
         assertEquals(197, result);
 
         // With initial value
         String stringList = smartList2.reduce("ArrayList:",
-                new BinaryFunction<String, String, Integer>() {
-                    @Override
-                    public String execute(final String input1,
-                            final Integer input2) {
-                        return input1 + " " + String.valueOf(input2);
-                    }
-                });
+                new BinaryFunction<String, Integer>() {
+            @Override
+            public String apply(final String input1,
+                    final Integer input2) {
+                return input1 + " " + String.valueOf(input2);
+            }
+        });
 
         assertEquals("ArrayList: 87 13 11 56 85 19", stringList);
     }
 
     @Test
     public void testJoin() {
-        Assert.assertEquals("87|13|11|56|85|19", smartList2.join("|"));
+        assertEquals("87|13|11|56|85|19", smartList2.join("|"));
     }
 
     @Test
     public void testCount() {
         int count = smartList1.count(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input % 2 == 0;
             }
         });
@@ -142,7 +151,7 @@ public class SmartListTest {
         // Predicate that matches
         boolean exist = smartList2.exists(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input.equals(11);
             }
         });
@@ -152,7 +161,7 @@ public class SmartListTest {
         // Predicate that doesn't match
         exist = smartList2.exists(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return (input / 3) == 5;
             }
         });
@@ -165,7 +174,7 @@ public class SmartListTest {
         // Predicate that matches
         boolean allTrue = smartList2.forall(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input.compareTo(100) < 0;
             }
         });
@@ -175,7 +184,7 @@ public class SmartListTest {
         // Predicate that doesn't match
         allTrue = smartList2.forall(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input.compareTo(5) < 0;
             }
         });
@@ -194,12 +203,12 @@ public class SmartListTest {
     @Test
     public void testMap() {
         SmartList<Double> doubleList = smartList2
-                .map(new UnaryFunction<Double, Integer>() {
-                    @Override
-                    public Double execute(final Integer input) {
-                        return Integer.valueOf(input).doubleValue();
-                    }
-                });
+        .map(new UnaryFunction<Double, Integer>() {
+            @Override
+            public Double apply(final Integer input) {
+                return Integer.valueOf(input).doubleValue();
+            }
+        });
 
         assertEquals(new SmartArrayList<Double>(87d, 13d, 11d, 56d, 85d,
                 19d), doubleList);
@@ -212,12 +221,12 @@ public class SmartListTest {
                 new SmartArrayList<SmartList<Integer>>(
                         new SmartArrayList<Integer>(5, 3),
                         new SmartArrayList<Integer>(1, 2, 3)),
-                new SmartArrayList<SmartList<Integer>>(
-                        new SmartArrayList<Integer>(6),
-                        new SmartArrayList<Integer>(7, 6, 5, 4)),
-                new SmartArrayList<SmartList<Integer>>(
-                        new SmartArrayList<Integer>(1, 3),
-                        new SmartArrayList<Integer>(8)));
+                        new SmartArrayList<SmartList<Integer>>(
+                                new SmartArrayList<Integer>(6),
+                                new SmartArrayList<Integer>(7, 6, 5, 4)),
+                                new SmartArrayList<SmartList<Integer>>(
+                                        new SmartArrayList<Integer>(1, 3),
+                                        new SmartArrayList<Integer>(8)));
 
         assertEquals(new SmartArrayList<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
                 5, 4, 1, 3, 8), deepList.flatten());
@@ -233,7 +242,7 @@ public class SmartListTest {
 
     @Test
     public void testToArray() {
-        Integer[] anArray = smartList2.ToArray(Integer.class);
+        Integer[] anArray = smartList2.toArray(Integer.class);
         assertArrayEquals(new Integer[] { 87, 13, 11, 56, 85, 19 }, anArray);
     }
 
@@ -292,7 +301,7 @@ public class SmartListTest {
     public void testTakeWhile() {
         assertEquals(new SmartArrayList<Integer>(87, 13, 11), smartList2.takeWhile(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input % 2 == 1;
             }
         }));
@@ -302,7 +311,7 @@ public class SmartListTest {
     public void testDropWhile() {
         assertEquals(new SmartArrayList<Integer>(56, 85, 19), smartList2.dropWhile(new Predicate<Integer>() {
             @Override
-            public boolean check(final Integer input) {
+            public boolean test(final Integer input) {
                 return input % 2 == 1;
             }
         }));

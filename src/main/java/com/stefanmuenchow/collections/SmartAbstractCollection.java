@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
@@ -107,7 +108,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     @Override
     public E find(final Predicate<E> pred) {
         for (E elem : internalColl) {
-            if (pred.check(elem)) {
+            if (pred.test(elem)) {
                 return elem;
             }
         }
@@ -120,7 +121,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
-            if (!predicate.check(elem)) {
+            if (!predicate.test(elem)) {
                 toRemove.add(elem);
             }
         }
@@ -134,7 +135,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
-            if (predicate.check(elem)) {
+            if (predicate.test(elem)) {
                 toRemove.add(elem);
             }
         }
@@ -149,7 +150,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
 
         return this.replace(new Predicate<E>() {
             @Override
-            public boolean check(final E input) {
+            public boolean test(final E input) {
                 return input.equals(seekVar);
             }
         }, replacement);
@@ -158,10 +159,10 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     @Override
     public SmartCollection<E> replace(final Predicate<E> predicate,
             final E replacement) {
-        List<E> tempList = new ArrayList<E>();
+        SmartCollection<E> tempList = createNewInstance();
 
         for (E elem : internalColl) {
-            if (predicate.check(elem)) {
+            if (predicate.test(elem)) {
                 tempList.add(replacement);
             } else {
                 tempList.add(elem);
@@ -173,18 +174,18 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public <R> R reduce(final R initial, final BinaryFunction<R, R, E> funct) {
+    public <R> R reduce(final R initial, final BinaryFunction<R, E> funct) {
         R result = initial;
 
         for (E elem : internalColl) {
-            result = funct.execute(result, elem);
+            result = funct.apply(result, elem);
         }
 
         return result;
     }
 
     @Override
-    public E reduce(final BinaryFunction<E, E, E> funct) {
+    public E reduce(final BinaryFunction<E, E> funct) {
         Iterator<E> it = internalColl.iterator();
         E result = null;
 
@@ -193,7 +194,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         }
 
         while (it.hasNext()) {
-            result = funct.execute(result, it.next());
+            result = funct.apply(result, it.next());
         }
 
         return result;
@@ -215,7 +216,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     public int count(final Predicate<E> predicate) {
         int counter = 0;
         for (E elem : internalColl) {
-            if (predicate.check(elem)) {
+            if (predicate.test(elem)) {
                 counter++;
             }
         }
@@ -226,7 +227,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     @Override
     public boolean exists(final Predicate<E> pred) {
         for (E elem : internalColl) {
-            if (pred.check(elem)) {
+            if (pred.test(elem)) {
                 return true;
             }
         }
@@ -235,9 +236,24 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
+    public SmartCollection<E> replace(final Map<E, E> replacements) {
+        SmartCollection<E> result = createNewInstance();
+
+        for (E elem : internalColl) {
+            if (replacements.get(elem) != null) {
+                result.add(replacements.get(elem));
+            } else {
+                result.add(elem);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean forall(final Predicate<E> pred) {
         for (E elem : internalColl) {
-            if (!pred.check(elem)) {
+            if (!pred.test(elem)) {
                 return false;
             }
         }
@@ -249,7 +265,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     public <R> SmartCollection<R> map(final UnaryFunction<R, E> function) {
         SmartCollection<R> resultList = createNewInstance(new ArrayList<R>());
         for (E elem : internalColl) {
-            resultList.add(function.execute(elem));
+            resultList.add(function.apply(elem));
         }
 
         return resultList;
@@ -292,7 +308,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] ToArray(final Class<T> clazz) {
+    public <T> T[] toArray(final Class<T> clazz) {
         return toArray((T[]) Array.newInstance(clazz, size()));
     }
 

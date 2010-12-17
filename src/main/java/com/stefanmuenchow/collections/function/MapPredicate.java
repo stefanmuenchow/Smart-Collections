@@ -28,5 +28,5 @@ public interface MapPredicate<K, V> {
      *            Entry value
      * @return true / false
      */
-    boolean check(K key, V val);
+    boolean test(K key, V val);
 }

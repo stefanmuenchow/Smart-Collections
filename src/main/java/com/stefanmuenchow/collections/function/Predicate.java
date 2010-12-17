@@ -26,5 +26,5 @@ public interface Predicate<E> {
      *            Input value
      * @return true / false
      */
-    boolean check(E input);
+    boolean test(E input);
 }
