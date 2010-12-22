@@ -310,23 +310,26 @@ public class SmartSetTest {
     public void testUnion() {
         SmartSet<Integer> firstSet = new SmartHashSet<Integer>(1,2,3);
         SmartSet<Integer> secondSet = new SmartHashSet<Integer>(4,5,6);
+        firstSet.union(secondSet);
 
-        assertEquals(new SmartHashSet<Integer>(1,2,3,4,5,6), firstSet.union(secondSet));
+        assertEquals(new SmartHashSet<Integer>(1,2,3,4,5,6), firstSet);
     }
 
     @Test
     public void testIntersection() {
         SmartSet<Integer> firstSet = new SmartHashSet<Integer>(1,2,3);
         SmartSet<Integer> secondSet = new SmartHashSet<Integer>(4,2,1);
+        firstSet.intersection(secondSet);
 
-        assertEquals(new SmartHashSet<Integer>(1,2), firstSet.intersection(secondSet));
+        assertEquals(new SmartHashSet<Integer>(1,2), firstSet);
     }
 
     @Test
     public void testDifference() {
         SmartSet<Integer> firstSet = new SmartHashSet<Integer>(1,2,3,4,5,6);
         SmartSet<Integer> secondSet = new SmartHashSet<Integer>(4,5,6);
+        firstSet.difference(secondSet);
 
-        assertEquals(new SmartHashSet<Integer>(1,2,3), firstSet.difference(secondSet));
+        assertEquals(new SmartHashSet<Integer>(1,2,3), firstSet);
     }
 }

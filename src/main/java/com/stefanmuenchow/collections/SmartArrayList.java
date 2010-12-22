@@ -24,7 +24,7 @@ public class SmartArrayList<E> extends SmartAbstractList<E> implements SmartList
         this(Arrays.asList(elems));
     }
 
-    protected SmartArrayList(final Collection<E> internalColl) {
+    public SmartArrayList(final Collection<E> internalColl) {
         super(new ArrayList<E>(internalColl));
     }
 

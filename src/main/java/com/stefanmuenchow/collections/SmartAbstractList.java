@@ -200,19 +200,17 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
     }
 
     @Override
-    public SmartList<E> removeDuplicates() {
-        SmartSet<E> resultSet = new SmartHashSet<E>(this);
-        internalColl = new ArrayList<E>(resultSet);
-        return this;
+    public void removeDuplicates() {
+        SmartSet<E> resultSet = new SmartHashSet<E>(internalColl);
+        clear();
+        addAll(resultSet);
     }
 
     @Override
-    public SmartList<E> intersperse(final E elem) {
+    public void intersperse(final E elem) {
         for (int i = 1; i < size(); i += 2) {
             add(i, elem);
         }
-
-        return this;
     }
 
     @Override
@@ -254,9 +252,8 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
     }
 
     @Override
-    public SmartList<E> reverse() {
-        Collections.reverse(getInternalList());
-        return this;
+    public void reverse() {
+        Collections.reverse(this);
     }
 
     @Override

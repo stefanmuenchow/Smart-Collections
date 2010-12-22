@@ -1,12 +1,12 @@
 /**
-* Copyright (c) Stefan Muenchow. All rights reserved.
-* The use and distribution terms for this software are covered by the
-* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-* which can be found in the file epl-v10.html at the root of this distribution.
-* By using this software in any fashion, you are agreeing to be bound by
-* the terms of this license.
-* You must not remove this notice, or any other, from this software.
-**/
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
 
 package com.stefanmuenchow.collections;
 
@@ -117,7 +117,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> filter(final Predicate<E> predicate) {
+    public void filter(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -127,11 +127,10 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         }
 
         internalColl.removeAll(toRemove);
-        return this;
     }
 
     @Override
-    public SmartCollection<E> remove(final Predicate<E> predicate) {
+    public void remove(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -141,14 +140,13 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         }
 
         internalColl.removeAll(toRemove);
-        return this;
     }
 
     @Override
-    public SmartCollection<E> replace(final E seek, final E replacement) {
+    public void replace(final E seek, final E replacement) {
         final E seekVar = seek;
 
-        return this.replace(new Predicate<E>() {
+        this.replace(new Predicate<E>() {
             @Override
             public boolean test(final E input) {
                 return input.equals(seekVar);
@@ -157,20 +155,17 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> replace(final Predicate<E> predicate,
-            final E replacement) {
-        SmartCollection<E> tempList = createNewInstance();
+    public void replace(final Predicate<E> predicate, final E replacement) {
+        List<E> tempList = new ArrayList<E>(internalColl);
+        internalColl.clear();
 
-        for (E elem : internalColl) {
+        for (E elem : tempList) {
             if (predicate.test(elem)) {
-                tempList.add(replacement);
+                internalColl.add(replacement);
             } else {
-                tempList.add(elem);
+                internalColl.add(elem);
             }
         }
-
-        internalColl = tempList;
-        return this;
     }
 
     @Override
@@ -236,18 +231,17 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> replace(final Map<E, E> replacements) {
-        SmartCollection<E> result = createNewInstance();
+    public void replace(final Map<E, E> replacements) {
+        List<E> tempList = new ArrayList<E>(internalColl);
+        internalColl.clear();
 
-        for (E elem : internalColl) {
+        for (E elem : tempList) {
             if (replacements.get(elem) != null) {
-                result.add(replacements.get(elem));
+                internalColl.add(replacements.get(elem));
             } else {
-                result.add(elem);
+                internalColl.add(elem);
             }
         }
-
-        return result;
     }
 
     @Override
@@ -296,14 +290,14 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-	public <T> SmartCollection<T> castAllElements(final Class<T> clazz) {
-    	SmartCollection<T> result = createNewInstance(new ArrayList<T>());
+    public <T> SmartCollection<T> castAllElements(final Class<T> clazz) {
+        SmartCollection<T> result = createNewInstance(new ArrayList<T>());
 
-    	for (E elem : internalColl) {
-    		result.add(clazz.cast(elem));
-    	}
+        for (E elem : internalColl) {
+            result.add(clazz.cast(elem));
+        }
 
-    	return result;
+        return result;
     }
 
     @Override

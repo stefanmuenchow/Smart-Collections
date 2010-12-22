@@ -13,10 +13,6 @@ public abstract class SmartAbstractSet<E> extends SmartAbstractCollection<E> imp
 
     /** Helper methods */
 
-    private Set<E> getInternalSet() {
-        return (Set<E>) internalColl;
-    }
-
     @Override
     protected abstract SmartSet<E> createNewInstance();
 
@@ -49,21 +45,18 @@ public abstract class SmartAbstractSet<E> extends SmartAbstractCollection<E> imp
     }
 
     @Override
-    public SmartSet<E> union(final Set<E> anotherSet) {
-        getInternalSet().addAll(anotherSet);
-        return this;
+    public void union(final Set<E> anotherSet) {
+        addAll(anotherSet);
     }
 
     @Override
-    public SmartSet<E> intersection(final Set<E> anotherSet) {
-        getInternalSet().retainAll(anotherSet);
-        return this;
+    public void intersection(final Set<E> anotherSet) {
+        retainAll(anotherSet);
     }
 
     @Override
-    public SmartSet<E> difference(final Set<E> anotherSet) {
-        getInternalSet().removeAll(anotherSet);
-        return this;
+    public void difference(final Set<E> anotherSet) {
+        removeAll(anotherSet);
     }
 
     @Override

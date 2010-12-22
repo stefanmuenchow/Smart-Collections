@@ -1,12 +1,12 @@
 /**
-* Copyright (c) Stefan Muenchow. All rights reserved.
-* The use and distribution terms for this software are covered by the
-* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-* which can be found in the file epl-v10.html at the root of this distribution.
-* By using this software in any fashion, you are agreeing to be bound by
-* the terms of this license.
-* You must not remove this notice, or any other, from this software.
-**/
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
 
 package com.stefanmuenchow.collections;
 
@@ -79,7 +79,6 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *
      * @param n
      *            Number of elements to take from beginning of list
-     * @return Prefix list
      */
     SmartList<E> take(int n);
 
@@ -93,7 +92,6 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *
      * @param n
      *            Number of elements to remove from beginning of list
-     * @return Postfix list
      */
     SmartList<E> drop(int n);
 
@@ -119,10 +117,8 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
 
     /**
      * Removes all duplicate values from the List. Changes the original list.
-     *
-     * @return List without duplicates
      */
-    SmartList<E> removeDuplicates();
+    void removeDuplicates();
 
     /**
      * Inserts the specified elem between each two elements of the list. Changes
@@ -132,7 +128,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *            Element to insert
      * @return List with elem at each 2nd index
      */
-    SmartList<E> intersperse(E elem);
+    void intersperse(E elem);
 
     /**
      * Creates a SmartMap from two lists. Elements in the first list are the
@@ -172,7 +168,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *
      * @return Reversed list
      */
-    SmartList<E> reverse();
+    void reverse();
 
     /**
      * Returns the list size without all null elements. If there are no null

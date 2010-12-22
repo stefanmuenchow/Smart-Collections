@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
 import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
@@ -99,7 +98,7 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     /** ISmartMap methods */
 
     @Override
-    public java.util.Map.Entry<K, V> head() throws NoSuchElementException {
+    public java.util.Map.Entry<K, V> head() {
         if (size() > 0) {
             return new SmartArrayList<Map.Entry<K, V>>(internalMap.entrySet()).head();
         }
@@ -108,7 +107,7 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public SmartMap<K, V> tail() throws UnsupportedOperationException {
+    public SmartMap<K, V> tail() {
         if (size() > 0) {
             SmartMap<K, V> resultMap = createNewInstance(internalMap);
             resultMap.remove(new SmartArrayList<K>(resultMap.keySet()).head());
@@ -119,21 +118,19 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public SmartMap<K, V> mergeWith(final SmartMap<K, V> anotherMap, final BinaryFunction<V, V> mergeFunct) {
-
+    public void mergeWith(final SmartMap<K, V> anotherMap, final BinaryFunction<V, V> mergeFunct) {
         SmartMap<K, V> resultMap = createNewInstance(internalMap);
+        clear();
 
         for (Map.Entry<K, V> entry : anotherMap.entrySet()) {
             if (resultMap.containsKey(entry.getKey())) {
                 V mergedVal = mergeFunct.apply(resultMap.get(entry.getKey()),
                         entry.getValue());
-                resultMap.put(entry.getKey(), mergedVal);
+                internalMap.put(entry.getKey(), mergedVal);
             } else {
-                resultMap.put(entry.getKey(), entry.getValue());
+                internalMap.put(entry.getKey(), entry.getValue());
             }
         }
-
-        return resultMap;
     }
 
     @Override
@@ -144,7 +141,7 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
 
     @Override
     public V find(final MapPredicate<K, V> predicate) {
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
+        for (Map.Entry<K, V> entry : entrySet()) {
             if (predicate.test(entry.getKey(), entry.getValue())) {
                 return entry.getValue();
             }
@@ -154,42 +151,37 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public SmartMap<K, V> filter(final MapPredicate<K, V> predicate) {
-        SmartMap<K, V> result = createNewInstance();
+    public void filter(final MapPredicate<K, V> predicate) {
+        SmartMap<K, V> tempMap = createNewInstance(internalMap);
+        clear();
 
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
+        for (Map.Entry<K, V> entry : tempMap.entrySet()) {
             if (predicate.test(entry.getKey(), entry.getValue())) {
-                result.put(entry.getKey(), entry.getValue());
+                put(entry.getKey(), entry.getValue());
             }
         }
-
-        return result;
     }
 
     @Override
-    public SmartMap<K, V> remove(final MapPredicate<K, V> predicate) {
-        SmartMap<K, V> result = createNewInstance();
+    public void remove(final MapPredicate<K, V> predicate) {
+        SmartMap<K, V> tempMap = createNewInstance(internalMap);
+        clear();
 
-        for (Map.Entry<K, V> entry : internalMap.entrySet()) {
+        for (Map.Entry<K, V> entry : tempMap.entrySet()) {
             if (!predicate.test(entry.getKey(), entry.getValue())) {
-                result.put(entry.getKey(), entry.getValue());
+                put(entry.getKey(), entry.getValue());
             }
         }
-
-        return result;
     }
 
     @Override
-    public SmartMap<K, V> replace(final K seekKey, final V seekValue,
-            final K newKey, final V newValue) {
-        V foundVal = internalMap.get(seekKey);
+    public void replace(final K seekKey, final V seekValue, final K newKey, final V newValue) {
+        V foundVal = get(seekKey);
 
         if (foundVal.equals(seekValue)) {
-            internalMap.remove(seekKey);
-            internalMap.put(newKey, newValue);
+            remove(seekKey);
+            put(newKey, newValue);
         }
-
-        return this;
     }
 
     @Override
@@ -269,9 +261,9 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public SmartMap<V, K> swap() throws PreconditionViolatedException {
+    public SmartMap<V, K> swap() {
         if (!isBijective()) {
-            throw new PreconditionViolatedException("Map is not bijective!");
+            throw new UnsupportedOperationException("Map is not bijective!");
         }
 
         SmartMap<V, K> swappedMap = createNewInstance(new HashMap<V, K>());

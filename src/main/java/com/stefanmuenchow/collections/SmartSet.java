@@ -1,12 +1,12 @@
 /**
-* Copyright (c) Stefan Muenchow. All rights reserved.
-* The use and distribution terms for this software are covered by the
-* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-* which can be found in the file epl-v10.html at the root of this distribution.
-* By using this software in any fashion, you are agreeing to be bound by
-* the terms of this license.
-* You must not remove this notice, or any other, from this software.
-**/
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
 
 package com.stefanmuenchow.collections;
 
@@ -66,7 +66,7 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
      *            Another set
      * @return Union set
      */
-    SmartSet<E> union(Set<E> anotherSet);
+    void union(Set<E> anotherSet);
 
     /**
      * Creates the intersection of both sets. The first set is changed.
@@ -75,7 +75,7 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
      *            Another set
      * @return Intersection set
      */
-    SmartSet<E> intersection(Set<E> anotherSet);
+    void intersection(Set<E> anotherSet);
 
     /**
      * Creates the difference of both sets. The first set is changed.
@@ -84,7 +84,7 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
      *            Another set
      * @return Difference set
      */
-    SmartSet<E> difference(Set<E> anotherSet);
+    void difference(Set<E> anotherSet);
 
     @Override
     <R> SmartSet<R> map(UnaryFunction<R, E> function);

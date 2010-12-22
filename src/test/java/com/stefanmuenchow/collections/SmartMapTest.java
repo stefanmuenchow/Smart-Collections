@@ -74,7 +74,7 @@ public class SmartMapTest {
 
     @Test
     public void testMergeWith() {
-        SmartMap<Integer, String> someMap = smartMap1.mergeWith(smartMap2, new BinaryFunction<String, String>() {
+        smartMap1.mergeWith(smartMap2, new BinaryFunction<String, String>() {
 
             @Override
             public String apply(final String input1, final String input2) {
@@ -82,7 +82,7 @@ public class SmartMapTest {
             }
         });
 
-        assertEquals("Frodo and Aragorn", someMap.get(1));
+        assertEquals("Frodo and Aragorn", smartMap1.get(1));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class SmartMapTest {
         expectedMap.put(2, "Sam");
         expectedMap.put(3, "Merry");
 
-        smartMap1 = smartMap1.filter(new MapPredicate<Integer, String>() {
+        smartMap1.filter(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -138,7 +138,7 @@ public class SmartMapTest {
         expectedMap.put(2, "Sam");
         expectedMap.put(3, "Merry");
 
-        smartMap1 = smartMap1.remove(new MapPredicate<Integer, String>() {
+        smartMap1.remove(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {

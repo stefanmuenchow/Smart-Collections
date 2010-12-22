@@ -319,14 +319,21 @@ public class SmartListTest {
 
     @Test
     public void testRemoveDuplicates() {
-        assertEquals(new SmartArrayList<Integer>(1,2,3,4,5),
-                new SmartArrayList<Integer>(1,1,1,2,3,3,3,4,5).removeDuplicates());
+        SmartList<Integer> testList = new SmartArrayList<Integer>(1,1,1,2,3,3,3,4,5);
+        testList.removeDuplicates();
+
+        assertEquals(new SmartArrayList<Integer>(1,2,3,4,5), testList);
     }
 
     @Test
     public void testIntersperse() {
-        assertEquals(new SmartArrayList<Integer>(1,0,2,0,3), new SmartArrayList<Integer>(1,2,3).intersperse(0));
-        assertEquals(new SmartArrayList<Integer>(), new SmartArrayList<Integer>().intersperse(0));
+        SmartList<Integer> testList = new SmartArrayList<Integer>(1,2,3);
+        testList.intersperse(0);
+        assertEquals(new SmartArrayList<Integer>(1,0,2,0,3), testList);
+
+        testList = new SmartArrayList<Integer>();
+        testList.intersperse(0);
+        assertEquals(new SmartArrayList<Integer>(), testList);
     }
 
     @Test
@@ -364,8 +371,12 @@ public class SmartListTest {
 
     @Test
     public void testReverse() {
-        assertEquals(new SmartArrayList<Integer>(1,3,2), new SmartArrayList<Integer>(2,3,1).reverse());
-        assertEquals(new SmartArrayList<Integer>(2,3,1), new SmartArrayList<Integer>(2,3,1).reverse().reverse());
+        SmartList<Integer> testList = new SmartArrayList<Integer>(2,3,1);
+        testList.reverse();
+        assertEquals(new SmartArrayList<Integer>(1,3,2), testList);
+
+        testList.reverse();
+        assertEquals(new SmartArrayList<Integer>(2,3,1), testList);
     }
 
     @Test

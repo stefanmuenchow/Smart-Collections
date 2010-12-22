@@ -1,19 +1,18 @@
 /**
-* Copyright (c) Stefan Muenchow. All rights reserved.
-* The use and distribution terms for this software are covered by the
-* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-* which can be found in the file epl-v10.html at the root of this distribution.
-* By using this software in any fashion, you are agreeing to be bound by
-* the terms of this license.
-* You must not remove this notice, or any other, from this software.
-**/
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
 
 package com.stefanmuenchow.collections;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
 import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
@@ -54,7 +53,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @see BinaryFunction
      * @return Merged map
      */
-    SmartMap<K, V> mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
+    void mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
 
     /**
      * Gets the value to the given key if it exists. Else returns defaultVal.
@@ -85,7 +84,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return Map containing only elements for which predicate returns true
      */
-    SmartMap<K, V> filter(MapPredicate<K, V> predicate);
+    void filter(MapPredicate<K, V> predicate);
 
     /**
      * Removes all entries in map for which the predicate evaluates to true.
@@ -94,7 +93,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return Map containing only elements for which predicate returns false
      */
-    SmartMap<K, V> remove(MapPredicate<K, V> predicate);
+    void remove(MapPredicate<K, V> predicate);
 
     /**
      * Seeks the map for a given key-value-pair and replaces it with the
@@ -111,7 +110,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Replacement value
      * @return Map with entries replaced
      */
-    SmartMap<K, V> replace(K seekKey, V seekValue, K newKey, V newValue);
+    void replace(K seekKey, V seekValue, K newKey, V newValue);
 
     /**
      * Applies the function to all entries of map replacing each original entry
@@ -193,5 +192,5 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *
      * @return
      */
-    SmartMap<V, K> swap() throws PreconditionViolatedException;
+    SmartMap<V, K> swap() throws UnsupportedOperationException;
 }

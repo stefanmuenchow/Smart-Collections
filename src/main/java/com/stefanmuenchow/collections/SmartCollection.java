@@ -1,12 +1,12 @@
 /**
-* Copyright (c) Stefan Muenchow. All rights reserved.
-* The use and distribution terms for this software are covered by the
-* Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-* which can be found in the file epl-v10.html at the root of this distribution.
-* By using this software in any fashion, you are agreeing to be bound by
-* the terms of this license.
-* You must not remove this notice, or any other, from this software.
-**/
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
 
 package com.stefanmuenchow.collections;
 
@@ -43,20 +43,16 @@ public interface SmartCollection<E> extends Collection<E> {
      *
      * @param predicate
      *            Predicate
-     * @return Collection containing only elements for which predicate returns
-     *         true
      */
-    SmartCollection<E> filter(Predicate<E> predicate);
+    void filter(Predicate<E> predicate);
 
     /**
      * Removes all elements in the collection for which the predicate is true.
      *
      * @param predicate
      *            Predicate
-     * @return Collection containing only elements for which predicate returns
-     *         false
      */
-    SmartCollection<E> remove(Predicate<E> predicate);
+    void remove(Predicate<E> predicate);
 
     /**
      * Replaces each occurence of an element in the collection with a
@@ -67,9 +63,8 @@ public interface SmartCollection<E> extends Collection<E> {
      *            Element to be replaced
      * @param replacement
      *            Replacement
-     * @return List with replaced elements
      */
-    SmartCollection<E> replace(E seek, E replacement);
+    void replace(E seek, E replacement);
 
     /**
      * Replaces each element in the collection, for which the predicate returns
@@ -80,9 +75,8 @@ public interface SmartCollection<E> extends Collection<E> {
      *            Predicate to identify elements to replace
      * @param replacement
      *            Replacement
-     * @return List with replaced elements
      */
-    SmartCollection<E> replace(Predicate<E> predicate, E replacement);
+    void replace(Predicate<E> predicate, E replacement);
 
     /**
      * Calls a given function for each element in the collection with the
@@ -168,7 +162,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param replacements Map including all replacements
      * @return Collection with replaced elements
      */
-    SmartCollection<E> replace(Map<E, E> replacements);
+    void replace(Map<E, E> replacements);
 
     /**
      * If the collection contains other collections, then the values of all
