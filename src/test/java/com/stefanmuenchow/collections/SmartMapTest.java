@@ -21,7 +21,6 @@ import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stefanmuenchow.collections.exception.PreconditionViolatedException;
 import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
@@ -245,7 +244,7 @@ public class SmartMapTest {
     }
 
     @Test
-    public void testSwap() throws PreconditionViolatedException {
+    public void testSwap() {
         SmartMap<String, Integer> expectedMap = new SmartHashMap<String, Integer>();
         expectedMap.put("Frodo", 1);
         expectedMap.put("Sam", 2);
@@ -255,8 +254,8 @@ public class SmartMapTest {
         assertEquals(expectedMap, smartMap1.swap());
     }
 
-    @Test(expected=PreconditionViolatedException.class)
-    public void testSwapFail() throws PreconditionViolatedException {
+    @Test(expected=UnsupportedOperationException.class)
+    public void testSwapFail() {
         smartMap1.put(5, "Frodo");
         smartMap1.swap();
     }

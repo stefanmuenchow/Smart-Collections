@@ -307,8 +307,13 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(final Object obj) {
-        return internalColl.equals(obj);
+        if (obj.getClass().equals(this.getClass())) {
+            return internalColl.equals(((SmartAbstractCollection<E>) obj).internalColl);
+        }
+
+        return false;
     }
 
     @Override

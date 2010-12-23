@@ -30,8 +30,8 @@ public class SmartQueueTest {
 
     @Before
     public void setUp() throws Exception {
-        smartQueue1 = new SmartLinkedList<Integer>(9, 56, 23, 11, 67, 12, 9, 10);
-        smartQueue2 = new SmartLinkedList<Integer>(87, 13, 11, 56, 85, 19);
+        smartQueue1 = new SmartLinkedQueue<Integer>(9, 56, 23, 11, 67, 12, 9, 10);
+        smartQueue2 = new SmartLinkedQueue<Integer>(87, 13, 11, 56, 85, 19);
     }
 
     /** Test SmartCollection methods */
@@ -67,7 +67,11 @@ public class SmartQueueTest {
             }
         });
 
-        assertEquals(new SmartLinkedList<Integer>(56), smartQueue2);
+        boolean a = smartQueue2.equals(new SmartLinkedQueue<Integer>(56));
+        boolean b = new SmartLinkedQueue<Integer>(56).equals(smartQueue2);
+
+        assertEquals(a, b);
+        assertEquals(new SmartLinkedQueue<Integer>(56), smartQueue2);
     }
 
     @Test
@@ -79,7 +83,7 @@ public class SmartQueueTest {
             }
         });
 
-        assertEquals(new SmartLinkedList<Integer>(56), smartQueue2);
+        assertEquals(new SmartLinkedQueue<Integer>(56), smartQueue2);
     }
 
     @Test
@@ -88,7 +92,7 @@ public class SmartQueueTest {
         smartQueue1.replace(9, 10);
         smartQueue1.replace(90, 91);
 
-        assertEquals(new SmartLinkedList<Integer>(10, 56, 23, 11, 67, 12,
+        assertEquals(new SmartLinkedQueue<Integer>(10, 56, 23, 11, 67, 12,
                 10, 10), smartQueue1);
 
         // Replace value that fits predicate
@@ -99,7 +103,7 @@ public class SmartQueueTest {
             }
         }, 10);
 
-        assertEquals(new SmartLinkedList<Integer>(10, 13, 11, 56, 10, 19), smartQueue2);
+        assertEquals(new SmartLinkedQueue<Integer>(10, 13, 11, 56, 10, 19), smartQueue2);
     }
 
     @Test
@@ -195,14 +199,14 @@ public class SmartQueueTest {
     @Test
     public void testEquals() {
         assertTrue(smartQueue2.equals(smartQueue2));
-        assertTrue(smartQueue2.equals(new SmartLinkedList<Integer>(87, 13,
+        assertTrue(smartQueue2.equals(new SmartLinkedQueue<Integer>(87, 13,
                 11, 56, 85, 19)));
         assertFalse(smartQueue2.equals(smartQueue1));
     }
 
     @Test
     public void testMap() {
-        SmartList<Double> doubleList = smartQueue2
+        SmartQueue<Double> doubleList = smartQueue2
         .map(new UnaryFunction<Double, Integer>() {
             @Override
             public Double apply(final Integer input) {
@@ -210,34 +214,34 @@ public class SmartQueueTest {
             }
         });
 
-        assertEquals(new SmartLinkedList<Double>(87d, 13d, 11d, 56d, 85d,
+        assertEquals(new SmartLinkedQueue<Double>(87d, 13d, 11d, 56d, 85d,
                 19d), doubleList);
     }
 
     @Test
     public void testFlatten() {
         @SuppressWarnings("unchecked")
-        SmartQueue<SmartQueue<SmartQueue<Integer>>> deepList = new SmartLinkedList<SmartQueue<SmartQueue<Integer>>>(
-                new SmartLinkedList<SmartQueue<Integer>>(
-                        new SmartLinkedList<Integer>(5, 3),
-                        new SmartLinkedList<Integer>(1, 2, 3)),
-                        new SmartLinkedList<SmartQueue<Integer>>(
-                                new SmartLinkedList<Integer>(6),
-                                new SmartLinkedList<Integer>(7, 6, 5, 4)),
-                                new SmartLinkedList<SmartQueue<Integer>>(
-                                        new SmartLinkedList<Integer>(1, 3),
-                                        new SmartLinkedList<Integer>(8)));
+        SmartQueue<SmartQueue<SmartQueue<Integer>>> deepList = new SmartLinkedQueue<SmartQueue<SmartQueue<Integer>>>(
+                new SmartLinkedQueue<SmartQueue<Integer>>(
+                        new SmartLinkedQueue<Integer>(5, 3),
+                        new SmartLinkedQueue<Integer>(1, 2, 3)),
+                        new SmartLinkedQueue<SmartQueue<Integer>>(
+                                new SmartLinkedQueue<Integer>(6),
+                                new SmartLinkedQueue<Integer>(7, 6, 5, 4)),
+                                new SmartLinkedQueue<SmartQueue<Integer>>(
+                                        new SmartLinkedQueue<Integer>(1, 3),
+                                        new SmartLinkedQueue<Integer>(8)));
 
-        assertEquals(new SmartLinkedList<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
+        assertEquals(new SmartLinkedQueue<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
                 5, 4, 1, 3, 8), deepList.flatten());
     }
 
     @Test
     public void testCastAllElements() {
-        SmartCollection<Object> aColl = new SmartLinkedList<Object>(3, 6, 8);
+        SmartCollection<Object> aColl = new SmartLinkedQueue<Object>(3, 6, 8);
         SmartCollection<Integer> castedColl = aColl.castAllElements(Integer.class);
 
-        assertEquals(new SmartLinkedList<Integer>(3, 6, 8), castedColl);
+        assertEquals(new SmartLinkedQueue<Integer>(3, 6, 8), castedColl);
     }
 
     @Test
