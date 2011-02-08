@@ -15,7 +15,7 @@ import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 public abstract class ImmutableAbstractCollection<E> implements ImmutableCollection<E> {
-    private final SmartCollection<E> internalColl;
+    protected final SmartCollection<E> internalColl;
 
     public ImmutableAbstractCollection(final SmartCollection<E> collection) {
         internalColl = collection;
@@ -124,85 +124,83 @@ public abstract class ImmutableAbstractCollection<E> implements ImmutableCollect
 
     @Override
     public ImmutableCollection<E> remove(final Predicate<E> predicate) {
-        // TODO Auto-generated method stub
-        return null;
+        SmartList<E> temp = new SmartArrayList<E>(internalColl);
+        temp.remove(predicate);
+
+        return createNewInstance(temp);
     }
 
     @Override
     public ImmutableCollection<E> replace(final E seek, final E replacement) {
-        // TODO Auto-generated method stub
-        return null;
+        SmartList<E> temp = new SmartArrayList<E>(internalColl);
+        temp.replace(seek, replacement);
+
+        return createNewInstance(temp);
     }
 
     @Override
     public ImmutableCollection<E> replace(final Predicate<E> predicate, final E replacement) {
-        // TODO Auto-generated method stub
-        return null;
+        SmartList<E> temp = new SmartArrayList<E>(internalColl);
+        temp.replace(predicate, replacement);
+
+        return createNewInstance(temp);
     }
 
     @Override
     public <R> ImmutableCollection<R> map(final UnaryFunction<R, E> function) {
-        // TODO Auto-generated method stub
-        return null;
+        return createNewInstance(internalColl.map(function));
     }
 
     @Override
     public <R> R reduce(final R initial, final BinaryFunction<R, E> funct) {
-        // TODO Auto-generated method stub
-        return null;
+        return internalColl.reduce(initial, funct);
     }
 
     @Override
     public E reduce(final BinaryFunction<E, E> funct) {
-        // TODO Auto-generated method stub
-        return null;
+        return internalColl.reduce(funct);
     }
 
     @Override
     public String join(final String delimiter) {
-        // TODO Auto-generated method stub
-        return null;
+        return internalColl.join(delimiter);
     }
 
     @Override
     public int count(final Predicate<E> predicate) {
-        // TODO Auto-generated method stub
-        return 0;
+        return internalColl.count(predicate);
     }
 
     @Override
     public boolean exists(final Predicate<E> pred) {
-        // TODO Auto-generated method stub
-        return false;
+        return internalColl.exists(pred);
     }
 
     @Override
     public boolean forall(final Predicate<E> pred) {
-        // TODO Auto-generated method stub
-        return false;
+        return internalColl.forall(pred);
     }
 
     @Override
     public ImmutableCollection<E> replace(final Map<E, E> replacements) {
-        // TODO Auto-generated method stub
-        return null;
+        SmartList<E> temp = new SmartArrayList<E>(internalColl);
+        temp.replace(replacements);
+
+        return createNewInstance(temp);
     }
 
     @Override
     public ImmutableCollection<Object> flatten() {
-        // TODO Auto-generated method stub
-        return null;
+        return createNewInstance(internalColl.flatten());
     }
 
     @Override
     public <T> ImmutableCollection<T> castAllElements(final Class<T> clazz) {
-        // TODO Auto-generated method stub
-        return null;
+        return createNewInstance(internalColl.castAllElements(clazz));
     }
 
     @Override
     public <T> T[] toArray(final Class<T> clazz) {
-        // TODO Auto-generated method stub
-        return null;
+        return internalColl.toArray(clazz);
     }
 }
