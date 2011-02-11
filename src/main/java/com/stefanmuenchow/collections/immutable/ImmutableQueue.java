@@ -11,4 +11,12 @@ public interface ImmutableQueue<E> extends ImmutableCollection<E> {
 
     @Override
     <T> ImmutableQueue<T> castAllElements(Class<T> clazz);
+    
+    ImmutableQueue<E> offer(E e);
+
+    ImmutableQueue<E> remove();
+
+	E element();
+
+	E peek();
 }

@@ -71,7 +71,7 @@ public abstract class ImmutableAbstractCollection<E> implements ImmutableCollect
     public boolean containsAll(final Collection<?> c) {
         return internalColl.containsAll(c);
     }
-
+    
     @Override
     public ImmutableCollection<E> addAll(final Collection<? extends E> c) {
         List<E> temp = new ArrayList<E>(internalColl);

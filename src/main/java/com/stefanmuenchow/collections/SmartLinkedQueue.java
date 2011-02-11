@@ -22,6 +22,7 @@ public class SmartLinkedQueue<E> extends SmartAbstractCollection<E> implements S
     }
 
     /** Overwritten methods */
+    
     @Override
     public <R> SmartQueue<R> map(final UnaryFunction<R, E> function) {
         SmartCollection<R> result = super.map(function);
