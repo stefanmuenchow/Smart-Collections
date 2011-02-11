@@ -258,13 +258,13 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
 
     @Override
     public int sizeWithoutNulls() {
-        List<E> temp = new ArrayList<E>();
+    	int i = 0;
         for (E elem : getInternalList()) {
             if (elem != null) {
-                temp.add(elem);
+               i++;
             }
         }
 
-        return temp.size();
+        return i;
     }
 }
