@@ -124,7 +124,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
     /**
      * Removes all duplicate values from the List. Changes the original list.
      */
-    void removeDuplicates();
+    SmartList<E> removeDuplicates();
 
     /**
      * Inserts the specified elem between each two elements of the list. Changes

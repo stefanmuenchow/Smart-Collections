@@ -218,10 +218,11 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     }
 
     @Override
-    public void removeDuplicates() {
+    public SmartList<E> removeDuplicates() {
         SmartSet<E> resultSet = new SmartHashSet<E>(internalColl);
         clear();
         addAll(resultSet);
+        return this;
     }
 
     @Override
