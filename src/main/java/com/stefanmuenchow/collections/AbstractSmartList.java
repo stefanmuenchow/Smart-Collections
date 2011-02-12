@@ -54,7 +54,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
 	}
 
 	@Override
-	public SmartList<E> removeReturn(int index) {
+	public SmartList<E> removeIndexReturn(int index) {
 		remove(index);
 		return this;
 	}
@@ -272,8 +272,9 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     }
 
     @Override
-    public void reverse() {
+	public SmartList<E> reverse() {
         Collections.reverse(this);
+        return this;
     }
 
     @Override

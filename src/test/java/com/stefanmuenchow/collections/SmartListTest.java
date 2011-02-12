@@ -15,6 +15,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -27,15 +31,60 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
 public class SmartListTest {
     private SmartList<Integer> smartList1 = null;
     private SmartList<Integer> smartList2 = null;
+    private SmartList<Integer> smartList3 = null;
 
     @Before
     public void setUp() throws Exception {
         smartList1 = new SmartArrayList<Integer>(9, 56, 23, 11, 67, 12, 9, 10);
         smartList2 = new SmartArrayList<Integer>(87, 13, 11, 56, 85, 19);
+        smartList3 = new SmartArrayList<Integer>(1, 2, 3, 4, 5);
     }
 
-    /** Test SmartCollection methods */
-
+    @Test
+    public void testAddReturn() {
+    	assertEquals(new SmartArrayList<Integer>(9, 56, 23, 11, 67, 12, 9, 10, 1), smartList1.addReturn(1));
+    	assertEquals(new SmartArrayList<Integer>(87, 13, 11, 1, 56, 85, 19), smartList2.addReturn(3, 1));
+    }
+    
+    @Test
+    public void testAddAllReturn() {
+    	List<Integer> toAdd = new ArrayList<Integer>();
+    	toAdd.add(23);
+    	toAdd.add(24);
+    	
+    	assertEquals(new SmartArrayList<Integer>(9, 56, 23, 11, 67, 12, 9, 10, 23, 24), smartList1.addAllReturn(toAdd));
+    	assertEquals(new SmartArrayList<Integer>(87, 13, 11, 56, 23, 24, 85, 19), smartList2.addAllReturn(4, toAdd));
+    }
+    
+    @Test
+    public void testRemoveReturn() {
+    	assertEquals(new SmartArrayList<Integer>(56, 23, 11, 67, 12, 9, 10), smartList1.removeReturn(9));
+    }
+    
+    @Test
+    public void testRemoveIndexReturn() {
+    	 assertEquals(new SmartArrayList<Integer>(87, 13, 11, 85, 19), smartList2.removeIndexReturn(3));
+    }
+    
+    @Test
+    public void testRemoveAllReturn() {
+    	List<Integer> toRemove = new ArrayList<Integer>();
+    	toRemove.add(23);
+    	toRemove.add(67);
+    	
+    	assertEquals(new SmartArrayList<Integer>(9, 56, 11, 12, 9, 10), smartList1.removeAllReturn(toRemove));
+    }
+    
+    @Test
+    public void testRetainAllReturn() {
+    	List<Integer> toRetain = new ArrayList<Integer>();
+    	toRetain.add(23);
+    	toRetain.add(67);
+    	toRetain.add(100);
+    	
+    	assertEquals(new SmartArrayList<Integer>(23, 67), smartList1.retainAllReturn(toRetain));
+    }
+    
     @Test
     public void testFind() {
         int value1 = smartList1.find(new Predicate<Integer>() {
@@ -60,73 +109,76 @@ public class SmartListTest {
 
     @Test
     public void testFilter() {
-        smartList2.filter(new Predicate<Integer>() {
-            @Override
-            public boolean test(final Integer input) {
-                return input % 2 == 0;
-            }
-        });
-
-        assertEquals(new SmartArrayList<Integer>(56), smartList2);
+		assertEquals(new SmartArrayList<Integer>(56),
+				smartList2.filter(new Predicate<Integer>() {
+					@Override
+					public boolean test(final Integer input) {
+						return input % 2 == 0;
+					}
+				}));
     }
 
     @Test
     public void testRemove() {
-        smartList2.remove(new Predicate<Integer>() {
-            @Override
-            public boolean test(final Integer input) {
-                return input % 2 == 1;
-            }
-        });
-
-        assertEquals(new SmartArrayList<Integer>(56), smartList2);
+		assertEquals(new SmartArrayList<Integer>(56),
+				smartList2.remove(new Predicate<Integer>() {
+					@Override
+					public boolean test(final Integer input) {
+						return input % 2 == 1;
+					}
+				}));
     }
 
     @Test
     public void testReplace() {
-        // Replace specific value
-        smartList1.replace(9, 10);
-        smartList1.replace(90, 91);
+		assertEquals(
+				new SmartArrayList<Integer>(10, 56, 23, 11, 67, 12, 10, 10),
+				smartList1.replace(9, 10).replace(90, 91));
 
-        assertEquals(new SmartArrayList<Integer>(10, 56, 23, 11, 67, 12,
-                10, 10), smartList1);
-
-        // Replace value that fits predicate
-        smartList2.replace(new Predicate<Integer>() {
-            @Override
-            public boolean test(final Integer input) {
-                return input > 80;
-            }
-        }, 10);
-
-        assertEquals(new SmartArrayList<Integer>(10, 13, 11, 56, 10, 19), smartList2);
+		assertEquals(new SmartArrayList<Integer>(10, 13, 11, 56, 10, 19),
+				smartList2.replace(new Predicate<Integer>() {
+					@Override
+					public boolean test(final Integer input) {
+						return input > 80;
+					}
+				}, 10));
+		
+		Map<Integer, Integer> replacements = new HashMap<Integer, Integer>();
+		replacements.put(3, 5);
+		replacements.put(5, 10);
+		assertEquals(new SmartArrayList<Integer>(1, 2, 5, 4, 10), smartList3.replace(replacements));
+    }
+    
+    @Test
+    public void testMap() {
+		assertEquals(new SmartArrayList<Double>(87d, 13d, 11d, 56d, 85d, 19d),
+				smartList2.map(new UnaryFunction<Double, Integer>() {
+					@Override
+					public Double apply(final Integer input) {
+						return Integer.valueOf(input).doubleValue();
+					}
+				}));
     }
 
     @Test
     public void testReduce() {
-        // Without initial value
-        int result = smartList1
-        .reduce(new BinaryFunction<Integer, Integer>() {
-            @Override
-            public Integer apply(final Integer input1,
-                    final Integer input2) {
-                return input1 + input2;
-            }
-        });
+		assertEquals(Integer.valueOf(197),
+				smartList1.reduce(new BinaryFunction<Integer, Integer>() {
+					@Override
+					public Integer apply(final Integer input1,
+							final Integer input2) {
+						return input1 + input2;
+					}
+				}));
 
-        assertEquals(197, result);
-
-        // With initial value
-        String stringList = smartList2.reduce("ArrayList:",
-                new BinaryFunction<String, Integer>() {
-            @Override
-            public String apply(final String input1,
-                    final Integer input2) {
-                return input1 + " " + String.valueOf(input2);
-            }
-        });
-
-        assertEquals("ArrayList: 87 13 11 56 85 19", stringList);
+		assertEquals("ArrayList: 87 13 11 56 85 19", smartList2.reduce(
+				"ArrayList:", new BinaryFunction<String, Integer>() {
+					@Override
+					public String apply(final String input1,
+							final Integer input2) {
+						return input1 + " " + String.valueOf(input2);
+					}
+				}));
     }
 
     @Test
@@ -136,82 +188,46 @@ public class SmartListTest {
 
     @Test
     public void testCount() {
-        int count = smartList1.count(new Predicate<Integer>() {
+        assertEquals(3, smartList1.count(new Predicate<Integer>() {
             @Override
             public boolean test(final Integer input) {
                 return input % 2 == 0;
             }
-        });
-
-        assertEquals(3, count);
+        }));
     }
 
     @Test
     public void testExists() {
-        // Predicate that matches
-        boolean exist = smartList2.exists(new Predicate<Integer>() {
+        assertTrue(smartList2.exists(new Predicate<Integer>() {
             @Override
             public boolean test(final Integer input) {
                 return input.equals(11);
             }
-        });
+        }));
 
-        assertTrue(exist);
-
-        // Predicate that doesn't match
-        exist = smartList2.exists(new Predicate<Integer>() {
+        assertFalse(smartList2.exists(new Predicate<Integer>() {
             @Override
             public boolean test(final Integer input) {
                 return (input / 3) == 5;
             }
-        });
-
-        assertFalse(exist);
+        }));
     }
 
     @Test
     public void testForall() {
-        // Predicate that matches
-        boolean allTrue = smartList2.forall(new Predicate<Integer>() {
+        assertTrue(smartList2.forall(new Predicate<Integer>() {
             @Override
             public boolean test(final Integer input) {
                 return input.compareTo(100) < 0;
             }
-        });
+        }));
 
-        assertTrue(allTrue);
-
-        // Predicate that doesn't match
-        allTrue = smartList2.forall(new Predicate<Integer>() {
+        assertFalse(smartList2.forall(new Predicate<Integer>() {
             @Override
             public boolean test(final Integer input) {
                 return input.compareTo(5) < 0;
             }
-        });
-
-        assertFalse(allTrue);
-    }
-
-    @Test
-    public void testEquals() {
-        assertTrue(smartList2.equals(smartList2));
-        assertTrue(smartList2.equals(new SmartArrayList<Integer>(87, 13,
-                11, 56, 85, 19)));
-        assertFalse(smartList2.equals(smartList1));
-    }
-
-    @Test
-    public void testMap() {
-        SmartList<Double> doubleList = smartList2
-        .map(new UnaryFunction<Double, Integer>() {
-            @Override
-            public Double apply(final Integer input) {
-                return Integer.valueOf(input).doubleValue();
-            }
-        });
-
-        assertEquals(new SmartArrayList<Double>(87d, 13d, 11d, 56d, 85d,
-                19d), doubleList);
+        }));
     }
 
     @Test
@@ -227,8 +243,6 @@ public class SmartListTest {
         Integer[] anArray = smartList2.toArray(Integer.class);
         assertArrayEquals(new Integer[] { 87, 13, 11, 56, 85, 19 }, anArray);
     }
-
-    /** Test SmartList methods */
 
     @Test
     public void testHead() {
@@ -354,11 +368,8 @@ public class SmartListTest {
     @Test
     public void testReverse() {
         SmartList<Integer> testList = new SmartArrayList<Integer>(2,3,1);
-        testList.reverse();
-        assertEquals(new SmartArrayList<Integer>(1,3,2), testList);
-
-        testList.reverse();
-        assertEquals(new SmartArrayList<Integer>(2,3,1), testList);
+        assertEquals(new SmartArrayList<Integer>(1,3,2), testList.reverse());
+        assertEquals(new SmartArrayList<Integer>(2,3,1), testList.reverse());
     }
 
     @Test

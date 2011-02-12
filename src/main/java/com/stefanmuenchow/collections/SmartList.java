@@ -28,7 +28,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
 
 	SmartList<E> addReturn(int index, E element);
 	SmartList<E> addAllReturn(int index, Collection<E> c);
-	SmartList<E> removeReturn(int index);
+	SmartList<E> removeIndexReturn(int index);
 	SmartList<E> setReturn(int index, E elem);
 	
     /**
@@ -174,7 +174,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *
      * @return Reversed list
      */
-    void reverse();
+    SmartList<E> reverse();
 
     /**
      * Returns the list size without all null elements. If there are no null
