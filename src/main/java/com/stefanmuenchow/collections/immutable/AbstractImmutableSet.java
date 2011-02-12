@@ -8,9 +8,9 @@ import com.stefanmuenchow.collections.SmartCollection;
 import com.stefanmuenchow.collections.SmartSet;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class ImmutableAbstractSet<E> extends ImmutableAbstractCollection<E> implements ImmutableSet<E> {
+public abstract class AbstractImmutableSet<E> extends AbstractImmutableCollection<E> implements ImmutableSet<E> {
 
-    public ImmutableAbstractSet(final SmartCollection<E> collection) {
+    public AbstractImmutableSet(final SmartCollection<E> collection) {
         super(collection);
     }
 
@@ -75,13 +75,6 @@ public abstract class ImmutableAbstractSet<E> extends ImmutableAbstractCollectio
     <R> ImmutableSet<R> map(final UnaryFunction<R, E> function) {
         ImmutableCollection<R> result = super.map(function);
         return (ImmutableSet<R>) result;
-    }
-
-    @Override
-    public
-    ImmutableSet<Object> flatten() {
-        ImmutableCollection<Object> result = super.flatten();
-        return (ImmutableSet<Object>) result;
     }
 
     @Override

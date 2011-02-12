@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class SmartAbstractSet<E> extends SmartAbstractCollection<E> implements SmartSet<E> {
+public abstract class AbstractSmartSet<E> extends AbstractSmartCollection<E> implements SmartSet<E> {
 
-    protected SmartAbstractSet(final Collection<E> innerSet) {
+    protected AbstractSmartSet(final Collection<E> innerSet) {
         super(innerSet);
     }
 
@@ -66,14 +66,8 @@ public abstract class SmartAbstractSet<E> extends SmartAbstractCollection<E> imp
     }
 
     @Override
-    public SmartSet<Object> flatten() {
-        SmartCollection<Object> result = super.flatten();
-        return (SmartSet<Object>) result;
-    }
-
-    @Override
-    public <T> SmartSet<T> castAllElements(final Class<T> clazz) {
-        SmartCollection<T> result = super.castAllElements(clazz);
+    public <T> SmartSet<T> castEach(final Class<T> clazz) {
+        SmartCollection<T> result = super.castEach(clazz);
         return (SmartSet<T>) result;
     }
 }

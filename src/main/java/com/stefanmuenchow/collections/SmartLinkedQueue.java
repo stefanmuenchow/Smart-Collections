@@ -7,7 +7,7 @@ import java.util.Queue;
 
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public class SmartLinkedQueue<E> extends SmartAbstractCollection<E> implements SmartQueue<E> {
+public class SmartLinkedQueue<E> extends AbstractSmartCollection<E> implements SmartQueue<E> {
 
     public SmartLinkedQueue() {
         this(new LinkedList<E>());
@@ -30,14 +30,8 @@ public class SmartLinkedQueue<E> extends SmartAbstractCollection<E> implements S
     }
 
     @Override
-    public SmartQueue<Object> flatten() {
-        SmartCollection<Object> result = super.flatten();
-        return (SmartQueue<Object>) result;
-    }
-
-    @Override
-    public <T> SmartQueue<T> castAllElements(final Class<T> clazz) {
-        SmartCollection<T> result = super.castAllElements(clazz);
+    public <T> SmartQueue<T> castEach(final Class<T> clazz) {
+        SmartCollection<T> result = super.castEach(clazz);
         return (SmartQueue<T>) result;
     }
 
@@ -83,4 +77,10 @@ public class SmartLinkedQueue<E> extends SmartAbstractCollection<E> implements S
     public E peek() {
         return getInternalQueue().peek();
     }
+
+	@Override
+	public SmartQueue<E> offerReturn(E o) {
+		offer(o);
+		return this;
+	}
 }

@@ -8,7 +8,7 @@ import com.stefanmuenchow.collections.SmartCollection;
 import com.stefanmuenchow.collections.SmartSortedSet;
 import com.stefanmuenchow.collections.SmartTreeSet;
 
-public class ImmutableTreeSet<E> extends ImmutableAbstractSet<E> implements ImmutableSortedSet<E> {
+public class ImmutableTreeSet<E> extends AbstractImmutableSet<E> implements ImmutableSortedSet<E> {
 
     protected ImmutableTreeSet(final SmartCollection<E> collection) {
         super(collection);

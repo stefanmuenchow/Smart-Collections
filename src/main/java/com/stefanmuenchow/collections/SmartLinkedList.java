@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class SmartLinkedList<E> extends SmartAbstractList<E> implements SmartList<E> {
+public class SmartLinkedList<E> extends AbstractSmartList<E> implements SmartList<E> {
 
     public SmartLinkedList() {
         this(new LinkedList<E>());

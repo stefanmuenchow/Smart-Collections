@@ -26,6 +26,12 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  * @author Stefan Muenchow
  */
 public interface SmartCollection<E> extends Collection<E> {
+	
+	SmartCollection<E> addReturn(E elem);
+	SmartCollection<E> addAllReturn(Collection<E> coll);
+	SmartCollection<E> removeReturn(E elem);
+	SmartCollection<E> removeAllReturn(Collection<E> coll);
+	SmartCollection<E> retainAllReturn(Collection<E> coll);
 
     /**
      * Seeks a single element based on a predicate. The first element for which
@@ -44,7 +50,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param predicate
      *            Predicate
      */
-    void filter(Predicate<E> predicate);
+    SmartCollection<E> filter(Predicate<E> predicate);
 
     /**
      * Removes all elements in the collection for which the predicate is true.
@@ -52,7 +58,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param predicate
      *            Predicate
      */
-    void remove(Predicate<E> predicate);
+    SmartCollection<E> remove(Predicate<E> predicate);
 
     /**
      * Replaces each occurence of an element in the collection with a
@@ -64,7 +70,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param replacement
      *            Replacement
      */
-    void replace(E seek, E replacement);
+    SmartCollection<E> replace(E seek, E replacement);
 
     /**
      * Replaces each element in the collection, for which the predicate returns
@@ -76,7 +82,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param replacement
      *            Replacement
      */
-    void replace(Predicate<E> predicate, E replacement);
+    SmartCollection<E> replace(Predicate<E> predicate, E replacement);
 
     /**
      * Calls a given function for each element in the collection with the
@@ -162,17 +168,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param replacements Map including all replacements
      * @return Collection with replaced elements
      */
-    void replace(Map<E, E> replacements);
-
-    /**
-     * If the collection contains other collections, then the values of all
-     * collections are collected recursively and put into the resulting list. If
-     * it is already a "flat" collection, nothing is done. A new collection is
-     * created.
-     *
-     * @return Flat collection not containing any other collection
-     */
-    SmartCollection<Object> flatten();
+    SmartCollection<E> replace(Map<E, E> replacements);
 
     /**
      * Casts all elements of the collecion to a specified type.
@@ -182,7 +178,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @throws ClassCastException
      * @return Collection with changed element type
      */
-    <T> SmartCollection<T> castAllElements(Class<T> clazz);
+    <T> SmartCollection<T> castEach(Class<T> clazz);
 
     /**
      * Converts this collection to an array of the same type.

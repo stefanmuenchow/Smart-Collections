@@ -21,9 +21,9 @@ import java.util.NoSuchElementException;
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> implements SmartList<E> {
+public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> implements SmartList<E> {
 
-    protected SmartAbstractList(final Collection<E> innerList) {
+    protected AbstractSmartList(final Collection<E> innerList) {
         super(innerList);
     }
 
@@ -40,6 +40,30 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
     protected abstract <T> SmartList<T> createNewInstance(Collection<T> aColl);
 
     /** List methods */
+    
+	@Override
+	public SmartList<E> addReturn(int index, E element) {
+		add(index, element);
+		return this;
+	}
+
+	@Override
+	public SmartList<E> addAllReturn(int index, Collection<E> c) {
+		addAll(index, c);
+		return this;
+	}
+
+	@Override
+	public SmartList<E> removeReturn(int index) {
+		remove(index);
+		return this;
+	}
+
+	@Override
+	public SmartList<E> setReturn(int index, E elem) {
+		set(index, elem);
+		return this;
+	}
 
     @Override
     public boolean addAll(final int index, final Collection<? extends E> c) {
@@ -100,14 +124,8 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
     }
 
     @Override
-    public SmartList<Object> flatten() {
-        SmartCollection<Object> result = super.flatten();
-        return (SmartList<Object>) result;
-    }
-
-    @Override
-    public <T> SmartList<T> castAllElements(final Class<T> clazz) {
-        SmartCollection<T> result = super.castAllElements(clazz);
+    public <T> SmartList<T> castEach(final Class<T> clazz) {
+        SmartCollection<T> result = super.castEach(clazz);
         return (SmartList<T>) result;
     }
 
@@ -207,10 +225,12 @@ public abstract class SmartAbstractList<E> extends SmartAbstractCollection<E> im
     }
 
     @Override
-    public void intersperse(final E elem) {
+    public SmartList<E> intersperse(final E elem) {
         for (int i = 1; i < size(); i += 2) {
             add(i, elem);
         }
+        
+        return this;
     }
 
     @Override

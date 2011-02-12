@@ -182,8 +182,5 @@ public interface ImmutableList<E> extends ImmutableCollection<E> {
     <R> ImmutableList<R> map(UnaryFunction<R, E> function);
 
     @Override
-    ImmutableList<Object> flatten();
-
-    @Override
     <T> ImmutableList<T> castAllElements(Class<T> clazz);
 }

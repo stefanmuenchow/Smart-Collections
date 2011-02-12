@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.stefanmuenchow.collections.SmartArrayList;
 import com.stefanmuenchow.collections.SmartList;
 
-public class ImmutableArrayList<E> extends ImmutableAbstractList<E> implements ImmutableList<E> {
+public class ImmutableArrayList<E> extends AbstractImmutableList<E> implements ImmutableList<E> {
 
     protected ImmutableArrayList(final SmartList<E> collection) {
         super(collection);

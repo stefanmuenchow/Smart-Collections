@@ -215,27 +215,9 @@ public class SmartListTest {
     }
 
     @Test
-    public void testFlatten() {
-        @SuppressWarnings("unchecked")
-        SmartList<SmartList<SmartList<Integer>>> deepList = new SmartArrayList<SmartList<SmartList<Integer>>>(
-                new SmartArrayList<SmartList<Integer>>(
-                        new SmartArrayList<Integer>(5, 3),
-                        new SmartArrayList<Integer>(1, 2, 3)),
-                        new SmartArrayList<SmartList<Integer>>(
-                                new SmartArrayList<Integer>(6),
-                                new SmartArrayList<Integer>(7, 6, 5, 4)),
-                                new SmartArrayList<SmartList<Integer>>(
-                                        new SmartArrayList<Integer>(1, 3),
-                                        new SmartArrayList<Integer>(8)));
-
-        assertEquals(new SmartArrayList<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
-                5, 4, 1, 3, 8), deepList.flatten());
-    }
-
-    @Test
-    public void testCastAllElements() {
+    public void testCastEach() {
         SmartCollection<Object> aColl = new SmartArrayList<Object>(3, 6, 8);
-        SmartCollection<Integer> castedColl = aColl.castAllElements(Integer.class);
+        SmartCollection<Integer> castedColl = aColl.castEach(Integer.class);
 
         assertEquals(new SmartArrayList<Integer>(3, 6, 8), castedColl);
     }

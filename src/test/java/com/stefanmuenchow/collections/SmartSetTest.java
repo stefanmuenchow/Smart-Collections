@@ -228,27 +228,9 @@ public class SmartSetTest {
     }
 
     @Test
-    public void testFlatten() {
-        @SuppressWarnings("unchecked")
-        SmartSet<SmartSet<SmartSet<Integer>>> deepList = new SmartHashSet<SmartSet<SmartSet<Integer>>>(
-                new SmartHashSet<SmartSet<Integer>>(
-                        new SmartHashSet<Integer>(5, 3),
-                        new SmartHashSet<Integer>(1, 2, 3)),
-                        new SmartHashSet<SmartSet<Integer>>(
-                                new SmartHashSet<Integer>(6),
-                                new SmartHashSet<Integer>(7, 6, 5, 4)),
-                                new SmartHashSet<SmartSet<Integer>>(
-                                        new SmartHashSet<Integer>(1, 3),
-                                        new SmartHashSet<Integer>(8)));
-
-        assertEquals(new SmartHashSet<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
-                5, 4, 1, 3, 8), deepList.flatten());
-    }
-
-    @Test
     public void testCastAllElements() {
         SmartCollection<Object> aColl = new SmartHashSet<Object>(3, 6, 8);
-        SmartCollection<Integer> castedColl = aColl.castAllElements(Integer.class);
+        SmartCollection<Integer> castedColl = aColl.castEach(Integer.class);
 
         assertEquals(new SmartHashSet<Integer>(3, 6, 8), castedColl);
     }

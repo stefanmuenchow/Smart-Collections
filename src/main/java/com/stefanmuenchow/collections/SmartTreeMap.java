@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class SmartTreeMap<K, V> extends SmartAbstractMap<K, V> implements SmartSortedMap<K, V> {
+public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartSortedMap<K, V> {
 
     public SmartTreeMap() {
         super(new TreeMap<K, V>());

@@ -219,27 +219,9 @@ public class SmartQueueTest {
     }
 
     @Test
-    public void testFlatten() {
-        @SuppressWarnings("unchecked")
-        SmartQueue<SmartQueue<SmartQueue<Integer>>> deepList = new SmartLinkedQueue<SmartQueue<SmartQueue<Integer>>>(
-                new SmartLinkedQueue<SmartQueue<Integer>>(
-                        new SmartLinkedQueue<Integer>(5, 3),
-                        new SmartLinkedQueue<Integer>(1, 2, 3)),
-                        new SmartLinkedQueue<SmartQueue<Integer>>(
-                                new SmartLinkedQueue<Integer>(6),
-                                new SmartLinkedQueue<Integer>(7, 6, 5, 4)),
-                                new SmartLinkedQueue<SmartQueue<Integer>>(
-                                        new SmartLinkedQueue<Integer>(1, 3),
-                                        new SmartLinkedQueue<Integer>(8)));
-
-        assertEquals(new SmartLinkedQueue<Integer>(5, 3, 1, 2, 3, 6, 7, 6,
-                5, 4, 1, 3, 8), deepList.flatten());
-    }
-
-    @Test
     public void testCastAllElements() {
         SmartCollection<Object> aColl = new SmartLinkedQueue<Object>(3, 6, 8);
-        SmartCollection<Integer> castedColl = aColl.castAllElements(Integer.class);
+        SmartCollection<Integer> castedColl = aColl.castEach(Integer.class);
 
         assertEquals(new SmartLinkedQueue<Integer>(3, 6, 8), castedColl);
     }

@@ -23,12 +23,11 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  */
 public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 
+	SmartQueue<E> offerReturn(E o);
+	
     @Override
     <R> SmartQueue<R> map(UnaryFunction<R, E> function);
 
     @Override
-    SmartQueue<Object> flatten();
-
-    @Override
-    <T> SmartQueue<T> castAllElements(Class<T> clazz);
+    <T> SmartQueue<T> castEach(Class<T> clazz);
 }

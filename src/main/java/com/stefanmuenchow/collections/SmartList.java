@@ -10,6 +10,7 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -25,6 +26,11 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  */
 public interface SmartList<E> extends List<E>, SmartCollection<E> {
 
+	SmartList<E> addReturn(int index, E element);
+	SmartList<E> addAllReturn(int index, Collection<E> c);
+	SmartList<E> removeReturn(int index);
+	SmartList<E> setReturn(int index, E elem);
+	
     /**
      * Returns the first element in the List. Similar to
      *
@@ -128,7 +134,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *            Element to insert
      * @return List with elem at each 2nd index
      */
-    void intersperse(E elem);
+    SmartList<E> intersperse(E elem);
 
     /**
      * Creates a SmartMap from two lists. Elements in the first list are the
@@ -182,8 +188,5 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
     <R> SmartList<R> map(UnaryFunction<R, E> function);
 
     @Override
-    SmartList<Object> flatten();
-
-    @Override
-    <T> SmartList<T> castAllElements(Class<T> clazz);
+    <T> SmartList<T> castEach(Class<T> clazz);
 }

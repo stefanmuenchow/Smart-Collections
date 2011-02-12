@@ -3,7 +3,7 @@ package com.stefanmuenchow.collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SmartHashMap<K, V> extends SmartAbstractMap<K, V> implements
+public class SmartHashMap<K, V> extends AbstractSmartMap<K, V> implements
         SmartMap<K, V> {
 
     public SmartHashMap() {

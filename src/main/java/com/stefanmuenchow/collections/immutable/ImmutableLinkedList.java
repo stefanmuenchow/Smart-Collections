@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.stefanmuenchow.collections.SmartLinkedList;
 import com.stefanmuenchow.collections.SmartList;
 
-public class ImmutableLinkedList<E> extends ImmutableAbstractList<E> implements ImmutableList<E> {
+public class ImmutableLinkedList<E> extends AbstractImmutableList<E> implements ImmutableList<E> {
 
     protected ImmutableLinkedList(final SmartList<E> collection) {
         super(collection);

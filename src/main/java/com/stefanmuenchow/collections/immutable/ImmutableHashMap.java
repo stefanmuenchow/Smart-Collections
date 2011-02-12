@@ -5,7 +5,7 @@ import java.util.Map;
 import com.stefanmuenchow.collections.SmartHashMap;
 import com.stefanmuenchow.collections.SmartMap;
 
-public class ImmutableHashMap<K, V> extends ImmutableAbstractMap<K, V> implements ImmutableMap<K, V> {
+public class ImmutableHashMap<K, V> extends AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
 
     protected ImmutableHashMap(final SmartMap<K, V> map) {
         super(map);

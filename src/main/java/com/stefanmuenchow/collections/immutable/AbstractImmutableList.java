@@ -12,9 +12,9 @@ import com.stefanmuenchow.collections.SmartList;
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class ImmutableAbstractList<E> extends ImmutableAbstractCollection<E> implements ImmutableList<E> {
+public abstract class AbstractImmutableList<E> extends AbstractImmutableCollection<E> implements ImmutableList<E> {
 
-    public ImmutableAbstractList(final SmartCollection<E> collection) {
+    public AbstractImmutableList(final SmartCollection<E> collection) {
         super(collection);
     }
 
@@ -186,13 +186,6 @@ public abstract class ImmutableAbstractList<E> extends ImmutableAbstractCollecti
     <R> ImmutableList<R> map(final UnaryFunction<R, E> function) {
         ImmutableCollection<R> result = super.map(function);
         return (ImmutableList<R>) result;
-    }
-
-    @Override
-    public
-    ImmutableList<Object> flatten() {
-        ImmutableCollection<Object> result = super.flatten();
-        return (ImmutableList<Object>) result;
     }
 
     @Override

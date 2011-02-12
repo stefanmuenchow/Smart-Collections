@@ -21,10 +21,10 @@ import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
+public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     protected final Map<K, V> internalMap;
 
-    public SmartAbstractMap(final Map<K, V> map) {
+    public AbstractSmartMap(final Map<K, V> map) {
         internalMap = map;
     }
 
@@ -34,6 +34,24 @@ public abstract class SmartAbstractMap<K, V> implements SmartMap<K, V> {
     protected abstract <S, R> SmartMap<S, R> createNewInstance(final Map<S, R> aMap);
 
     /** Map Methods */
+    
+	@Override
+	public SmartMap<K, V> putReturn(K key, V value) {
+		put(key, value);
+		return this;
+	}
+
+	@Override
+	public SmartMap<K, V> putAllReturn(Map<K, V> t) {
+		putAll(t);
+		return this;
+	}
+
+	@Override
+	public SmartMap<K, V> removeReturn(K key) {
+		remove(key);
+		return this;
+	}
 
     @Override
     public int size() {

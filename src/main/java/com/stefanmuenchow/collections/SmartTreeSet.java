@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class SmartTreeSet<E> extends SmartAbstractSet<E> implements SmartSortedSet<E> {
+public class SmartTreeSet<E> extends AbstractSmartSet<E> implements SmartSortedSet<E> {
 
     public SmartTreeSet() {
         this(new TreeSet<E>());

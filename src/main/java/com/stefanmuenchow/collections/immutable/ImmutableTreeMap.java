@@ -6,7 +6,7 @@ import java.util.Map;
 import com.stefanmuenchow.collections.SmartMap;
 import com.stefanmuenchow.collections.SmartTreeMap;
 
-public class ImmutableTreeMap<K,V> extends ImmutableAbstractMap<K, V> implements ImmutableSortedMap<K, V> {
+public class ImmutableTreeMap<K,V> extends AbstractImmutableMap<K, V> implements ImmutableSortedMap<K, V> {
 
     protected ImmutableTreeMap(final SmartMap<K, V> map) {
         super(map);

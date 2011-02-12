@@ -26,6 +26,10 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  */
 public interface SmartMap<K, V> extends Map<K, V> {
 
+	SmartMap<K, V> putReturn(K key, V value);
+	SmartMap<K, V> putAllReturn(Map<K, V> t);
+	SmartMap<K, V> removeReturn(K key);
+	
     /**
      * Returns the first element of the Map. If it is not a sorted map, the ordering
      * is arbitrary.

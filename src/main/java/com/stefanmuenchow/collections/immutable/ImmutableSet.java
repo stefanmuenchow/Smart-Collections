@@ -73,8 +73,5 @@ public interface ImmutableSet<E> extends ImmutableCollection<E> {
     <R> ImmutableSet<R> map(UnaryFunction<R, E> function);
 
     @Override
-    ImmutableSet<Object> flatten();
-
-    @Override
     <T> ImmutableSet<T> castAllElements(Class<T> clazz);
 }

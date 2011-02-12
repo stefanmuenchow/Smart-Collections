@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class SmartHashSet<E> extends SmartAbstractSet<E> implements SmartSet<E> {
+public class SmartHashSet<E> extends AbstractSmartSet<E> implements SmartSet<E> {
 
     public SmartHashSet() {
         this(new HashSet<E>());

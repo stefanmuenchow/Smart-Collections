@@ -174,16 +174,6 @@ public interface ImmutableCollection<E> {
     ImmutableCollection<E> replace(Map<E, E> replacements);
 
     /**
-     * If the collection contains other collections, then the values of all
-     * collections are collected recursively and put into the resulting list. If
-     * it is already a "flat" collection, nothing is done. A new collection is
-     * created.
-     *
-     * @return Flat collection not containing any other collection
-     */
-    ImmutableCollection<Object> flatten();
-
-    /**
      * Casts all elements of the collecion to a specified type.
      * @param <T> Element type of the resulting collection
      * @param clazz Class to which all elements should be casted

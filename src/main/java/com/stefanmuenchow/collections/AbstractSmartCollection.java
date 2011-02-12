@@ -22,10 +22,10 @@ import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
+public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     protected Collection<E> internalColl;
 
-    protected SmartAbstractCollection(final Collection<E> collection) {
+    protected AbstractSmartCollection(final Collection<E> collection) {
         internalColl = collection;
     }
 
@@ -37,6 +37,36 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
             Collection<T> aColl);
 
     /** Collection methods */
+    
+	@Override
+	public SmartCollection<E> addReturn(E elem) {
+		add(elem);
+		return this;
+	}
+
+	@Override
+	public SmartCollection<E> addAllReturn(Collection<E> coll) {
+		addAll(coll);
+		return this;
+	}
+
+	@Override
+	public SmartCollection<E> removeReturn(E elem) {
+		remove(elem);
+		return this;
+	}
+
+	@Override
+	public SmartCollection<E> removeAllReturn(Collection<E> coll) {
+		removeAll(coll);
+		return this;
+	}
+
+	@Override
+	public SmartCollection<E> retainAllReturn(Collection<E> coll) {
+		retainAll(coll);
+		return this;
+	}
 
     @Override
     public int size() {
@@ -117,7 +147,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public void filter(final Predicate<E> predicate) {
+    public SmartCollection<E> filter(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -127,10 +157,11 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         }
 
         internalColl.removeAll(toRemove);
+        return this;
     }
 
     @Override
-    public void remove(final Predicate<E> predicate) {
+    public SmartCollection<E> remove(final Predicate<E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -140,10 +171,11 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
         }
 
         internalColl.removeAll(toRemove);
+        return this;
     }
 
     @Override
-    public void replace(final E seek, final E replacement) {
+    public SmartCollection<E> replace(final E seek, final E replacement) {
         final E seekVar = seek;
 
         this.replace(new Predicate<E>() {
@@ -152,10 +184,12 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
                 return input.equals(seekVar);
             }
         }, replacement);
+        
+        return this;
     }
 
     @Override
-    public void replace(final Predicate<E> predicate, final E replacement) {
+    public SmartCollection<E> replace(final Predicate<E> predicate, final E replacement) {
         List<E> tempList = new ArrayList<E>(internalColl);
         internalColl.clear();
 
@@ -166,6 +200,8 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
                 internalColl.add(elem);
             }
         }
+        
+        return this;
     }
 
     @Override
@@ -231,7 +267,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public void replace(final Map<E, E> replacements) {
+    public SmartCollection<E> replace(final Map<E, E> replacements) {
         List<E> tempList = new ArrayList<E>(internalColl);
         internalColl.clear();
 
@@ -242,6 +278,8 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
                 internalColl.add(elem);
             }
         }
+        
+        return this;
     }
 
     @Override
@@ -266,31 +304,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<Object> flatten() {
-        SmartCollection<Object> resultList = createNewInstance(new ArrayList<Object>());
-
-        Iterator<E> iterator = this.iterator();
-        E first = null;
-
-        if (iterator.hasNext()) {
-            first = iterator.next();
-        }
-
-        if (first != null && first instanceof Collection) {
-            for (E elem : internalColl) {
-                @SuppressWarnings("unchecked")
-                Collection<Object> innerList = (Collection<Object>) elem;
-                resultList.addAll(createNewInstance(innerList).flatten());
-            }
-        } else {
-            resultList.addAll(internalColl);
-        }
-
-        return resultList;
-    }
-
-    @Override
-    public <T> SmartCollection<T> castAllElements(final Class<T> clazz) {
+    public <T> SmartCollection<T> castEach(final Class<T> clazz) {
         SmartCollection<T> result = createNewInstance(new ArrayList<T>());
 
         for (E elem : internalColl) {
@@ -310,7 +324,7 @@ public abstract class SmartAbstractCollection<E> implements SmartCollection<E> {
     @SuppressWarnings("unchecked")
     public boolean equals(final Object obj) {
         if (obj.getClass().equals(this.getClass())) {
-            return internalColl.equals(((SmartAbstractCollection<E>) obj).internalColl);
+            return internalColl.equals(((AbstractSmartCollection<E>) obj).internalColl);
         }
 
         return false;

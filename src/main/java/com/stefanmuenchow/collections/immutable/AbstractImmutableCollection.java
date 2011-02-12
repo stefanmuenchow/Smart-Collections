@@ -14,10 +14,10 @@ import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class ImmutableAbstractCollection<E> implements ImmutableCollection<E> {
+public abstract class AbstractImmutableCollection<E> implements ImmutableCollection<E> {
     protected final SmartCollection<E> internalColl;
 
-    public ImmutableAbstractCollection(final SmartCollection<E> collection) {
+    public AbstractImmutableCollection(final SmartCollection<E> collection) {
         internalColl = collection;
     }
 
@@ -190,13 +190,8 @@ public abstract class ImmutableAbstractCollection<E> implements ImmutableCollect
     }
 
     @Override
-    public ImmutableCollection<Object> flatten() {
-        return createNewInstance(internalColl.flatten());
-    }
-
-    @Override
     public <T> ImmutableCollection<T> castAllElements(final Class<T> clazz) {
-        return createNewInstance(internalColl.castAllElements(clazz));
+        return createNewInstance(internalColl.castEach(clazz));
     }
 
     @Override

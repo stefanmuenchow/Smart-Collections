@@ -7,9 +7,6 @@ public interface ImmutableQueue<E> extends ImmutableCollection<E> {
     <R> ImmutableQueue<R> map(UnaryFunction<R, E> function);
 
     @Override
-    ImmutableQueue<Object> flatten();
-
-    @Override
     <T> ImmutableQueue<T> castAllElements(Class<T> clazz);
     
     ImmutableQueue<E> offer(E e);

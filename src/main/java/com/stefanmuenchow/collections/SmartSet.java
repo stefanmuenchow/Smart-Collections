@@ -90,8 +90,5 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
     <R> SmartSet<R> map(UnaryFunction<R, E> function);
 
     @Override
-    SmartSet<Object> flatten();
-
-    @Override
-    <T> SmartSet<T> castAllElements(Class<T> clazz);
+    <T> SmartSet<T> castEach(Class<T> clazz);
 }

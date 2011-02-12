@@ -14,10 +14,10 @@ import com.stefanmuenchow.collections.function.BinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public abstract class ImmutableAbstractMap<K, V> implements ImmutableMap<K, V> {
+public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
     protected final SmartMap<K, V> internalMap;
 
-    public ImmutableAbstractMap(final SmartMap<K,V> map) {
+    public AbstractImmutableMap(final SmartMap<K,V> map) {
         internalMap = map;
     }
 

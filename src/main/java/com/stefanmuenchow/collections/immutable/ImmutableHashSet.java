@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.stefanmuenchow.collections.SmartHashSet;
 import com.stefanmuenchow.collections.SmartSet;
 
-public class ImmutableHashSet<E> extends ImmutableAbstractSet<E> implements ImmutableSet<E> {
+public class ImmutableHashSet<E> extends AbstractImmutableSet<E> implements ImmutableSet<E> {
 
     protected ImmutableHashSet(final SmartSet<E> collection) {
         super(collection);

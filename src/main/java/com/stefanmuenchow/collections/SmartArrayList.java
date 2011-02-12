@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class SmartArrayList<E> extends SmartAbstractList<E> implements SmartList<E> {
+public class SmartArrayList<E> extends AbstractSmartList<E> implements SmartList<E> {
 
     public SmartArrayList() {
         this(new ArrayList<E>());

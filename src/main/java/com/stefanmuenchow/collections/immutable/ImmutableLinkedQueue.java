@@ -7,7 +7,7 @@ import com.stefanmuenchow.collections.SmartLinkedQueue;
 import com.stefanmuenchow.collections.SmartQueue;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
-public class ImmutableLinkedQueue<E> extends ImmutableAbstractCollection<E> implements ImmutableQueue<E> {
+public class ImmutableLinkedQueue<E> extends AbstractImmutableCollection<E> implements ImmutableQueue<E> {
 
 	public ImmutableLinkedQueue(SmartQueue<E> collection) {
 		super(collection);
@@ -71,12 +71,7 @@ public class ImmutableLinkedQueue<E> extends ImmutableAbstractCollection<E> impl
 	public <R> ImmutableQueue<R> map(UnaryFunction<R, E> function) {
 		return (ImmutableQueue<R>) super.map(function);
 	}
-	
-	@Override
-	public ImmutableQueue<Object> flatten() {
-		return (ImmutableQueue<Object>) super.flatten();
-	}
-	
+
 	@Override
 	public <T> ImmutableQueue<T> castAllElements(Class<T> clazz) {
 		return (ImmutableQueue<T>) super.castAllElements(clazz);
