@@ -18,8 +18,9 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.MapBinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.collections.function.MapUnaryFunction;
 
 public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     protected final Map<K, V> internalMap;
@@ -158,7 +159,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public V find(final MapPredicate<K, V> predicate) {
+    public V find(final MapPredicate<? super K, ? super V> predicate) {
         for (Map.Entry<K, V> entry : entrySet()) {
             if (predicate.test(entry.getKey(), entry.getValue())) {
                 return entry.getValue();
@@ -169,7 +170,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public void filter(final MapPredicate<K, V> predicate) {
+    public void filter(final MapPredicate<? super K, ? super V> predicate) {
         SmartMap<K, V> tempMap = createNewInstance(internalMap);
         clear();
 
@@ -181,7 +182,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public void remove(final MapPredicate<K, V> predicate) {
+    public void remove(final MapPredicate<? super K, ? super V> predicate) {
         SmartMap<K, V> tempMap = createNewInstance(internalMap);
         clear();
 
@@ -203,11 +204,11 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public <S, R> SmartMap<S, R> map(final UnaryFunction<KeyValuePair<S, R>, java.util.Map.Entry<K, V>> function) {
+    public <S, R> SmartMap<S, R> map(final MapUnaryFunction<KeyValuePair<S, R>, ? super K, ? super V> function) {
         SmartMap<S, R> resultMap = createNewInstance(new HashMap<S, R>());
 
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            KeyValuePair<S, R> mappedEntry = function.apply(entry);
+            KeyValuePair<S, R> mappedEntry = function.apply(entry.getKey(), entry.getValue());
             resultMap.put(mappedEntry.getKey(), mappedEntry.getValue());
         }
 
@@ -215,11 +216,11 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public <R> R reduce(final R initial, final BinaryFunction<R, java.util.Map.Entry<K, V>> funct) {
+    public <R> R reduce(final R initial, final MapBinaryFunction<R, ? super K, ? super V> funct) {
         R result = initial;
 
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            result = funct.apply(result, entry);
+            result = funct.apply(result, entry.getKey(), entry.getValue());
         }
 
         return result;
@@ -239,7 +240,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public int count(final MapPredicate<K, V> predicate) {
+    public int count(final MapPredicate<? super K, ? super V> predicate) {
         int counter = 0;
 
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
@@ -252,7 +253,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public boolean exists(final MapPredicate<K, V> predicate) {
+    public boolean exists(final MapPredicate<? super K, ? super V> predicate) {
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
             if (predicate.test(entry.getKey(), entry.getValue())) {
                 return true;
@@ -263,7 +264,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public boolean forall(final MapPredicate<K, V> predicate) {
+    public boolean forall(final MapPredicate<? super K, ? super V> predicate) {
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
             if (!predicate.test(entry.getKey(), entry.getValue())) {
                 return false;

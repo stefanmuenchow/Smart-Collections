@@ -14,8 +14,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.MapBinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.collections.function.MapUnaryFunction;
 
 /**
  * Smart Maps are compatible with the standard Map interface, but add some
@@ -79,7 +80,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @throws NoSuchElementException   If no element matches
      * @return                          Value satisfying predicate
      */
-    V find(MapPredicate<K, V> predicate) throws NoSuchElementException;
+    V find(MapPredicate<? super K, ? super V> predicate) throws NoSuchElementException;
 
     /**
      * Retains all entries in map for which the predicate evaluates to true.
@@ -88,7 +89,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return Map containing only elements for which predicate returns true
      */
-    void filter(MapPredicate<K, V> predicate);
+    void filter(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Removes all entries in map for which the predicate evaluates to true.
@@ -97,7 +98,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return Map containing only elements for which predicate returns false
      */
-    void remove(MapPredicate<K, V> predicate);
+    void remove(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Seeks the map for a given key-value-pair and replaces it with the
@@ -124,7 +125,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Function
      * @return Changed map
      */
-    <S, R> SmartMap<S, R> map(UnaryFunction<KeyValuePair<S, R>, Map.Entry<K, V>> function);
+    <S, R> SmartMap<S, R> map(MapUnaryFunction<KeyValuePair<S, R>, ? super K, ? super V> function);
 
     /**
      * Combines the elements of this map using a binary function and an initial
@@ -137,7 +138,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @see BinaryFunction
      * @return A single value
      */
-    <R> R reduce(R initial, BinaryFunction<R, Map.Entry<K, V>> funct);
+    <R> R reduce(R initial, MapBinaryFunction<R, ? super K, ? super V> funct);
 
     /**
      * Calls the toString() method for the key and value of each entry in the
@@ -159,7 +160,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return Number of elements in map for which predicate is true
      */
-    int count(MapPredicate<K, V> predicate);
+    int count(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Checks if the predicate evaluates to true for any element in the map. If
@@ -169,7 +170,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return true / false
      */
-    boolean exists(MapPredicate<K, V> predicate);
+    boolean exists(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Checks if the predicate evaluates to true for all elements in the map. If
@@ -179,7 +180,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      *            Predicate
      * @return true / false
      */
-    boolean forall(MapPredicate<K, V> predicate);
+    boolean forall(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Checks if this map describes a bijective mapping. This is the case when

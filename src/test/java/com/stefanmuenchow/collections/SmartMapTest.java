@@ -14,16 +14,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.stefanmuenchow.collections.function.BinaryFunction;
+import com.stefanmuenchow.collections.function.MapBinaryFunction;
 import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.collections.function.MapUnaryFunction;
 
 public class SmartMapTest {
     private SmartMap<Integer, String> smartMap1 = null;
@@ -173,11 +172,11 @@ public class SmartMapTest {
         expectedMap.put(4, "Gimli".length());
 
         SmartMap<Integer, Integer> resultMap =
-            smartMap2.map(new UnaryFunction<KeyValuePair<Integer,Integer>, Map.Entry<Integer,String>>() {
+            smartMap2.map(new MapUnaryFunction<KeyValuePair<Integer,Integer>, Integer, String>() {
 
                 @Override
-                public KeyValuePair<Integer, Integer> apply(final Entry<Integer, String> input) {
-                    return new KeyValuePair<Integer, Integer>(input.getKey(), input.getValue().length());
+                public KeyValuePair<Integer, Integer> apply(Integer key, String val) {
+                    return new KeyValuePair<Integer, Integer>(key, val.length());
                 }
             });
 
@@ -187,11 +186,11 @@ public class SmartMapTest {
     @Test
     public void testReduce() {
         String result = "FrodoSamMerryPippin";
-        assertEquals(result, smartMap1.reduce("", new BinaryFunction<String, Map.Entry<Integer, String>>() {
+        assertEquals(result, smartMap1.reduce("", new MapBinaryFunction<String, Integer, String>() {
 
             @Override
-            public String apply(final String input1, final Entry<Integer, String> input2) {
-                return input1.concat(input2.getValue());
+            public String apply(final String input1, Integer key, String val) {
+                return input1.concat(val);
             }
         }));
     }
