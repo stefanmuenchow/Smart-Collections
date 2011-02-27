@@ -26,8 +26,11 @@ public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 	SmartQueue<E> offerReturn(E o);
 	
     @Override
-    <R> SmartQueue<R> map(UnaryFunction<R, E> function);
+    <R> SmartQueue<R> map(UnaryFunction<R, ? super E> function);
 
     @Override
     <T> SmartQueue<T> castEach(Class<T> clazz);
+    
+    @Override
+    Queue<E> toStandardCollection();
 }

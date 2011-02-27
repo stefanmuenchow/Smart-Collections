@@ -118,7 +118,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     /** ISmartList methods */
 
     @Override
-    public <R> SmartList<R> map(final UnaryFunction<R, E> function) {
+    public <R> SmartList<R> map(final UnaryFunction<R, ? super E> function) {
         SmartCollection<R> result = super.map(function);
         return (SmartList<R>) result;
     }
@@ -190,7 +190,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     }
 
     @Override
-    public SmartList<E> takeWhile(final Predicate<E> pred) {
+    public SmartList<E> takeWhile(final Predicate<? super E> pred) {
         SmartList<E> resultList = createNewInstance();
         for (E elem : this) {
             if (pred.test(elem)) {
@@ -204,7 +204,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     }
 
     @Override
-    public SmartList<E> dropWhile(final Predicate<E> pred) {
+    public SmartList<E> dropWhile(final Predicate<? super E> pred) {
         SmartList<E> resultList = createNewInstance(getInternalList());
         for (E elem : this) {
             if (pred.test(elem)) {
@@ -288,5 +288,10 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
         }
 
         return i;
+    }
+    
+    @Override
+    public List<E> toStandardCollection() {
+    	return (List<E>) super.toStandardCollection();
     }
 }

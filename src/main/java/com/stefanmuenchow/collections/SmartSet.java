@@ -87,8 +87,11 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
     void difference(Set<E> anotherSet);
 
     @Override
-    <R> SmartSet<R> map(UnaryFunction<R, E> function);
+    <R> SmartSet<R> map(UnaryFunction<R, ? super E> function);
 
     @Override
     <T> SmartSet<T> castEach(Class<T> clazz);
+    
+    @Override
+    Set<E> toStandardCollection();
 }

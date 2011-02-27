@@ -42,7 +42,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @throws NoSuchElementException If no element matches
      * @return Element
      */
-    E find(Predicate<E> pred) throws NoSuchElementException;
+    E find(Predicate<? super E> pred) throws NoSuchElementException;
 
     /**
      * Retains all elements in the collection for which the predicate is true.
@@ -50,7 +50,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param predicate
      *            Predicate
      */
-    SmartCollection<E> filter(Predicate<E> predicate);
+    SmartCollection<E> filter(Predicate<? super E> predicate);
 
     /**
      * Removes all elements in the collection for which the predicate is true.
@@ -58,7 +58,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param predicate
      *            Predicate
      */
-    SmartCollection<E> remove(Predicate<E> predicate);
+    SmartCollection<E> remove(Predicate<? super E> predicate);
 
     /**
      * Replaces each occurence of an element in the collection with a
@@ -82,7 +82,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @param replacement
      *            Replacement
      */
-    SmartCollection<E> replace(Predicate<E> predicate, E replacement);
+    SmartCollection<E> replace(Predicate<? super E> predicate, E replacement);
 
     /**
      * Calls a given function for each element in the collection with the
@@ -95,7 +95,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @see UnaryFunction
      * @return Altered collection
      */
-    <R> SmartCollection<R> map(UnaryFunction<R, E> function);
+    <R> SmartCollection<R> map(UnaryFunction<R, ? super E> function);
 
     /**
      * Combines the elements of this list from left to right using a binary
@@ -109,7 +109,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @see BinaryFunction
      * @return A single value
      */
-    <R> R reduce(R initial, BinaryFunction<R, E> funct);
+    <R> R reduce(R initial, BinaryFunction<R, ? super E> funct);
 
     /**
      * Combines the elements of this list from left to right using a binary
@@ -120,7 +120,7 @@ public interface SmartCollection<E> extends Collection<E> {
      * @see BinaryFunction
      * @return A single value
      */
-    E reduce(BinaryFunction<E, E> funct);
+    E reduce(BinaryFunction<? super E, ? super E> funct);
 
     /**
      * Calls the toString() method of each element in the collection and
@@ -140,7 +140,7 @@ public interface SmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return Number of elements in collection for which predicate is true
      */
-    int count(Predicate<E> predicate);
+    int count(Predicate<? super E> predicate);
 
     /**
      * Checks if the predicate evaluates to true for any element in the
@@ -150,7 +150,7 @@ public interface SmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return true / false
      */
-    boolean exists(Predicate<E> pred);
+    boolean exists(Predicate<? super E> pred);
 
     /**
      * Checks if the predicate evaluates to true for all elements in the
@@ -160,7 +160,7 @@ public interface SmartCollection<E> extends Collection<E> {
      *            Predicate
      * @return true / false
      */
-    boolean forall(Predicate<E> pred);
+    boolean forall(Predicate<? super E> pred);
 
     /**
      * Replaces each occurence of a key in the specified map with the
@@ -186,4 +186,6 @@ public interface SmartCollection<E> extends Collection<E> {
      * @return Array holding all elements of this collection
      */
     <T> T[] toArray(Class<T> clazz);
+    
+    Collection<E> toStandardCollection();
 }

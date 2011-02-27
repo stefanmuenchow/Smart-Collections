@@ -136,7 +136,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     /** ISmartCollection methods */
 
     @Override
-    public E find(final Predicate<E> pred) {
+    public E find(final Predicate<? super E> pred) {
         for (E elem : internalColl) {
             if (pred.test(elem)) {
                 return elem;
@@ -147,7 +147,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> filter(final Predicate<E> predicate) {
+    public SmartCollection<E> filter(final Predicate<? super E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -161,7 +161,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> remove(final Predicate<E> predicate) {
+    public SmartCollection<E> remove(final Predicate<? super E> predicate) {
         List<E> toRemove = new ArrayList<E>();
 
         for (E elem : internalColl) {
@@ -189,7 +189,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public SmartCollection<E> replace(final Predicate<E> predicate, final E replacement) {
+    public SmartCollection<E> replace(final Predicate<? super E> predicate, final E replacement) {
         List<E> tempList = new ArrayList<E>(internalColl);
         internalColl.clear();
 
@@ -205,7 +205,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public <R> R reduce(final R initial, final BinaryFunction<R, E> funct) {
+    public <R> R reduce(final R initial, final BinaryFunction<R, ? super E> funct) {
         R result = initial;
 
         for (E elem : internalColl) {
@@ -215,8 +215,9 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
         return result;
     }
 
-    @Override
-    public E reduce(final BinaryFunction<E, E> funct) {
+	@Override
+	@SuppressWarnings("unchecked")
+    public E reduce(final BinaryFunction<? super E, ? super E> funct) {
         Iterator<E> it = internalColl.iterator();
         E result = null;
 
@@ -225,7 +226,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
         }
 
         while (it.hasNext()) {
-            result = funct.apply(result, it.next());
+            result = (E) funct.apply(result, it.next());
         }
 
         return result;
@@ -244,7 +245,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public int count(final Predicate<E> predicate) {
+    public int count(final Predicate<? super E> predicate) {
         int counter = 0;
         for (E elem : internalColl) {
             if (predicate.test(elem)) {
@@ -256,7 +257,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public boolean exists(final Predicate<E> pred) {
+    public boolean exists(final Predicate<? super E> pred) {
         for (E elem : internalColl) {
             if (pred.test(elem)) {
                 return true;
@@ -283,7 +284,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public boolean forall(final Predicate<E> pred) {
+    public boolean forall(final Predicate<? super E> pred) {
         for (E elem : internalColl) {
             if (!pred.test(elem)) {
                 return false;
@@ -294,7 +295,7 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     }
 
     @Override
-    public <R> SmartCollection<R> map(final UnaryFunction<R, E> function) {
+    public <R> SmartCollection<R> map(final UnaryFunction<R, ? super E> function) {
         SmartCollection<R> resultList = createNewInstance(new ArrayList<R>());
         for (E elem : internalColl) {
             resultList.add(function.apply(elem));
@@ -338,5 +339,10 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     @Override
     public String toString() {
         return internalColl.toString();
+    }
+    
+    @Override
+    public Collection<E> toStandardCollection() {
+    	return internalColl;
     }
 }

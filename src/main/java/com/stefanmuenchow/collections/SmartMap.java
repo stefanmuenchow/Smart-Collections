@@ -198,4 +198,6 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @return
      */
     SmartMap<V, K> swap() throws UnsupportedOperationException;
+    
+    Map<K, V> toStandardMap();
 }

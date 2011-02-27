@@ -77,4 +77,9 @@ public class SmartTreeSet<E> extends AbstractSmartSet<E> implements SmartSortedS
     public E last() {
         return getInternalSet().last();
     }
+    
+    @Override
+    public SortedSet<E> toStandardCollection() {
+    	return (SortedSet<E>) super.toStandardCollection();
+    }
 }

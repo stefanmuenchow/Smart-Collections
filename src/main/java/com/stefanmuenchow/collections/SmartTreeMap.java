@@ -72,4 +72,9 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
     public K lastKey() {
         return getInternalMap().lastKey();
     }
+    
+    @Override
+    public SortedMap<K, V> toStandardMap() {
+    	return (SortedMap<K, V>) super.toStandardMap();
+    }
 }

@@ -60,7 +60,7 @@ public abstract class AbstractSmartSet<E> extends AbstractSmartCollection<E> imp
     }
 
     @Override
-    public <R> SmartSet<R> map(final UnaryFunction<R, E> function) {
+    public <R> SmartSet<R> map(final UnaryFunction<R, ? super E> function) {
         SmartCollection<R> result = super.map(function);
         return (SmartSet<R>) result;
     }
@@ -69,5 +69,10 @@ public abstract class AbstractSmartSet<E> extends AbstractSmartCollection<E> imp
     public <T> SmartSet<T> castEach(final Class<T> clazz) {
         SmartCollection<T> result = super.castEach(clazz);
         return (SmartSet<T>) result;
+    }
+    
+    @Override
+    public Set<E> toStandardCollection() {
+    	return (Set<E>) super.toStandardCollection();
     }
 }

@@ -20,5 +20,6 @@ import java.util.SortedSet;
  * @author Stefan Muenchow
  */
 public interface SmartSortedSet<E> extends SortedSet<E>, SmartSet<E> {
-
+    @Override
+    SortedSet<E> toStandardCollection();
 }

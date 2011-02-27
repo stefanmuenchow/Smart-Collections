@@ -308,4 +308,9 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     public String toString() {
         return internalMap.toString();
     }
+    
+    @Override
+    public Map<K, V> toStandardMap() {
+    	return internalMap;
+    }
 }

@@ -24,7 +24,7 @@ public class SmartLinkedQueue<E> extends AbstractSmartCollection<E> implements S
     /** Overwritten methods */
     
     @Override
-    public <R> SmartQueue<R> map(final UnaryFunction<R, E> function) {
+    public <R> SmartQueue<R> map(final UnaryFunction<R, ? super E> function) {
         SmartCollection<R> result = super.map(function);
         return (SmartQueue<R>) result;
     }
@@ -82,5 +82,10 @@ public class SmartLinkedQueue<E> extends AbstractSmartCollection<E> implements S
 	public SmartQueue<E> offerReturn(E o) {
 		offer(o);
 		return this;
+	}
+	
+	@Override
+	public Queue<E> toStandardCollection() {
+		return (Queue<E>) super.toStandardCollection();
 	}
 }

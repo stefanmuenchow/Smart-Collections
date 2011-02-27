@@ -20,5 +20,7 @@ import java.util.SortedMap;
  * @author Stefan Muenchow
  */
 public interface SmartSortedMap<K, V> extends SortedMap<K, V>, SmartMap<K, V> {
-
+	
+	@Override
+	SortedMap<K, V> toStandardMap();
 }

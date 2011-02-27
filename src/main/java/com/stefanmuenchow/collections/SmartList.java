@@ -109,7 +109,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *            Predicate
      * @return Prefix list
      */
-    SmartList<E> takeWhile(Predicate<E> pred);
+    SmartList<E> takeWhile(Predicate<? super E> pred);
 
     /**
      * Removes elements from the List until the predicate evaluates to false the
@@ -119,7 +119,7 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      *            Predicate
      * @return Postfix list
      */
-    SmartList<E> dropWhile(Predicate<E> pred);
+    SmartList<E> dropWhile(Predicate<? super E> pred);
 
     /**
      * Removes all duplicate values from the List. Changes the original list.
@@ -185,8 +185,11 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
     int sizeWithoutNulls();
 
     @Override
-    <R> SmartList<R> map(UnaryFunction<R, E> function);
+    <R> SmartList<R> map(UnaryFunction<R, ? super E> function);
 
     @Override
     <T> SmartList<T> castEach(Class<T> clazz);
+    
+    @Override
+    List<E> toStandardCollection();
 }
