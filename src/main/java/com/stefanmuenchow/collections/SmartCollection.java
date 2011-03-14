@@ -36,61 +36,61 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  * @author Stefan Muenchow
  */
 public interface SmartCollection<E> extends Collection<E> {
-	
-	/**
-	 * Adds an element and returns the collection. Modifies the original 
-	 * collection.
-	 * 
-	 * @param elem			Element to be added
-	 * @return				Collection with element added
-	 */
-	SmartCollection<E> addReturn(E elem);
-	
-	/**
-	 * Adds all elements of coll and returns the collection. Modifies the 
-	 * original collection.
-	 * 
-	 * @param coll			Collections of elements to be added
-	 * @return				Collection with elements added
-	 */
-	SmartCollection<E> addAllReturn(Collection<E> coll);
-	
-	/**
-	 * Removed an element and returns the collection. Modifies the original 
-	 * collection.
-	 * 
-	 * @param elem			Element to be removed
-	 * @return				Collection with element removed
-	 */
-	SmartCollection<E> removeReturn(E elem);
-	
-	/**
-	 * Removes all elements of coll and returns the collection. Modifies the 
-	 * original collection.
-	 * 
-	 * @param coll			Collections of elements to be removed
-	 * @return				Collection with elements removed
-	 */
-	SmartCollection<E> removeAllReturn(Collection<E> coll);
-	
-	/**
-	 * Removes all elements from the collection that are not in coll. Modifies 
-	 * the original collection.
-	 * 
-	 * @param coll			Collections of elements to be retained
-	 * @return				Collection containing only elements contained in 
-	 * 						coll
-	 */
-	SmartCollection<E> retainAllReturn(Collection<E> coll);
+    
+    /**
+     * Adds an element and returns the collection. Modifies the original 
+     * collection.
+     * 
+     * @param elem            Element to be added
+     * @return                Collection with element added
+     */
+    SmartCollection<E> addReturn(E elem);
+    
+    /**
+     * Adds all elements of coll and returns the collection. Modifies the 
+     * original collection.
+     * 
+     * @param coll            Collections of elements to be added
+     * @return                Collection with elements added
+     */
+    SmartCollection<E> addAllReturn(Collection<E> coll);
+    
+    /**
+     * Removes an element and returns the collection. Modifies the original 
+     * collection.
+     * 
+     * @param elem            Element to be removed
+     * @return                Collection with element removed
+     */
+    SmartCollection<E> removeReturn(E elem);
+    
+    /**
+     * Removes all elements of coll and returns the collection. Modifies the 
+     * original collection.
+     * 
+     * @param coll            Collections of elements to be removed
+     * @return                Collection with elements removed
+     */
+    SmartCollection<E> removeAllReturn(Collection<E> coll);
+    
+    /**
+     * Removes all elements from the collection that are not in coll. Modifies 
+     * the original collection.
+     * 
+     * @param coll            Collections of elements to be retained
+     * @return                Collection containing only elements contained in 
+     *                        coll
+     */
+    SmartCollection<E> retainAllReturn(Collection<E> coll);
 
     /**
      * Seeks a single element based on a predicate. The first element for which
      * the predicate returns <code>true</code>, is returned. If the predicate is
      * <code>false</code> for all elements, an Exception is thrown.
      *
-     * @param pred  					Predicate to find element
-     * @throws NoSuchElementException 	If no element matches
-     * @return 							First element matching predicate
+     * @param pred                      Predicate to find element
+     * @throws NoSuchElementException   If no element matches
+     * @return                          First element matching predicate
      */
     E find(Predicate<? super E> pred) throws NoSuchElementException;
 
@@ -98,8 +98,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * Retains all elements in the collection for which the predicate evaluates
      * to <code>true</code>. Modifies the original collection.
      *
-     * @param predicate		Predicate to identify elements
-     * @return 				Filtered collection
+     * @param predicate        	Predicate to identify elements
+     * @return                 	Filtered collection
      */
     SmartCollection<E> filter(Predicate<? super E> predicate);
 
@@ -107,8 +107,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * Removes all elements in the collection for which the predicate evaluates
      * to <code>true</code>. Modifies the original collection.
      * 
-     * @param predicate		Predicate to identify elements
-     * @return				Filtered collection
+     * @param predicate    		Predicate to identify elements
+     * @return                	Filtered collection
      */
     SmartCollection<E> remove(Predicate<? super E> predicate);
 
@@ -118,9 +118,9 @@ public interface SmartCollection<E> extends Collection<E> {
      * method. If the element is not found in the collection, nothing is done.
      * Modifies the original collection.
      *
-     * @param seek 			Element to be replaced
-     * @param replacement	Replacement element
-     * @return				Collection with elements replaced
+     * @param seek             	Element to be replaced
+     * @param replacement    	Replacement element
+     * @return                	Collection with elements replaced
      */
     SmartCollection<E> replace(E seek, E replacement);
 
@@ -130,9 +130,9 @@ public interface SmartCollection<E> extends Collection<E> {
      * evaluates to <code>false</code> for all elements, nothing is done.
      * Modifies the original collection.
      *
-     * @param predicate 	Predicate to identify elements
-     * @param replacement	Replacement element
-     * @return				Collection with elements replaced
+     * @param predicate     	Predicate to identify elements
+     * @param replacement    	Replacement element
+     * @return                	Collection with elements replaced
      */
     SmartCollection<E> replace(Predicate<? super E> predicate, E replacement);
 
@@ -143,8 +143,8 @@ public interface SmartCollection<E> extends Collection<E> {
      *
      * @see UnaryFunction
      *
-     * @param function		Unary function applied to each element
-     * @return 				New collection containing return values
+     * @param function        	Unary function applied to each element
+     * @return                 	New collection containing return values
      */
     <R> SmartCollection<R> map(UnaryFunction<R, ? super E> function);
 
@@ -155,9 +155,9 @@ public interface SmartCollection<E> extends Collection<E> {
      * 
      * @see BinaryFunction
      *
-     * @param initial		Initial value
-     * @param funct			Binary Function to combine two values a time
-     * @return 				Resulting value
+     * @param initial        	Initial value
+     * @param funct            	Binary Function to combine two values a time
+     * @return                 	Resulting value
      */
     <R> R reduce(R initial, BinaryFunction<R, ? super E> funct);
 
@@ -168,8 +168,8 @@ public interface SmartCollection<E> extends Collection<E> {
      *
      * @see BinaryFunction
      *
-     * @param funct			Binary Function to combine two values a time
-     * @return 				Resulting value
+     * @param funct            	Binary Function to combine two values a time
+     * @return                 	Resulting value
      */
     E reduce(BinaryFunction<? super E, ? super E> funct);
 
@@ -177,8 +177,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * Calls the toString-method of each element in the collection and inserts
      * delimiter between each pair of elements. Returns the resulting String.
      *
-     * @param delimiter		String to insert between each two elements
-     * @return 				Resulting string representation
+     * @param delimiter        	String to insert between each two elements
+     * @return                 	Resulting string representation
      */
     String join(String delimiter);
 
@@ -186,9 +186,9 @@ public interface SmartCollection<E> extends Collection<E> {
      * Counts the number of entries for which the predicate evaluates to 
      * <code>true</code>.
      *
-     * @param predicate		Predicate to identify elements
-     * @return 				Number of elements for which predicate was 
-     * 						<code>true</code>
+     * @param predicate        	Predicate to identify elements
+     * @return                 	Number of elements for which predicate was 
+     *                         	<code>true</code>
      */
     int count(Predicate<? super E> predicate);
 
@@ -197,8 +197,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * of the collection. If yes, the result is <code>true</code>, otherwise
      * <code>false</code>.
      *
-     * @param pred			Predicate to identify elements
-     * @return 				True if element exists, otherwise false
+     * @param pred            	Predicate to identify elements
+     * @return                 	True if element exists, otherwise false
      */
     boolean exists(Predicate<? super E> pred);
 
@@ -207,8 +207,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * of the collection. If yes, the result is <code>true</code>, otherwise
      * <code>false</code>.
      *
-     * @param pred			Predicate to identify elements
-     * @return 				True if element exists, otherwise false
+     * @param pred            	Predicate to identify elements
+     * @return                 	True if element exists, otherwise false
      */
     boolean forall(Predicate<? super E> pred);
 
@@ -216,8 +216,8 @@ public interface SmartCollection<E> extends Collection<E> {
      * Replaces each occurence of a key that is contained in replacements
      * with the corresponding value. Modifies the original collection.
      * 
-     * @param replacements 	Map including all replacements
-     * @return 				Collection with elements replaced
+     * @param replacements     	Map including all replacements
+     * @return                 	Collection with elements replaced
      */
     SmartCollection<E> replace(Map<E, E> replacements);
 
@@ -228,30 +228,29 @@ public interface SmartCollection<E> extends Collection<E> {
      * 
      * @throws ClassCastException	If cast is not possible
      * 
-     * @param clazz 				Class to cast all elements to
-     * @return 						New collection containing elements of type 
-     * 								clazz
+     * @param clazz                 Class to cast all elements to
+     * @return                      New collection containing elements of type 
+     *                              clazz
      */
     <T> SmartCollection<T> castEach(Class<T> clazz);
 
     /**
      * Creates an array of the same type from this collection.
      * 
-     * @param clazz 				Type of the array elements
-     * @return 						Array containg all elements
+     * @param clazz                 Type of the array elements
+     * @return                      Array containg all elements
      */
     <T> T[] toArray(Class<T> clazz);
     
     /**
-     * Returns the particular java standard collection to this collection.
+     * Returns the corresponding java standard collection.
      * As smart collections are simple decorators around the standard 
      * collections, just the internal collection is returned and no new
-     * collection has to be created. 
+     * one has to be created. 
      * 
-     * Changes to the returned collection will also affect this smart
-     * collection. The original collection remains unchanged.
+     * Changes to the returned collection will also affect this one.
      * 
-     * @return				Standard collection wrapped by this decorator
+     * @return                Standard collection wrapped by this decorator
      */
     Collection<E> toStandardCollection();
 }

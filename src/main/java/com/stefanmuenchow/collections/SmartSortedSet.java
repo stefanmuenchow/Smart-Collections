@@ -10,16 +10,24 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Comparator;
 import java.util.SortedSet;
 
 /**
- * SmartSortedSets are compatible with the standard SortedSet interface, but add
- * some functionality to them. They are implemented as simple decorators (see
- * Gang of Four).
+ * A SmartSortedSet keeps its elements in ascending order, sorted according to 
+ * the natural ordering of its elements or by a given {@link Comparator}.
+ * 
+ * @see SortedSet
+ * @see SmartSet
+ * @see SmartTreeSet
  *
  * @author Stefan Muenchow
  */
 public interface SmartSortedSet<E> extends SortedSet<E>, SmartSet<E> {
+	
+	/**
+	 * @see SmartCollection#toStandardCollection()
+	 */
     @Override
     SortedSet<E> toStandardCollection();
 }

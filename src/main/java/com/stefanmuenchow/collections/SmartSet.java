@@ -15,83 +15,104 @@ import java.util.Set;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
- * SmartSets are compatible with the standard Set interface, but add some
- * functionality to them. They are implemented as simple decorators (see Gang of
- * Four).
+ * A SmartSet is a collection that contains no duplicate elements. It models
+ * the notion of a mathematical set.
+ * 
+ * @see Set
+ * @see SmartHashSet
+ * @see SmartTreeSet
+ * @see SmartSortedSet
  *
  * @author Stefan Muenchow
  */
 public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
 
     /**
-     * Checks if this set is a subset of anotherSet.
+     * Checks if this set is a subset of anotherSet. This is the case if all
+     * elements of this set are contained in anotherSet (also if the sets are
+     * equal).
      *
-     * @param anotherSet
-     *            Another set
-     * @return true / false
+     * @param anotherSet 		Supposed superset
+     * @return 					True if this set is a subset of anotherSet, 
+     * 							otherwise false.
      */
     boolean isSubsetOf(Set<E> anotherSet);
 
     /**
-     * Checks if this set is a proper subset of anotherSet.
+     * Checks if this set is a proper subset of anotherSet. This is the case if
+     * all elements of this set are contained in anotherSet and the sets are 
+     * not equal.
      *
-     * @param anotherSet
-     *            Another set
-     * @return true / false
+     * @param anotherSet		Supposed proper superset
+     * @return					True if this set is proper subset of anotherSet,
+     * 							otherwise false
      */
     boolean isProperSubsetOf(Set<E> anotherSet);
 
     /**
-     * Checks if this set is a superset of anotherSet.
+     * Checks if this set is a superset of anotherSet. This is the case if all
+     * elements of anotherSet are contained in this set (also if the sets are
+     * equal).
      *
-     * @param anotherSet
-     *            Another set
-     * @return true / false
+     * @param anotherSet 		Supposed subset
+     * @return 					True if this set is a superset of anotherSet, 
+     * 							otherwise false.
      */
     boolean isSupersetOf(Set<E> anotherSet);
 
     /**
-     * Checks if this set is a proper superset of anotherSet.
+     * Checks if this set is a proper superset of anotherSet. This is the case if
+     * all elements of anotherSet are contained in this set and the sets are 
+     * not equal.
      *
-     * @param anotherSet
-     *            Another set
-     * @return true / false
+     * @param anotherSet		Supposed proper subset
+     * @return					True if this set is proper superset of anotherSet,
+     * 							otherwise false
      */
     boolean isProperSupersetOf(Set<E> anotherSet);
 
     /**
-     * Creates the union of the two sets. The first set is changed.
+     * Creates the union of the two sets and returns the result. Changes the
+     * original set.
      *
-     * @param anotherSet
-     *            Another set
-     * @return Union set
+     * @param anotherSet		Set to union this set with
+     * @return 					Union of both sets
      */
-    void union(Set<E> anotherSet);
+    SmartSet<E> union(Set<E> anotherSet);
 
     /**
-     * Creates the intersection of both sets. The first set is changed.
+     * Creates the intersection of the two sets and returns the result. Changes
+     * the original set.
      *
-     * @param anotherSet
-     *            Another set
-     * @return Intersection set
+     * @param anotherSet		Set to intersect this set with
+     * @return 					Intersection of both sets
      */
-    void intersection(Set<E> anotherSet);
+    SmartSet<E> intersection(Set<E> anotherSet);
 
     /**
-     * Creates the difference of both sets. The first set is changed.
+     * Creates the difference of the two sets and returns the result. Changes 
+     * the original set.
      *
-     * @param anotherSet
-     *            Another set
-     * @return Difference set
+     * @param anotherSet		Set to create difference with
+     * @return 					Difference of both sets
      */
-    void difference(Set<E> anotherSet);
+    SmartSet<E> difference(Set<E> anotherSet);
 
+    /**
+     * @see SmartCollection#map(UnaryFunction)
+     */
     @Override
     <R> SmartSet<R> map(UnaryFunction<R, ? super E> function);
 
+    /**
+     * @see SmartCollection#castEach(Class)
+     */
     @Override
     <T> SmartSet<T> castEach(Class<T> clazz);
     
+    /**
+     * @see SmartCollection#toStandardCollection()
+     */
     @Override
     Set<E> toStandardCollection();
 }

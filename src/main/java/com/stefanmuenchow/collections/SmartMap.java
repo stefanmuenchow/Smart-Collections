@@ -19,185 +19,212 @@ import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.MapUnaryFunction;
 
 /**
- * Smart Maps are compatible with the standard Map interface, but add some
- * functionality to them. They are implemented as simple decorators (see Gang of
- * Four).
+ * A SmartMap is an object that maps keys to values. There can be no duplicate
+ * keys. 
+ * 
+ * @see Map
+ * @see SmartHashMap
+ * @see SmartTreeMap
  *
  * @author Stefan Muenchow
  */
 public interface SmartMap<K, V> extends Map<K, V> {
 
+	/**
+	 * Adds a key-value-pair to the map and returns it. The original map is
+	 * changed.
+	 * 
+	 * @param key		Key for new value
+	 * @param value		New value
+	 * @return			{@link SmartMap} with pair added
+	 */
 	SmartMap<K, V> putReturn(K key, V value);
+	
+	/**
+	 * Adds all elements of t to this map and returns the resulting map. The 
+	 * original map is changed.
+	 * 
+	 * @param t			Map containing elements to be added
+	 * @return			{@link SmartMap} with all key-value-pairs added
+	 */
 	SmartMap<K, V> putAllReturn(Map<K, V> t);
 	SmartMap<K, V> removeReturn(K key);
 	
     /**
-     * Returns the first element of the Map. If it is not a sorted map, the ordering
-     * is arbitrary.
-     * @throws NoSuchElementException
-     * @return Map.Entry
+     * Returns the first element of the Map. If it is an unsorted map, the 
+     * ordering is arbitrary.
+     * 
+     * @throws NoSuchElementException		If map is empty
+     * @return 								First element of map					
      */
     Map.Entry<K, V> head() throws NoSuchElementException;
 
     /**
-     * Returns the map without the first element. If it is not a sorted map, the ordering
-     * is arbitrary.
-     * @throws UnsupportedOperationException
-     * @return Map without first element
+     * Returns the map without the first element. If it is an unsorted map, the 
+     * ordering is arbitrary. A new map is created, the original one remains
+     * unchanged.
+     * 
+     * @throws UnsupportedOperationException	If map is empty
+     * @return 									Map without first element			
      */
     SmartMap<K, V> tail() throws UnsupportedOperationException;
 
     /**
-     * Merges this map with anotherMap using the given merging function. A new map is
-     * returned.
+     * Merges this map with anotherMap using the given merge function. A new map 
+     * is created, the original one remains unchanged.
      *
-     * @param anotherMap
-     *            Map to merge with
-     * @param mergeFunct
-     *            Merging function
+     * @param anotherMap 		Map to merge with
+     * @param mergeFunct		Merge function to be used
+     * 
      * @see BinaryFunction
-     * @return Merged map
+     * 
+     * @return 					Resulting map
      */
     void mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
 
     /**
-     * Gets the value to the given key if it exists. Else returns defaultVal.
+     * Gets the value to the given key if it exists. Otherwise returns 
+     * defaultVal.
      *
-     * @param key
-     *            Key to get value to
-     * @param defaultVal
-     *            Default value
-     * @return Value to given key or defaultVal
+     * @param key				Key to get value to
+     * @param defaultVa			Default value
+     * @return 					Value to given key or defaultVal
      */
     V get(K key, V defaultVal);
 
     /**
-     * Returns the first value for which the predicate evaluates to true. If the
-     * predicate evaluates to false for all elements in the map, an exception is
-     * thrown.
+     * Returns the first value for which the predicate evaluates to true. If 
+     * the predicate evaluates to false for all elements in the map, an 
+     * exception is thrown.
      *
-     * @param predicate                 Predicate to test entries against
-     * @throws NoSuchElementException   If no element matches
+     * @param predicate                 Predicate to identify entry
+     * @throws NoSuchElementException   If no entry matches precidate
      * @return                          Value satisfying predicate
      */
     V find(MapPredicate<? super K, ? super V> predicate) throws NoSuchElementException;
 
     /**
      * Retains all entries in map for which the predicate evaluates to true.
+     * Changes the original map.
      *
-     * @param predicate
-     *            Predicate
-     * @return Map containing only elements for which predicate returns true
+     * @param predicate 		Predicate to identify entries
+     * @return 					Map containing only entries for which predicate 
+     * 							evaluates to true
      */
     void filter(MapPredicate<? super K, ? super V> predicate);
 
     /**
-     * Removes all entries in map for which the predicate evaluates to true.
+     * Removes all entries from map for which the predicate evaluates to true.
+     * Changes the original map.
      *
-     * @param predicate
-     *            Predicate
-     * @return Map containing only elements for which predicate returns false
+     * @param predicate 		Predicate to identify entries
+     * @return 					Map containing only entries for which predicate 
+     * 							evaluates to false
      */
     void remove(MapPredicate<? super K, ? super V> predicate);
 
     /**
-     * Seeks the map for a given key-value-pair and replaces it with the
-     * specified pair. The equals() method is used to compare items. If the pair
-     * is not found, nothing is changed.
+     * Searches the map for a given key-value-pair and replaces it with the
+     * specified pair. The equals() method is used to compare keys and values. 
+     * If the pair is not found, nothing is changed. Changes the original map.
      *
-     * @param seekKey
-     *            Key to replace
-     * @param seekValue
-     *            Value to replace
-     * @param newKey
-     *            Replacement key
-     * @param newValue
-     *            Replacement value
-     * @return Map with entries replaced
+     * @param seekKey		Key to be replaced
+     * @param seekValue		Value to be replaced
+     * @param newKey		Replacement key
+     * @param newValue		Replacement value
+     * @return 				Map with entries replaced
      */
     void replace(K seekKey, V seekValue, K newKey, V newValue);
 
     /**
-     * Applies the function to all entries of map replacing each original entry
-     * with the result of function. Return the resulting map.
+     * Applies the function to each entry of map replacing it with the result 
+     * of function. Returns the resulting map. A new map is created, the 
+     * original one remains unchanged.
      *
-     * @param function
-     *            Function
-     * @return Changed map
+     * @param function		Function applied to each element
+     * @return 				Resulting map
      */
     <S, R> SmartMap<S, R> map(MapUnaryFunction<KeyValuePair<S, R>, ? super K, ? super V> function);
 
     /**
      * Combines the elements of this map using a binary function and an initial
-     * value.
+     * value. The original map remains unchanged.
      *
-     * @param initial
-     *            Initial value
-     * @param funct
-     *            Binary Function
+     * @param initial		Initial value to use
+     * @param funct			Binary function combining two entries
+     * 
      * @see BinaryFunction
-     * @return A single value
+     * 
+     * @return 				Resulting value
      */
     <R> R reduce(R initial, MapBinaryFunction<R, ? super K, ? super V> funct);
 
     /**
      * Calls the toString() method for the key and value of each entry in the
-     * map and inserts keyValDelimiter between them. Then it intersperses the
-     * resulting strings with entryDelimiter and returns the result.
+     * map and inserts keyValDelimiter between them. Then entryDelimiter is 
+     * inserted between each two entries and the result is returned.
      *
-     * @param entryDelimiter
-     *            String to insert between each two entries
-     * @param keyValDelimiter
-     *            String to insert between key and value of each map entry
-     * @return Resulting string representation
+     * @param entryDelimiter	Delimiter to insert between each two entries
+     * @param keyValDelimiter	Delimiter to insert between key and value of each 
+     * 							entry
+     * @return 					Resulting string representation
      */
     String join(String entryDelimiter, String keyValDelimiter);
 
     /**
      * Counts all entries for which the predicate evaluates to true.
      *
-     * @param predicate
-     *            Predicate
-     * @return Number of elements in map for which predicate is true
+     * @param predicate			Predicate to identify elements
+     * @return 					Number of elements in map for which predicate
+     * 							evaluates to <code>true</code>
      */
     int count(MapPredicate<? super K, ? super V> predicate);
 
     /**
-     * Checks if the predicate evaluates to true for any element in the map. If
-     * not, the result is false.
+     * Checks if the predicate evaluates to true for any element in the map. 
+     * If not, the result is false. Otherwise result is true.
      *
-     * @param predicate
-     *            Predicate
-     * @return true / false
+     * @param predicate			Predicate to identify entry
+     * @return 					True if any element matches, otherwise false.
      */
     boolean exists(MapPredicate<? super K, ? super V> predicate);
 
     /**
-     * Checks if the predicate evaluates to true for all elements in the map. If
-     * not, the result is false.
+     * Checks if the predicate evaluates to true for all elements in the map. 
+     * If not, the result is false. Otherwise result is true.
      *
-     * @param predicate
-     *            Predicate
-     * @return true / false
+     * @param predicate			Predicate to check entries with
+     * @return 					True if all elements matche, otherwise false.
      */
     boolean forall(MapPredicate<? super K, ? super V> predicate);
 
     /**
-     * Checks if this map describes a bijective mapping. This is the case when
+     * Checks if this map describes a bijective function. This is the case when
      * each value in the map is unique.
      *
-     * @return true / false
+     * @return 					True if mapping is bijective, otherwise false.
      */
     boolean isBijective();
 
     /**
      * Swaps keys and values. If this map is bijective (can be checked with
      * isBijective() method) operation will be successful and return the new
-     * map, otherwise a BadOperationException will be thrown.
+     * map, otherwise a BadOperationException will be thrown. A new map is 
+     * created, the original one remains unchanged.
      *
-     * @return
+     * @return					Swapped map
      */
     SmartMap<V, K> swap() throws UnsupportedOperationException;
     
+    /**
+     * Returns the corresponding java standard map.
+     * As smart maps are simple decorators around the standard 
+     * maps, just the internal map is returned and no new
+     * one has to be created. 
+     * 
+     * Changes to the returned map will also affect this one.
+     * 
+     * @return                Standard map wrapped by this decorator
+     */
     Map<K, V> toStandardMap();
 }

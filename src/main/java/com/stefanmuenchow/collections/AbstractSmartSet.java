@@ -45,18 +45,21 @@ public abstract class AbstractSmartSet<E> extends AbstractSmartCollection<E> imp
     }
 
     @Override
-    public void union(final Set<E> anotherSet) {
+    public SmartSet<E> union(final Set<E> anotherSet) {
         addAll(anotherSet);
+        return this;
     }
 
     @Override
-    public void intersection(final Set<E> anotherSet) {
+    public SmartSet<E> intersection(final Set<E> anotherSet) {
         retainAll(anotherSet);
+        return this;
     }
 
     @Override
-    public void difference(final Set<E> anotherSet) {
+    public SmartSet<E> difference(final Set<E> anotherSet) {
         removeAll(anotherSet);
+        return this;
     }
 
     @Override

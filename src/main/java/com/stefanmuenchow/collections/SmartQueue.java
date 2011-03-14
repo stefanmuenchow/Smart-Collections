@@ -15,22 +15,43 @@ import java.util.Queue;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
- * SmartQueues are compatible with the standard Queue interface, but add some
- * functionality to them. They are implemented as simple decorators (see Gang of
- * Four).
+ * A SmartQueue is an ordered collection that can hold duplicate elements.
+ * In contrast to lists, there are some restrictions on the elements'
+ * accessability. Elements are ordered in an FIFO (First-In-First-Out) manner.
+ * This means that elements can be retrieved only from the head of the queue
+ * and inserted only at the end.
+ * 
+ * @see Queue
+ * @see SmartLinkedQueue
  *
  * @author Stefan Muenchow
  */
 public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 
+	/**
+	 * Inserts the specified element at the end of this queue. Changes the
+	 * original queue.
+	 * 
+	 * @param o		Element to insert
+	 * @return		Queue with element added.
+	 */
 	SmartQueue<E> offerReturn(E o);
 	
+	/**
+	 * @see SmartCollection#map(UnaryFunction)
+	 */
     @Override
     <R> SmartQueue<R> map(UnaryFunction<R, ? super E> function);
 
+    /**
+     * @see SmartCollection#castEach(Class)
+     */
     @Override
     <T> SmartQueue<T> castEach(Class<T> clazz);
     
+    /**
+     * @see SmartCollection#toStandardCollection()
+     */
     @Override
     Queue<E> toStandardCollection();
 }

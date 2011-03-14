@@ -10,17 +10,24 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Comparator;
 import java.util.SortedMap;
 
 /**
- * SmartSortedMaps are compatible with the standard SortedMap interface, but add
- * some functionality to them. They are implemented as simple decorators (see
- * Gang of Four).
+ * A SmartSortedMap keeps its entries in ascending order, sorted according to 
+ * the natural ordering of the keys or by a given {@link Comparator}.
+ * 
+ * @see SortedMap
+ * @see SmartMap
+ * @see SmartTreeMap
  *
  * @author Stefan Muenchow
  */
 public interface SmartSortedMap<K, V> extends SortedMap<K, V>, SmartMap<K, V> {
 	
+	/**
+	 * @see SmartMap#toStandardMap()
+	 */
 	@Override
 	SortedMap<K, V> toStandardMap();
 }
