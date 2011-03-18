@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -25,21 +27,44 @@ import com.stefanmuenchow.collections.function.MapPredicate;
 import com.stefanmuenchow.collections.function.MapUnaryFunction;
 
 public class SmartMapTest {
-    private SmartMap<Integer, String> smartMap1 = null;
-    private SmartMap<Integer, String> smartMap2 = null;
+    private SmartMap<Integer, String> smartMap = null;
 
     @Before
     public void setUp() throws Exception {
-        smartMap1 = new SmartHashMap<Integer, String>();
-        smartMap1.put(1, "Frodo");
-        smartMap1.put(2, "Sam");
-        smartMap1.put(3, "Merry");
-        smartMap1.put(4, "Pippin");
-        smartMap2 = new SmartHashMap<Integer, String>();
-        smartMap2.put(1, "Aragorn");
-        smartMap2.put(2, "Boromir");
-        smartMap2.put(3, "Legolas");
-        smartMap2.put(4, "Gimli");
+        smartMap = new SmartHashMap<Integer, String>(
+        		new SmartArrayList<Integer>(1, 2, 3, 4),
+        		new SmartArrayList<String>("Frodo", "Sam", "Merry", "Pippin"));
+    }
+    
+    @Test
+    public void testPutReturn() {
+    	SmartMap<Integer, String> expected = new SmartHashMap<Integer, String>(
+        		new SmartArrayList<Integer>(1, 2, 3, 4, 5),
+        		new SmartArrayList<String>("Frodo", "Sam", "Merry", "Pippin", "Legolas"));
+    	
+    	assertEquals(expected, smartMap.putReturn(5, "Legolas"));
+    }
+    
+    @Test
+    public void testPutAllReturn() {
+    	SmartMap<Integer, String> expected = new SmartHashMap<Integer, String>(
+        		new SmartArrayList<Integer>(1, 2, 3, 4, 5, 6),
+        		new SmartArrayList<String>("Frodo", "Sam", "Merry", "Pippin", "Legolas", "Gandalf"));
+    	
+    	Map<Integer, String> toAdd = new HashMap<Integer, String>();
+    	toAdd.put(5, "Legolas");
+    	toAdd.put(6, "Gandalf");
+    	
+    	assertEquals(expected, smartMap.putAllReturn(toAdd));
+    }
+    
+    @Test
+    public void testRemoveReturn() {
+    	SmartMap<Integer, String> expected = new SmartHashMap<Integer, String>(
+        		new SmartArrayList<Integer>(1, 2, 4),
+        		new SmartArrayList<String>("Frodo", "Sam", "Pippin"));
+    	
+    	assertEquals(expected, smartMap.removeReturn(3));
     }
 
     @Test
@@ -58,7 +83,7 @@ public class SmartMapTest {
 
     @Test
     public void testTail() {
-        SmartMap<Integer, String> someMap = new SmartHashMap<Integer, String>(smartMap1);
+        SmartMap<Integer, String> someMap = new SmartHashMap<Integer, String>(smartMap);
         SmartMap<Integer, String> anotherMap = someMap.tail();
         someMap.remove(someMap.head().getKey());
 
@@ -72,26 +97,29 @@ public class SmartMapTest {
 
     @Test
     public void testMergeWith() {
-        smartMap1.mergeWith(smartMap2, new BinaryFunction<String, String>() {
-
+    	SmartMap<Integer, String> toMerge = new SmartHashMap<Integer, String>(
+    			new SmartArrayList<Integer>(1), 
+    			new SmartArrayList<String>("Aragorn"));
+    	
+        smartMap.mergeWith(toMerge, new BinaryFunction<String, String>() {
             @Override
             public String apply(final String input1, final String input2) {
                 return input1 + " and " + input2;
             }
         });
 
-        assertEquals("Frodo and Aragorn", smartMap1.get(1));
+        assertEquals("Frodo and Aragorn", smartMap.get(1));
     }
 
     @Test
     public void testGet() {
-        assertEquals("Gimli", smartMap2.get(4, "Gandalf"));
-        assertEquals("Gandalf", smartMap2.get(10, "Gandalf"));
+        assertEquals("Sam", smartMap.get(2, "Sauron"));
+        assertEquals("Sauron", smartMap.get(5, "Sauron"));
     }
 
     @Test
     public void testFind() {
-        String value = smartMap1.find(new MapPredicate<Integer, String>() {
+        String value = smartMap.find(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -104,7 +132,7 @@ public class SmartMapTest {
 
     @Test(expected=NoSuchElementException.class)
     public void testFindFail() {
-        smartMap1.find(new MapPredicate<Integer, String>() {
+        smartMap.find(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -119,7 +147,7 @@ public class SmartMapTest {
         expectedMap.put(2, "Sam");
         expectedMap.put(3, "Merry");
 
-        smartMap1.filter(new MapPredicate<Integer, String>() {
+        smartMap.filter(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -127,7 +155,7 @@ public class SmartMapTest {
             }
         });
 
-        assertEquals(expectedMap, smartMap1);
+        assertEquals(expectedMap, smartMap);
     }
 
     @Test
@@ -136,7 +164,7 @@ public class SmartMapTest {
         expectedMap.put(2, "Sam");
         expectedMap.put(3, "Merry");
 
-        smartMap1.remove(new MapPredicate<Integer, String>() {
+        smartMap.remove(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -144,7 +172,7 @@ public class SmartMapTest {
             }
         });
 
-        assertEquals(expectedMap, smartMap1);
+        assertEquals(expectedMap, smartMap);
     }
 
     @Test
@@ -155,24 +183,20 @@ public class SmartMapTest {
         expectedMap.put(4, "Pippin");
         expectedMap.put(5, "Bilbo");
 
-        smartMap1.replace(1, "Frodo", 5, "Bilbo");
-        assertEquals(expectedMap, smartMap1);
-
-        SmartMap<Integer, String> expectedMap2 = new SmartHashMap<Integer, String>(smartMap2);
-        smartMap2.replace(3, "Gimli", 1, "Frodo");
-        assertEquals(expectedMap2, smartMap2);
+        smartMap.replace(1, "Frodo", 5, "Bilbo");
+        assertEquals(expectedMap, smartMap);
     }
 
     @Test
     public void testMap() {
         SmartMap<Integer,Integer> expectedMap = new SmartHashMap<Integer, Integer>();
-        expectedMap.put(1, "Aragorn".length());
-        expectedMap.put(2, "Boromir".length());
-        expectedMap.put(3, "Legolas".length());
-        expectedMap.put(4, "Gimli".length());
+        expectedMap.put(1, "Frodo".length());
+        expectedMap.put(2, "Sam".length());
+        expectedMap.put(3, "Merry".length());
+        expectedMap.put(4, "Pippin".length());
 
         SmartMap<Integer, Integer> resultMap =
-            smartMap2.map(new MapUnaryFunction<KeyValuePair<Integer,Integer>, Integer, String>() {
+            smartMap.map(new MapUnaryFunction<KeyValuePair<Integer,Integer>, Integer, String>() {
 
                 @Override
                 public KeyValuePair<Integer, Integer> apply(Integer key, String val) {
@@ -186,7 +210,7 @@ public class SmartMapTest {
     @Test
     public void testReduce() {
         String result = "FrodoSamMerryPippin";
-        assertEquals(result, smartMap1.reduce("", new MapBinaryFunction<String, Integer, String>() {
+        assertEquals(result, smartMap.reduce("", new MapBinaryFunction<String, Integer, String>() {
 
             @Override
             public String apply(final String input1, Integer key, String val) {
@@ -198,12 +222,12 @@ public class SmartMapTest {
     @Test
     public void testJoin() {
         String expectedString = "1 -> Frodo ; 2 -> Sam ; 3 -> Merry ; 4 -> Pippin";
-        assertEquals(expectedString, smartMap1.join(" ; ", " -> "));
+        assertEquals(expectedString, smartMap.join(" ; ", " -> "));
     }
 
     @Test
     public void testCount() {
-        assertEquals(2, smartMap1.count(new MapPredicate<Integer, String>() {
+        assertEquals(2, smartMap.count(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -214,18 +238,18 @@ public class SmartMapTest {
 
     @Test
     public void testExists() {
-        assertTrue(smartMap2.exists(new MapPredicate<Integer, String>() {
+        assertTrue(smartMap.exists(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
-                return val.contains("romi");
+                return val.contains("er");
             }
         }));
     }
 
     @Test
     public void testForall() {
-        assertTrue(smartMap2.forall(new MapPredicate<Integer, String>() {
+        assertTrue(smartMap.forall(new MapPredicate<Integer, String>() {
 
             @Override
             public boolean test(final Integer key, final String val) {
@@ -236,10 +260,10 @@ public class SmartMapTest {
 
     @Test
     public void testIsBijective() {
-        assertTrue(smartMap1.isBijective());
+        assertTrue(smartMap.isBijective());
 
-        smartMap2.put(5, "Aragorn");
-        assertFalse(smartMap2.isBijective());
+        smartMap.put(5, "Frodo");
+        assertFalse(smartMap.isBijective());
     }
 
     @Test
@@ -250,12 +274,23 @@ public class SmartMapTest {
         expectedMap.put("Merry", 3);
         expectedMap.put("Pippin", 4);
 
-        assertEquals(expectedMap, smartMap1.swap());
+        assertEquals(expectedMap, smartMap.swap());
     }
 
     @Test(expected=UnsupportedOperationException.class)
     public void testSwapFail() {
-        smartMap1.put(5, "Frodo");
-        smartMap1.swap();
+        smartMap.put(5, "Frodo");
+        smartMap.swap();
+    }
+    
+    @Test
+    public void testToStandardMap() {
+    	Map<Integer, String> expected = new HashMap<Integer, String>();
+    	expected.put(1, "Frodo");
+    	expected.put(2, "Sam");
+    	expected.put(3, "Merry");
+    	expected.put(4, "Pippin");
+    	
+    	assertEquals(expected, smartMap.toStandardMap());
     }
 }

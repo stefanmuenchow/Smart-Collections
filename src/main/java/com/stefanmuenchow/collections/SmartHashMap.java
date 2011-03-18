@@ -13,6 +13,10 @@ public class SmartHashMap<K, V> extends AbstractSmartMap<K, V> implements
     public SmartHashMap(final Map<K, V> map) {
         super(new HashMap<K, V>(map));
     }
+    
+    public SmartHashMap(SmartList<K> keys, SmartList<V> vals) {
+    	super(keys.zipWith(vals));
+    }
 
     /** Helper methods */
 

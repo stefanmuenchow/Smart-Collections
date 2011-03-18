@@ -48,6 +48,13 @@ public interface SmartMap<K, V> extends Map<K, V> {
 	 * @return			{@link SmartMap} with all key-value-pairs added
 	 */
 	SmartMap<K, V> putAllReturn(Map<K, V> t);
+	
+	/**
+	 * Removes an entry from the map and returns the result. The original map
+	 * is changed.
+	 * @param key		Key of entry to be removed
+	 * @return			{@link SmartMap} with entry removed
+	 */
 	SmartMap<K, V> removeReturn(K key);
 	
     /**
