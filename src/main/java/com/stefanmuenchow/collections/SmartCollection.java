@@ -137,6 +137,15 @@ public interface SmartCollection<E> extends Collection<E> {
     SmartCollection<E> replace(Predicate<? super E> predicate, E replacement);
 
     /**
+     * Replaces each occurence of a key that is contained in replacements
+     * with the corresponding value. Modifies the original collection.
+     * 
+     * @param replacements     	Map including all replacements
+     * @return                 	Collection with elements replaced
+     */
+    SmartCollection<E> replace(Map<E, E> replacements);
+    
+    /**
      * Calls the function for each element of the collection and creates a new
      * collection with the return values. The original collection remains
      * unmodified.
@@ -211,15 +220,6 @@ public interface SmartCollection<E> extends Collection<E> {
      * @return                 	True if element exists, otherwise false
      */
     boolean forall(Predicate<? super E> pred);
-
-    /**
-     * Replaces each occurence of a key that is contained in replacements
-     * with the corresponding value. Modifies the original collection.
-     * 
-     * @param replacements     	Map including all replacements
-     * @return                 	Collection with elements replaced
-     */
-    SmartCollection<E> replace(Map<E, E> replacements);
 
     /**
      * Casts all elements of the collecion to the specified type. If that

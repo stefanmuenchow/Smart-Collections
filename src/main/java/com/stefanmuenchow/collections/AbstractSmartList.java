@@ -249,8 +249,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
 
     @Override
     public SmartList<Integer> getIndicesList() {
-        SmartList<Integer> result = new SmartArrayList<Integer>(
-                new ArrayList<Integer>());
+        SmartList<Integer> result = createNewInstance(new ArrayList<Integer>());
         for (int i = 0; i < size(); i++) {
             result.add(i);
         }

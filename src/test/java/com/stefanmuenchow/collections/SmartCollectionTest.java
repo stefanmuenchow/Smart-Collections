@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -220,8 +222,7 @@ public class SmartCollectionTest {
 	@Test
 	public void testJoin() {
 		assertEquals("1 2 3 4 5", list.join(" "));
-		assertEquals("1 2 3 4 5", queue.join(" "));
-		
+		assertEquals("1 2 3 4 5", queue.join(" "));		
 		assertEquals("1 2 3 4 5".length(), set.join(" ").length());
 	}
 
@@ -272,7 +273,13 @@ public class SmartCollectionTest {
 	public void testToArray() {
 		assertArrayEquals(new Integer[] {1,2,3,4,5}, list.toArray(Integer.class));
 		assertArrayEquals(new Integer[] {1,2,3,4,5}, queue.toArray(Integer.class));
-		
-		assertEquals(5, queue.toArray(Integer.class).length);
+		assertEquals(5, set.toArray(Integer.class).length);
+	}
+	
+	@Test
+	public void testToStandardCollection() {
+		assertEquals(new ArrayList<Integer>(list), list.toStandardCollection());
+		assertEquals(new HashSet<Integer>(list), set.toStandardCollection());
+		assertEquals(new LinkedList<Integer>(list), queue.toStandardCollection());
 	}
 }
