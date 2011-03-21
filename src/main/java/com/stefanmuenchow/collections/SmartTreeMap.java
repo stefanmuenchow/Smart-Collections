@@ -24,6 +24,10 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
     public SmartTreeMap(final Map<K, V> map) {
         super(new TreeMap<K, V>(map));
     }
+    
+    public SmartTreeMap(SmartList<K> keys, SmartList<V> vals) {
+    	super(new TreeMap<K, V>(keys.zipWith(vals)));
+    }
 
     /** Helper methods */
 
@@ -75,6 +79,6 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
     
     @Override
     public SortedMap<K, V> toStandardMap() {
-    	return (SortedMap<K, V>) super.toStandardMap();
+    	return (SortedMap<K, V>) getInternalMap();
     }
 }

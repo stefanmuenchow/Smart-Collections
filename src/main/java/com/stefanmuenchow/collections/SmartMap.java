@@ -77,8 +77,8 @@ public interface SmartMap<K, V> extends Map<K, V> {
     SmartMap<K, V> tail() throws UnsupportedOperationException;
 
     /**
-     * Merges this map with anotherMap using the given merge function. A new map 
-     * is created, the original one remains unchanged.
+     * Merges this map with anotherMap using the given merge function. Changes
+     * the original map.
      *
      * @param anotherMap 		Map to merge with
      * @param mergeFunct		Merge function to be used
@@ -87,7 +87,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * 
      * @return 					Resulting map
      */
-    void mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
+    SmartMap<K, V> mergeWith(SmartMap<K, V> anotherMap, BinaryFunction<V, V> mergeFunct);
 
     /**
      * Gets the value to the given key if it exists. Otherwise returns 
@@ -118,7 +118,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @return 					Map containing only entries for which predicate 
      * 							evaluates to true
      */
-    void filter(MapPredicate<? super K, ? super V> predicate);
+    SmartMap<K, V> filter(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Removes all entries from map for which the predicate evaluates to true.
@@ -128,7 +128,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @return 					Map containing only entries for which predicate 
      * 							evaluates to false
      */
-    void remove(MapPredicate<? super K, ? super V> predicate);
+    SmartMap<K, V> remove(MapPredicate<? super K, ? super V> predicate);
 
     /**
      * Searches the map for a given key-value-pair and replaces it with the
@@ -141,17 +141,16 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @param newValue		Replacement value
      * @return 				Map with entries replaced
      */
-    void replace(K seekKey, V seekValue, K newKey, V newValue);
+    SmartMap<K, V> replace(K seekKey, V seekValue, K newKey, V newValue);
 
     /**
-     * Applies the function to each entry of map replacing it with the result 
-     * of function. Returns the resulting map. A new map is created, the 
-     * original one remains unchanged.
+     * Applies the function to each entry of the map and returns a list 
+     * containing the result values. The original map remains unchanged. 
      *
      * @param function		Function applied to each element
-     * @return 				Resulting map
+     * @return 				List of return values
      */
-    <S, R> SmartMap<S, R> map(MapUnaryFunction<KeyValuePair<S, R>, ? super K, ? super V> function);
+    <R> SmartList<R> map(MapUnaryFunction<R, ? super K, ? super V> function);
 
     /**
      * Combines the elements of this map using a binary function and an initial

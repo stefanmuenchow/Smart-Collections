@@ -137,7 +137,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public void mergeWith(final SmartMap<K, V> anotherMap, final BinaryFunction<V, V> mergeFunct) {
+    public SmartMap<K, V> mergeWith(final SmartMap<K, V> anotherMap, final BinaryFunction<V, V> mergeFunct) {
         SmartMap<K, V> resultMap = createNewInstance(internalMap);
         clear();
 
@@ -150,6 +150,8 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
                 internalMap.put(entry.getKey(), entry.getValue());
             }
         }
+        
+        return this;
     }
 
     @Override
@@ -170,7 +172,7 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     }
 
     @Override
-    public void filter(final MapPredicate<? super K, ? super V> predicate) {
+    public SmartMap<K, V> filter(final MapPredicate<? super K, ? super V> predicate) {
         SmartMap<K, V> tempMap = createNewInstance(internalMap);
         clear();
 
@@ -179,10 +181,12 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
                 put(entry.getKey(), entry.getValue());
             }
         }
+        
+        return this;
     }
 
     @Override
-    public void remove(final MapPredicate<? super K, ? super V> predicate) {
+    public SmartMap<K, V> remove(final MapPredicate<? super K, ? super V> predicate) {
         SmartMap<K, V> tempMap = createNewInstance(internalMap);
         clear();
 
@@ -191,28 +195,32 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
                 put(entry.getKey(), entry.getValue());
             }
         }
+        
+        return this;
     }
 
     @Override
-    public void replace(final K seekKey, final V seekValue, final K newKey, final V newValue) {
+    public SmartMap<K, V> replace(final K seekKey, final V seekValue, final K newKey, final V newValue) {
         V foundVal = get(seekKey);
 
         if (foundVal.equals(seekValue)) {
             remove(seekKey);
             put(newKey, newValue);
         }
+        
+        return this;
     }
 
     @Override
-    public <S, R> SmartMap<S, R> map(final MapUnaryFunction<KeyValuePair<S, R>, ? super K, ? super V> function) {
-        SmartMap<S, R> resultMap = createNewInstance(new HashMap<S, R>());
+    public <R> SmartList<R> map(final MapUnaryFunction<R, ? super K, ? super V> function) {
+    	SmartList<R> result = new SmartArrayList<R>();
 
         for (Map.Entry<K, V> entry : internalMap.entrySet()) {
-            KeyValuePair<S, R> mappedEntry = function.apply(entry.getKey(), entry.getValue());
-            resultMap.put(mappedEntry.getKey(), mappedEntry.getValue());
+            R mappedEntry = function.apply(entry.getKey(), entry.getValue());
+            result.add(mappedEntry);
         }
 
-        return resultMap;
+        return result;
     }
 
     @Override
