@@ -17,52 +17,80 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SmartSetTest {
-    private SmartSet<Integer> smartSet = null;
+    private SmartSet<Integer> smartSet1 = null;
+    private SmartSet<Integer> smartSet2 = null;
 
     @Before
     public void setUp() throws Exception {
-        smartSet = new SmartHashSet<Integer>(9, 56, 23);
+        smartSet1 = new SmartHashSet<Integer>(9, 56, 23);
+        smartSet2 = new SmartTreeSet<Integer>(9, 56, 23);
     }
     
     @Test
     public void testIsSubsetOf() {
-    	assertTrue(smartSet.isSubsetOf(new SmartHashSet<Integer>(23, 9, 56)));
-    	assertTrue(smartSet.isSubsetOf(new SmartHashSet<Integer>(23, 9, 56, 10)));
+    	assertTrue(smartSet1.isSubsetOf(new SmartHashSet<Integer>(23, 9, 56)));
+    	assertTrue(smartSet1.isSubsetOf(new SmartHashSet<Integer>(23, 9, 56, 10)));
+    	assertFalse(smartSet1.isSubsetOf(new SmartHashSet<Integer>(11, 22)));
+    	
+    	assertTrue(smartSet2.isSubsetOf(new SmartTreeSet<Integer>(23, 9, 56)));
+    	assertTrue(smartSet2.isSubsetOf(new SmartTreeSet<Integer>(23, 9, 56, 10)));
+    	assertFalse(smartSet2.isSubsetOf(new SmartTreeSet<Integer>(11, 22)));
     }
     
     @Test
     public void testIsProperSubsetOf() {
-    	assertFalse(smartSet.isProperSubsetOf(new SmartHashSet<Integer>(23, 9, 56)));
-    	assertTrue(smartSet.isProperSubsetOf(new SmartHashSet<Integer>(23, 9, 56, 10)));
+    	assertFalse(smartSet1.isProperSubsetOf(new SmartHashSet<Integer>(11, 22)));
+    	assertFalse(smartSet1.isProperSubsetOf(new SmartHashSet<Integer>(23, 9, 56)));
+    	assertTrue(smartSet1.isProperSubsetOf(new SmartHashSet<Integer>(23, 9, 56, 10)));
+    	
+    	assertFalse(smartSet2.isProperSubsetOf(new SmartTreeSet<Integer>(11, 22)));
+    	assertFalse(smartSet2.isProperSubsetOf(new SmartTreeSet<Integer>(23, 9, 56)));
+    	assertTrue(smartSet2.isProperSubsetOf(new SmartTreeSet<Integer>(23, 9, 56, 10)));
     }
     
     @Test
     public void testIsSupersetOf() {
-    	assertTrue(smartSet.isSupersetOf(new SmartHashSet<Integer>(23, 56, 9)));
-    	assertTrue(smartSet.isSupersetOf(new SmartHashSet<Integer>(23, 9)));
+    	assertTrue(smartSet1.isSupersetOf(new SmartHashSet<Integer>(23, 56, 9)));
+    	assertTrue(smartSet1.isSupersetOf(new SmartHashSet<Integer>(23, 9)));
+    	assertFalse(smartSet1.isSupersetOf(new SmartHashSet<Integer>(11, 22)));
+    	
+    	assertTrue(smartSet2.isSupersetOf(new SmartTreeSet<Integer>(23, 56, 9)));
+    	assertTrue(smartSet2.isSupersetOf(new SmartTreeSet<Integer>(23, 9)));
+    	assertFalse(smartSet2.isSupersetOf(new SmartTreeSet<Integer>(11, 22)));
     }
     
     @Test
     public void testIsProperSupersetOf() {
-    	assertFalse(smartSet.isProperSupersetOf(new SmartHashSet<Integer>(23, 56, 9)));
-    	assertTrue(smartSet.isProperSupersetOf(new SmartHashSet<Integer>(23, 9)));
+    	assertFalse(smartSet1.isSupersetOf(new SmartHashSet<Integer>(11, 22)));
+    	assertFalse(smartSet1.isProperSupersetOf(new SmartHashSet<Integer>(23, 56, 9)));
+    	assertTrue(smartSet1.isProperSupersetOf(new SmartHashSet<Integer>(23, 9)));
+    	
+    	assertFalse(smartSet2.isSupersetOf(new SmartTreeSet<Integer>(11, 22)));
+    	assertFalse(smartSet2.isProperSupersetOf(new SmartTreeSet<Integer>(23, 56, 9)));
+    	assertTrue(smartSet2.isProperSupersetOf(new SmartTreeSet<Integer>(23, 9)));
     }
     
     @Test
     public void testUnion() {
     	assertEquals(new SmartHashSet<Integer>(9, 56, 11, 12, 23), 
-    			smartSet.union(new SmartHashSet<Integer>(11, 12)));
+    			smartSet1.union(new SmartHashSet<Integer>(11, 12)));
+    	assertEquals(new SmartTreeSet<Integer>(9, 56, 11, 12, 23), 
+    			smartSet2.union(new SmartTreeSet<Integer>(11, 12)));
     }
     
     @Test
     public void testIntersection() {
     	assertEquals(new SmartHashSet<Integer>(56, 23), 
-    			smartSet.intersection(new SmartHashSet<Integer>(23, 56, 99)));
+    			smartSet1.intersection(new SmartHashSet<Integer>(23, 56, 99)));
+    	assertEquals(new SmartTreeSet<Integer>(56, 23), 
+    			smartSet2.intersection(new SmartTreeSet<Integer>(23, 56, 99)));
     }
     
     @Test
     public void testDifference() {
     	assertEquals(new SmartHashSet<Integer>(56, 23), 
-    			smartSet.difference(new SmartHashSet<Integer>(9)));
+    			smartSet1.difference(new SmartHashSet<Integer>(9)));
+    	assertEquals(new SmartTreeSet<Integer>(56, 23), 
+    			smartSet2.difference(new SmartTreeSet<Integer>(9)));
     }
 }
