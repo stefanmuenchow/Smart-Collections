@@ -10,6 +10,7 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -27,6 +28,14 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
     
     public SmartTreeMap(SmartList<K> keys, SmartList<V> vals) {
     	super(new TreeMap<K, V>(keys.zipWith(vals)));
+    }
+    
+    public SmartTreeMap(Collection<Tuple<K, V>> tupleColl) {
+    	super(new TreeMap<K, V>());
+    	
+    	for (Tuple<K, V> tuple : tupleColl) {
+    		put(tuple.getKey(), tuple.getValue());
+    	}
     }
 
     /** Helper methods */

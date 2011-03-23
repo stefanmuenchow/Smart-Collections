@@ -1,5 +1,6 @@
 package com.stefanmuenchow.collections;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,14 @@ public class SmartHashMap<K, V> extends AbstractSmartMap<K, V> implements
     
     public SmartHashMap(SmartList<K> keys, SmartList<V> vals) {
     	super(new HashMap<K, V>(keys.zipWith(vals)));
+    }
+    
+    public SmartHashMap(Collection<Tuple<K, V>> tupleColl) {
+    	super(new HashMap<K, V>());
+    	
+    	for (Tuple<K, V> tuple : tupleColl) {
+    		put(tuple.getKey(), tuple.getValue());
+    	}
     }
 
     /** Helper methods */
