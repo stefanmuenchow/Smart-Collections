@@ -1,49 +1,49 @@
-package com.stefanmuenchow.collections.arithmetic;
+package com.stefanmuenchow.arithmetic;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class Subtraction implements Operation {
-	public static final Subtraction INSTANCE = new Subtraction();	
-	private Subtraction() { }
+public class Addition implements Operation {
+	public static final Addition INSTANCE = new Addition();
+	private Addition() { }
 
 	@Override
 	public Integer apply(Integer a, Integer b) {
-		return Integer.valueOf(a - b);
+		return Integer.valueOf(a + b);
 	}
 
 	@Override
 	public Long apply(Long a, Long b) {
-		return Long.valueOf(a - b);
+		return Long.valueOf(a + b);
 	}
 
 	@Override
 	public Short apply(Short a, Short b) {
-		return Short.valueOf((short) (a - b));
+		return Short.valueOf((short) (a + b));
 	}
 
 	@Override
 	public Byte apply(Byte a, Byte b) {
-		return Byte.valueOf((byte) (a - b));
+		return Byte.valueOf((byte) (a + b));
 	}
 
 	@Override
 	public Double apply(Double a, Double b) {
-		return Double.valueOf(a - b);
+		return Double.valueOf(a + b);
 	}
 
 	@Override
 	public Float apply(Float a, Float b) {
-		return Float.valueOf(a - b);
+		return Float.valueOf(a + b);
 	}
 
 	@Override
 	public BigDecimal apply(BigDecimal a, BigDecimal b) {
-		return a.subtract(b);
+		return a.add(b);
 	}
 
 	@Override
 	public BigInteger apply(BigInteger a, BigInteger b) {
-		return a.subtract(b);
+		return a.add(b);
 	}
 }

@@ -1,4 +1,4 @@
-package com.stefanmuenchow.collections.arithmetic;
+package com.stefanmuenchow.arithmetic;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

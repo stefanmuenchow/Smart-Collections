@@ -1,10 +1,6 @@
 package com.stefanmuenchow.collections.function;
 
-import com.stefanmuenchow.collections.arithmetic.Addition;
-import com.stefanmuenchow.collections.arithmetic.Arithmetic;
-import com.stefanmuenchow.collections.arithmetic.Division;
-import com.stefanmuenchow.collections.arithmetic.Multiplication;
-import com.stefanmuenchow.collections.arithmetic.Subtraction;
+import com.stefanmuenchow.arithmetic.Arithmetic;
 
 
 public class Functions {
@@ -22,7 +18,7 @@ public class Functions {
     	return new BinaryFunction<T, T>() {
 			@Override
 			public T apply(T input1, T input2) {
-				return Arithmetic.genericOp(input1, input2, Addition.INSTANCE);
+				return Arithmetic.add(input1, input2);
 			}
 		};
     }
@@ -31,7 +27,7 @@ public class Functions {
     	return new BinaryFunction<T, T>() {
 			@Override
 			public T apply(T input1, T input2) {
-				return Arithmetic.genericOp(input1, input2, Subtraction.INSTANCE);
+				return Arithmetic.sub(input1, input2);
 			}
 		};
     }
@@ -40,7 +36,7 @@ public class Functions {
     	return new BinaryFunction<T, T>() {
 			@Override
 			public T apply(T input1, T input2) {
-				return Arithmetic.genericOp(input1, input2, Multiplication.INSTANCE);
+				return Arithmetic.mul(input1, input2);
 			}
 		};
     }
@@ -49,7 +45,7 @@ public class Functions {
     	return new BinaryFunction<T, T>() {
 			@Override
 			public T apply(T input1, T input2) {
-				return Arithmetic.genericOp(input1, input2, Division.INSTANCE);
+				return Arithmetic.div(input1, input2);
 			}
 		};
     }
