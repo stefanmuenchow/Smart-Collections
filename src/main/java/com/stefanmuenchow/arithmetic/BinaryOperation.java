@@ -9,16 +9,18 @@
  * You must not remove this notice, or any other, from this software.
  **/
 
-package com.stefanmuenchow.collections.function;
+package com.stefanmuenchow.arithmetic;
 
-/**
- * Binary Function to be used by special operations on some smart collections,
- * e.g. reduce. For this purpose this interface is implemented by an anonymous
- * class that is passed to the collection function.
- *
- * @author Stefan Muenchow
- */
-public interface MapBinaryFunction<R, K, V> {
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
-    R apply(R input1, K input2key, V input2val);
+public interface BinaryOperation {
+	Integer apply(Integer a, Integer b);
+	Long apply(Long a, Long b);
+	Short apply(Short a, Short b);
+	Byte apply(Byte a, Byte b);
+	Double apply(Double a, Double b);
+	Float apply(Float a, Float b);
+	BigDecimal apply(BigDecimal a, BigDecimal b);
+	BigInteger apply(BigInteger a, BigInteger b);
 }

@@ -194,6 +194,39 @@ public class SmartListTest {
 					}
 				}));
 	}
+	
+	@Test
+	public void testSplitAt() {
+		assertEquals(new Tuple<SmartList<Integer>, SmartList<Integer>>(
+				new SmartArrayList<Integer>(9, 56, 23),
+				new SmartArrayList<Integer>(9, 10)
+			), smartList1.splitAt(3));
+		
+		assertEquals(new Tuple<SmartList<Integer>, SmartList<Integer>>(
+				new SmartLinkedList<Integer>(87, 13, 56),
+				new SmartLinkedList<Integer>(85, 19)
+			), smartList2.splitAt(3));
+	}
+	
+	@Test
+	public void testPartition() {
+		Predicate<Integer> even =  new Predicate<Integer>() {
+			@Override
+			public boolean test(Integer input) {
+				return input % 2 == 0;
+			}
+		};
+		
+		assertEquals(new Tuple<SmartList<Integer>, SmartList<Integer>>(
+				new SmartArrayList<Integer>(56, 10),
+				new SmartArrayList<Integer>(9, 23, 9)
+			), smartList1.partition(even));
+		
+		assertEquals(new Tuple<SmartList<Integer>, SmartList<Integer>>(
+				new SmartLinkedList<Integer>(56),
+				new SmartLinkedList<Integer>(87, 13, 85, 19)
+			), smartList2.partition(even));
+	}
 
 	@Test
 	public void testRemoveDuplicates() {
@@ -221,12 +254,12 @@ public class SmartListTest {
 		expectedMap.put(5, "bar");
 		expectedMap.put(6, "baz");
 		
-		SmartMap<Integer, String> resultMap = new SmartArrayList<Integer>(4, 5, 6)
-				.zipWith(new SmartArrayList<String>("foo", "bar", "baz"));
+		SmartMap<Integer, String> resultMap = new SmartHashMap<Integer, String>(
+				new SmartArrayList<Integer>(4, 5, 6).zipWith(new SmartArrayList<String>("foo", "bar", "baz")));
 		assertEquals(expectedMap, resultMap);
 		
-		SmartMap<Integer, String> resultMap2 = new SmartLinkedList<Integer>(4, 5, 6)
-				.zipWith(new SmartLinkedList<String>("foo", "bar", "baz"));
+		SmartMap<Integer, String> resultMap2 = new SmartHashMap<Integer, String>(
+			new SmartLinkedList<Integer>(4, 5, 6).zipWith(new SmartLinkedList<String>("foo", "bar", "baz")));
 		assertEquals(expectedMap, resultMap2);
 	}
 

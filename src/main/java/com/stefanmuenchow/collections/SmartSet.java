@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -10,8 +11,11 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
+import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
@@ -98,6 +102,58 @@ public interface SmartSet<E> extends Set<E>, SmartCollection<E> {
      */
     SmartSet<E> difference(Set<E> anotherSet);
 
+	/** Overridden methods from SmartCollection */
+    
+    /**
+     * @see SmartCollection#addReturn(Object)
+     */
+    SmartSet<E> addReturn(E elem);
+
+    /**
+     * @see SmartCollection#addAll(Collection)
+     */
+    SmartSet<E> addAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#removeReturn(Object)
+     */
+    SmartSet<E> removeReturn(E elem);
+    
+    /**
+     * @see SmartCollection#removeAllReturn(Collection)
+     */
+    SmartSet<E> removeAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#retainAllReturn(Collection)
+     */
+    SmartSet<E> retainAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#filter(Predicate)
+     */
+    SmartSet<E> filter(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#remove(Predicate)
+     */
+    SmartSet<E> remove(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#replace(Object, Object)
+     */
+    SmartSet<E> replace(E seek, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Predicate, Object)
+     */
+    SmartSet<E> replace(Predicate<? super E> predicate, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Map)
+     */
+    SmartSet<E> replace(Map<E, E> replacements);
+    
     /**
      * @see SmartCollection#map(UnaryFunction)
      */

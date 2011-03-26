@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -10,8 +11,11 @@
 
 package com.stefanmuenchow.collections;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Queue;
 
+import com.stefanmuenchow.collections.function.Predicate;
 import com.stefanmuenchow.collections.function.UnaryFunction;
 
 /**
@@ -37,9 +41,61 @@ public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 	 */
 	SmartQueue<E> offerReturn(E o);
 	
-	/**
-	 * @see SmartCollection#map(UnaryFunction)
-	 */
+	/** Overridden methods from SmartCollection */
+    
+    /**
+     * @see SmartCollection#addReturn(Object)
+     */
+    SmartQueue<E> addReturn(E elem);
+
+    /**
+     * @see SmartCollection#addAll(Collection)
+     */
+    SmartQueue<E> addAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#removeReturn(Object)
+     */
+    SmartQueue<E> removeReturn(E elem);
+    
+    /**
+     * @see SmartCollection#removeAllReturn(Collection)
+     */
+    SmartQueue<E> removeAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#retainAllReturn(Collection)
+     */
+    SmartQueue<E> retainAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#filter(Predicate)
+     */
+    SmartQueue<E> filter(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#remove(Predicate)
+     */
+    SmartQueue<E> remove(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#replace(Object, Object)
+     */
+    SmartQueue<E> replace(E seek, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Predicate, Object)
+     */
+    SmartQueue<E> replace(Predicate<? super E> predicate, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Map)
+     */
+    SmartQueue<E> replace(Map<E, E> replacements);
+    
+    /**
+     * @see SmartCollection#map(UnaryFunction)
+     */
     @Override
     <R> SmartQueue<R> map(UnaryFunction<R, ? super E> function);
 

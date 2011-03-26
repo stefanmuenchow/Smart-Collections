@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -18,16 +19,16 @@ import java.util.TreeSet;
 
 public class SmartTreeSet<E> extends AbstractSmartSet<E> implements SmartSortedSet<E> {
 
+    public SmartTreeSet(final Collection<E> collection) {
+        super(new TreeSet<E>(collection));
+    }
+    
     public SmartTreeSet() {
         this(new TreeSet<E>());
     }
 
     public SmartTreeSet(final E... elems) {
         this(Arrays.asList(elems));
-    }
-
-    public SmartTreeSet(final Collection<E> collection) {
-        super(new TreeSet<E>(collection));
     }
 
     /** Helper methods */
@@ -77,6 +78,21 @@ public class SmartTreeSet<E> extends AbstractSmartSet<E> implements SmartSortedS
     public E last() {
         return getInternalSet().last();
     }
+    
+	@Override
+	public SmartSortedSet<E> smartSubSet(E fromElement, E toElement) {
+		return createNewInstance(subSet(fromElement, toElement));
+	}
+
+	@Override
+	public SmartSortedSet<E> smartHeadSet(E toElement) {
+		return createNewInstance(headSet(toElement));
+	}
+
+	@Override
+	public SmartSortedSet<E> smartTailSet(E fromElement) {
+		return createNewInstance(tailSet(fromElement));
+	}
     
     @Override
     public SortedSet<E> toStandardCollection() {

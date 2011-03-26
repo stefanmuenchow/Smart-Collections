@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -11,20 +12,20 @@
 package com.stefanmuenchow.collections;
 
 public class Tuple<K, V> {
-    private final K key;
-    private final V value;
+    private final K first;
+    private final V second;
 
     public Tuple(final K key, final V value) {
-        this.key = key;
-        this.value = value;
+        this.first = key;
+        this.second = value;
     }
 
-    public K getKey() {
-        return key;
+    public K getFirst() {
+        return first;
     }
 
-    public V getValue() {
-        return value;
+    public V getSecond() {
+        return second;
     }
     
     @Override
@@ -32,8 +33,8 @@ public class Tuple<K, V> {
     	if (obj instanceof Tuple) {
     		@SuppressWarnings("rawtypes")
 			Tuple tuple = (Tuple) obj;
-    		return getKey().equals(tuple.getKey())
-    				&& getValue().equals(tuple.getValue());
+    		return getFirst().equals(tuple.getFirst())
+    				&& getSecond().equals(tuple.getSecond());
     		
     	}
     	
@@ -42,11 +43,11 @@ public class Tuple<K, V> {
     
     @Override
     public int hashCode() {
-    	return getKey().hashCode() ^ getValue().hashCode();
+    	return getFirst().hashCode() ^ getSecond().hashCode();
     }
     
     @Override
     public String toString() {
-    	return "(" + getKey() + "," + getValue() + ")";
+    	return "(" + getFirst() + "," + getSecond() + ")";
     }
 }

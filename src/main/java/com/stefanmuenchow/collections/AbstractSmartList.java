@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.Predicate;
@@ -118,18 +120,6 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     /** ISmartList methods */
 
     @Override
-    public <R> SmartList<R> map(final UnaryFunction<R, ? super E> function) {
-        SmartCollection<R> result = super.map(function);
-        return (SmartList<R>) result;
-    }
-
-    @Override
-    public <T> SmartList<T> castEach(final Class<T> clazz) {
-        SmartCollection<T> result = super.castEach(clazz);
-        return (SmartList<T>) result;
-    }
-
-    @Override
     public E head() {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty, no head element available");
@@ -217,6 +207,22 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
         return resultList;
     }
 
+    public Tuple<SmartList<E>, SmartList<E>> splitAt(int index) {
+    	return new Tuple<SmartList<E>, SmartList<E>>(
+    		take(index),
+    		drop(index)
+    	); 
+    }
+    
+    public Tuple<SmartList<E>, SmartList<E>> partition(Predicate<? super E> pred) {
+    	SmartList<E> temp1 = createNewInstance(internalColl);
+    	SmartList<E> temp2 = createNewInstance(internalColl);
+    	
+    	return new Tuple<SmartList<E>, SmartList<E>>(
+    			temp1.filter(pred), 
+    			temp2.remove(pred));
+    }
+    
     @Override
     public SmartList<E> removeDuplicates() {
         SmartSet<E> resultSet = new SmartHashSet<E>(internalColl);
@@ -235,16 +241,16 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
     }
 
     @Override
-    public <T> SmartMap<E, T> zipWith(final List<T> anotherList) {
-        SmartMap<E, T> resultMap = new SmartHashMap<E, T>();
-        Iterator<E> keys = iterator();
-        Iterator<T> vals = anotherList.iterator();
+    public <T> SmartList<Tuple<E, T>> zipWith(final List<T> anotherList) {
+    	SmartList<Tuple<E, T>> result = new SmartArrayList<Tuple<E, T>>();
+        Iterator<E> left = iterator();
+        Iterator<T> right = anotherList.iterator();
 
-        while (keys.hasNext() && vals.hasNext()) {
-            resultMap.put(keys.next(), vals.next());
+        while (left.hasNext() && right.hasNext()) {
+            result.add(new Tuple<E, T>(left.next(), right.next()));
         }
 
-        return resultMap;
+        return result;
     }
 
     @Override
@@ -287,6 +293,58 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
         }
 
         return i;
+    }
+    
+    /** Overridden methods from SmartCollection */
+    
+    public SmartList<E> addReturn(E elem) {
+    	return (SmartList<E>) super.addReturn(elem);
+    }
+
+    public SmartList<E> addAllReturn(Collection<E> coll) {
+    	return (SmartList<E>) super.addAllReturn(coll);
+    }
+    
+    public SmartList<E> removeReturn(E elem) {
+    	return (SmartList<E>) super.removeReturn(elem);
+    }
+    
+    public SmartList<E> removeAllReturn(Collection<E> coll) {
+    	return (SmartList<E>) super.removeAllReturn(coll);
+    }
+    
+    public SmartList<E> retainAllReturn(Collection<E> coll) {
+    	return (SmartList<E>) super.retainAllReturn(coll);
+    }
+    
+    public SmartList<E> filter(Predicate<? super E> predicate) {
+    	return (SmartList<E>) super.filter(predicate);
+    }
+    
+    public SmartList<E> remove(Predicate<? super E> predicate) {
+    	return (SmartList<E>) super.remove(predicate);
+    }
+    
+    public SmartList<E> replace(E seek, E replacement) {
+    	return (SmartList<E>) super.replace(seek, replacement);
+    }
+    
+    public SmartList<E> replace(Predicate<? super E> predicate, E replacement) {
+    	return (SmartList<E>) super.replace(predicate, replacement);
+    }
+    
+    public SmartList<E> replace(Map<E, E> replacements) {
+    	return (SmartList<E>) super.replace(replacements);
+    }
+    
+    @Override
+    public <R> SmartList<R> map(final UnaryFunction<R, ? super E> function) {
+        return (SmartList<R>) super.map(function);
+    }
+
+    @Override
+    public <T> SmartList<T> castEach(final Class<T> clazz) {
+        return (SmartList<T>) super.castEach(clazz);
     }
     
     @Override

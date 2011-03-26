@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file epl-v10.html at the root of this distribution.
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ * You must not remove this notice, or any other, from this software.
+ **/
+
 package com.stefanmuenchow.arithmetic;
 
 import java.math.BigDecimal;
@@ -23,24 +34,23 @@ public class Arithmetic {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T extends Number> T genericOp(T a, T b, Operation op) {
-		Class<? extends Number> clazz = a.getClass();
+	public static <T extends Number> T genericOp(T a, T b, BinaryOperation op) {
 		
-		if (clazz.equals(Integer.class)) {
+		if (a instanceof Integer) {
 			return (T) op.apply((Integer) a, (Integer) b);
-		} else if (clazz.equals(Long.class)) {
+		} else if (a instanceof Long) {
 			return (T) op.apply((Long) a, (Long) b);
-		} else if (clazz.equals(Short.class)) {
+		} else if (a instanceof Short) {
 			return (T) op.apply((Short) a, (Short) b);
-		} else if (clazz.equals(Byte.class)) {
+		} else if (a instanceof Byte) {
 			return (T) op.apply((Byte) a, (Byte) b);
-		} else if (clazz.equals(Double.class)) {
+		} else if (a instanceof Double) {
 			return (T) op.apply((Double) a, (Double) b);
-		} else if (clazz.equals(Float.class)) {
+		} else if (a instanceof Float) {
 			return (T) op.apply((Float) a, (Float) b);
-		} else if (clazz.equals(BigDecimal.class)) {
+		} else if (a instanceof BigDecimal) {
 			return (T) op.apply((BigDecimal) a, (BigDecimal) b);
-		} else if (clazz.equals(BigInteger.class)) {
+		} else if (a instanceof BigInteger) {
 			return (T) op.apply((BigInteger) a, (BigInteger) b);
 		} else {
 			throw new InvalidParameterException("One of the parameters is of an invalid class");

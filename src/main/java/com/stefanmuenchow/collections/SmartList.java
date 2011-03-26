@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -12,6 +13,7 @@ package com.stefanmuenchow.collections;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.stefanmuenchow.collections.function.Predicate;
@@ -144,6 +146,25 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      * @return 			Postfix list
      */
     SmartList<E> dropWhile(Predicate<? super E> pred);
+    
+    /**
+     * Splits the list at the given index and returns a tuple containing both
+     * sublists.
+     * 
+     * @param index		Index to split list at
+     * @return			Tuple containg two lists
+     */
+    Tuple<SmartList<E>, SmartList<E>> splitAt(int index);
+    
+    /**
+     * Partitions a list by the given predicate. The result is a Tuple of two 
+     * lists: One list containing all elements that match the predicate and
+     * a second list containing all elements that do not match the predicate.
+     *  
+     * @param pred		Predicate to select elements
+     * @return			Tuple containg two lists
+     */
+    Tuple<SmartList<E>, SmartList<E>> partition(Predicate<? super E> pred);
 
     /**
      * Removes all duplicate values from list. Modifies the original list.
@@ -162,16 +183,16 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
     SmartList<E> intersperse(E elem);
 
     /**
-     * Creates a {@link SmartMap} from two lists. Elements in the first list 
-     * are used as keys, elements at the corresponding position in the second 
-     * list are used as values. If one of the lists has less elements than the 
-     * other one, these elements are discarded.
+     * Creates a {@link SmartList} from two lists. The resulting list contains
+     * tuples with one element from the first list and one element from the 
+     * second list (at the corresponding index) as its second value. If one 
+     * list has less elements than the other one, these elements are discarded.
      *
      * @param anotherList	List to zip with
-     * @return 				{@link SmartMap} build from the two lists
+     * @return 				{@link SmartList} build from the two lists
      */
-    <T> SmartMap<E, T> zipWith(List<T> anotherList);
-
+    <T> SmartList<Tuple<E, T>> zipWith(List<T> anotherList);
+    
     /**
      * Returns a list of the list indices. The original list remains unchanged.
      *
@@ -203,7 +224,59 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      * @return 				List size without null elements
      */
     int sizeWithoutNulls();
+    
+    /** Overridden methods from SmartCollection */
+    
+    /**
+     * @see SmartCollection#addReturn(Object)
+     */
+    SmartList<E> addReturn(E elem);
 
+    /**
+     * @see SmartCollection#addAll(Collection)
+     */
+    SmartList<E> addAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#removeReturn(Object)
+     */
+    SmartList<E> removeReturn(E elem);
+    
+    /**
+     * @see SmartCollection#removeAllReturn(Collection)
+     */
+    SmartList<E> removeAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#retainAllReturn(Collection)
+     */
+    SmartList<E> retainAllReturn(Collection<E> coll);
+    
+    /**
+     * @see SmartCollection#filter(Predicate)
+     */
+    SmartList<E> filter(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#remove(Predicate)
+     */
+    SmartList<E> remove(Predicate<? super E> predicate);
+    
+    /**
+     * @see SmartCollection#replace(Object, Object)
+     */
+    SmartList<E> replace(E seek, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Predicate, Object)
+     */
+    SmartList<E> replace(Predicate<? super E> predicate, E replacement);
+    
+    /**
+     * @see SmartCollection#replace(Map)
+     */
+    SmartList<E> replace(Map<E, E> replacements);
+    
     /**
      * @see SmartCollection#map(UnaryFunction)
      */

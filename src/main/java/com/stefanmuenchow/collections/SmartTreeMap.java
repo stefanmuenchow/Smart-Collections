@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Stefan Muenchow. All rights reserved.
+ * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -18,23 +19,23 @@ import java.util.TreeMap;
 
 public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartSortedMap<K, V> {
 
-    public SmartTreeMap() {
-        super(new TreeMap<K, V>());
-    }
-
     public SmartTreeMap(final Map<K, V> map) {
         super(new TreeMap<K, V>(map));
     }
     
+    public SmartTreeMap() {
+        this(new TreeMap<K, V>());
+    }
+    
     public SmartTreeMap(SmartList<K> keys, SmartList<V> vals) {
-    	super(new TreeMap<K, V>(keys.zipWith(vals)));
+    	this(keys.zipWith(vals));
     }
     
     public SmartTreeMap(Collection<Tuple<K, V>> tupleColl) {
-    	super(new TreeMap<K, V>());
+    	this(new TreeMap<K, V>());
     	
     	for (Tuple<K, V> tuple : tupleColl) {
-    		put(tuple.getKey(), tuple.getValue());
+    		put(tuple.getFirst(), tuple.getSecond());
     	}
     }
 
@@ -85,6 +86,21 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
     public K lastKey() {
         return getInternalMap().lastKey();
     }
+
+	@Override
+	public SmartSortedMap<K, V> smartSubMap(K fromKey, K toKey) {
+		return createNewInstance(subMap(fromKey, toKey));
+	}
+
+	@Override
+	public SmartSortedMap<K, V> smartHeadMap(K toKey) {
+		return createNewInstance(headMap(toKey));
+	}
+
+	@Override
+	public SmartSortedMap<K, V> smartTailMap(K fromKey) {
+		return createNewInstance(tailMap(fromKey));
+	}
     
     @Override
     public SortedMap<K, V> toStandardMap() {
