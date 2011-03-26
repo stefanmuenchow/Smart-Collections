@@ -11,8 +11,10 @@
 
 package com.stefanmuenchow.collections.function;
 
+import java.util.Collection;
+
 public class Predicates {
-    public static final <T extends Number> Predicate<T> evenPred(final Class<T> clazz) {
+    public static final <T extends Number> Predicate<T> evenPred() {
         return new Predicate<T>() {
 
             @Override
@@ -22,13 +24,90 @@ public class Predicates {
         };
     }
     
-    public static final <T extends Number> Predicate<T> oddPred(final Class<T> clazz) {
+    public static final <T extends Number> Predicate<T> oddPred() {
         return new Predicate<T>() {
 
             @Override
             public boolean test(final T input) {
-                return !evenPred(clazz).test(input);
+                return !evenPred().test(input);
             }
         };
+    }
+    
+    public static final Predicate<String> containsPred(final String obj) {
+    	return new Predicate<String>() {
+    		private final String toFind = obj;
+    		
+			@Override
+			public boolean test(String input) {
+				return input.contains(toFind);
+			}
+		};
+    }
+    
+    public static final Predicate<Collection<Object>> containsPred(final Object obj) {
+    	return new Predicate<Collection<Object>>() {
+    		private final Object toFind = obj;
+    		
+			@Override
+			public boolean test(Collection<Object> input) {
+				return input.contains(toFind);
+			}
+		};
+    }
+    
+    public static final <T> Predicate<T> equalsPred(final T obj) {
+    	return new Predicate<T>() {
+    		private final T toComp = obj;
+    		
+			@Override
+			public boolean test(T input) {
+				return input.equals(toComp);
+			}
+		};
+    }
+    
+    public static final <T extends Comparable<T>> Predicate<T> lessThanPred(final T obj) {
+    	return new Predicate<T>() {
+    		private final T toComp = obj;
+    		
+			@Override
+			public boolean test(T input) {
+				return input.compareTo(toComp) < 0;
+			}
+		};
+    }
+    
+    public static final <T extends Comparable<T>> Predicate<T> lessEqualThanPred(final T obj) {
+    	return new Predicate<T>() {
+    		private final T toComp = obj;
+    		
+			@Override
+			public boolean test(T input) {
+				return input.compareTo(toComp) <= 0;
+			}
+		};
+    }
+    
+    public static final <T extends Comparable<T>> Predicate<T> greaterThanPred(final T obj) {
+    	return new Predicate<T>() {
+    		private final T toComp = obj;
+    		
+			@Override
+			public boolean test(T input) {
+				return input.compareTo(toComp) > 0;
+			}
+		};
+    }
+    
+    public static final <T extends Comparable<T>> Predicate<T> greaterEqualThanPred(final T obj) {
+    	return new Predicate<T>() {
+    		private final T toComp = obj;
+    		
+			@Override
+			public boolean test(T input) {
+				return input.compareTo(toComp) >= 0;
+			}
+		};
     }
 }

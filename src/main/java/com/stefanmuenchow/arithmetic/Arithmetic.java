@@ -18,23 +18,35 @@ import java.security.InvalidParameterException;
 public class Arithmetic {
 	
 	public static <T extends Number> T add(T a, T b) {
-		return genericOp(a, b, Addition.INSTANCE);
+		return binaryOperation(a, b, Addition.INSTANCE);
 	}
 	
 	public static <T extends Number> T sub(T a, T b) {
-		return genericOp(a, b, Subtraction.INSTANCE);
+		return binaryOperation(a, b, Subtraction.INSTANCE);
 	}
 	
 	public static <T extends Number> T mul(T a, T b) {
-		return genericOp(a, b, Multiplication.INSTANCE);
+		return binaryOperation(a, b, Multiplication.INSTANCE);
 	}
 	
 	public static <T extends Number> T div(T a, T b) {
-		return genericOp(a, b, Division.INSTANCE);
+		return binaryOperation(a, b, Division.INSTANCE);
+	}
+
+	public static <T extends Number> T min(T a, T b) {
+		return binaryOperation(a, b, Minimum.INSTANCE);
+	}
+	
+	public static <T extends Number> T max(T a, T b) {
+		return binaryOperation(a, b, Maximum.INSTANCE);
+	}
+	
+	public static <T extends Number> T compareTo(T a, T b) {
+		return binaryOperation(a, b, Comparison.INSTANCE);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T extends Number> T genericOp(T a, T b, BinaryOperation op) {
+	private static <T extends Number> T binaryOperation(T a, T b, BinaryOperation op) {
 		
 		if (a instanceof Integer) {
 			return (T) op.apply((Integer) a, (Integer) b);
@@ -52,6 +64,38 @@ public class Arithmetic {
 			return (T) op.apply((BigDecimal) a, (BigDecimal) b);
 		} else if (a instanceof BigInteger) {
 			return (T) op.apply((BigInteger) a, (BigInteger) b);
+		} else {
+			throw new InvalidParameterException("One of the parameters is of an invalid class");
+		}
+	}
+	
+	public static <T extends Number> T negate(T a) {
+		return unaryOperation(a, Negation.INSTANCE);
+	}
+	
+	public static <T extends Number> T abs(T a) {
+		return unaryOperation(a, Absolute.INSTANCE);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends Number> T unaryOperation(T a, UnaryOperation op) {
+		
+		if (a instanceof Integer) {
+			return (T) op.apply((Integer) a);
+		} else if (a instanceof Long) {
+			return (T) op.apply((Long) a);
+		} else if (a instanceof Short) {
+			return (T) op.apply((Short) a);
+		} else if (a instanceof Byte) {
+			return (T) op.apply((Byte) a);
+		} else if (a instanceof Double) {
+			return (T) op.apply((Double) a);
+		} else if (a instanceof Float) {
+			return (T) op.apply((Float) a);
+		} else if (a instanceof BigDecimal) {
+			return (T) op.apply((BigDecimal) a);
+		} else if (a instanceof BigInteger) {
+			return (T) op.apply((BigInteger) a);
 		} else {
 			throw new InvalidParameterException("One of the parameters is of an invalid class");
 		}

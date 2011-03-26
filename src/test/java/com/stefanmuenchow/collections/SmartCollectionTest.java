@@ -52,7 +52,6 @@ public class SmartCollectionTest {
 		assertEquals(new SmartArrayList<Integer>(1,2,3,4,5,6), list.addReturn(6));
 		assertEquals(new SmartHashSet<Integer>(1,2,3,4,5,6), set.addReturn(6));
 		assertEquals(new SmartLinkedQueue<Integer>(1,2,3,4,5,6), queue.addReturn(6));
-//		assertEquals(new SmartArrayList<Integer>(87, 13, 11, 1, 56, 85, 19), smartList2.addReturn(3, 1));
 	}
 
 	@Test
@@ -64,8 +63,6 @@ public class SmartCollectionTest {
 		assertEquals(new SmartArrayList<Integer>(1,2,3,4,5,6,7), list.addAllReturn(toAdd));
 		assertEquals(new SmartHashSet<Integer>(1,2,3,4,5,6,7), set.addAllReturn(toAdd));
 		assertEquals(new SmartLinkedQueue<Integer>(1,2,3,4,5,6,7), queue.addAllReturn(toAdd));
-//		assertEquals(new SmartArrayList<Integer>(87, 13, 11, 56, 23, 24, 85, 19),
-//				smartList2.addAllReturn(4, toAdd));
 	}
 
 	@Test
@@ -74,12 +71,6 @@ public class SmartCollectionTest {
 		assertEquals(new SmartHashSet<Integer>(1,2,4,5), set.removeReturn(3));
 		assertEquals(new SmartLinkedQueue<Integer>(1,2,4,5), queue.removeReturn(3));
 	}
-
-//	@Test
-//	public void testRemoveIndexReturn() {
-//		assertEquals(new SmartArrayList<Integer>(87, 13, 11, 85, 19),
-//				smartList2.removeIndexReturn(3));
-//	}
 
 	@Test
 	public void testRemoveAllReturn() {
