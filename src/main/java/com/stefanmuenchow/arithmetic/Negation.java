@@ -3,6 +3,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for negation operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Negation implements UnaryOperation {
 	public static final Negation INSTANCE = new Negation();
 	private Negation() { }

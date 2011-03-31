@@ -14,6 +14,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for addition operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Addition implements BinaryOperation {
 	public static final Addition INSTANCE = new Addition();
 	private Addition() { }

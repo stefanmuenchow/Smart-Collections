@@ -14,6 +14,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for multiplication operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Multiplication implements BinaryOperation {
 	public static final Multiplication INSTANCE = new Multiplication();	
 	private Multiplication() { }

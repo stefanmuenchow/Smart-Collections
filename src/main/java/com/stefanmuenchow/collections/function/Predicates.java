@@ -13,7 +13,18 @@ package com.stefanmuenchow.collections.function;
 
 import java.util.Collection;
 
+/**
+ * Factory class for often used predicates.
+ * 
+ * @author Stefan Münchow
+ */
 public class Predicates {
+	
+	/**
+	 * Predicate to test if a number is even.
+	 * 
+	 * @return		Even predicate
+	 */
     public static final <T extends Number> Predicate<T> evenPred() {
         return new Predicate<T>() {
 
@@ -24,6 +35,11 @@ public class Predicates {
         };
     }
     
+    /**
+     * Predicate to test if a number is odd.
+     * 
+     * @return		Odd predicate
+     */
     public static final <T extends Number> Predicate<T> oddPred() {
         return new Predicate<T>() {
 
@@ -34,6 +50,12 @@ public class Predicates {
         };
     }
     
+    /**
+     * Predicate to test if a string is contained in another string.
+     * 
+     * @param obj	String to be contained
+     * @return		Contains predicate
+     */
     public static final Predicate<String> containsPred(final String obj) {
     	return new Predicate<String>() {
     		private final String toFind = obj;
@@ -45,6 +67,12 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if an object is contained in a collection.
+     * 
+     * @param obj	Object to be contained
+     * @return		Contains predicate
+     */
     public static final Predicate<Collection<Object>> containsPred(final Object obj) {
     	return new Predicate<Collection<Object>>() {
     		private final Object toFind = obj;
@@ -56,6 +84,13 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if two objects are equal. Uses the 
+     * {@link Object#equals(Object)} method.
+     * 
+     * @param obj	Object to check on equality
+     * @return		Equals predicate
+     */
     public static final <T> Predicate<T> equalsPred(final T obj) {
     	return new Predicate<T>() {
     		private final T toComp = obj;
@@ -67,6 +102,13 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if an object is less than another one according
+     * to the {@link Comparable#compareTo(Object)} method.
+     * 
+     * @param obj	Object to compare to
+     * @return		LessThan function
+     */
     public static final <T extends Comparable<T>> Predicate<T> lessThanPred(final T obj) {
     	return new Predicate<T>() {
     		private final T toComp = obj;
@@ -78,6 +120,13 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if an object is less or equal than another one 
+     * according to the {@link Comparable#compareTo(Object)} method.
+     * 
+     * @param obj	Object to compare to
+     * @return		LessEqualThan function
+     */
     public static final <T extends Comparable<T>> Predicate<T> lessEqualThanPred(final T obj) {
     	return new Predicate<T>() {
     		private final T toComp = obj;
@@ -89,6 +138,13 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if an object is greater than another one according
+     * to the {@link Comparable#compareTo(Object)} method.
+     * 
+     * @param obj	Object to compare to
+     * @return		GreaterThan function
+     */
     public static final <T extends Comparable<T>> Predicate<T> greaterThanPred(final T obj) {
     	return new Predicate<T>() {
     		private final T toComp = obj;
@@ -100,6 +156,13 @@ public class Predicates {
 		};
     }
     
+    /**
+     * Predicate to test if an object is greater or equal than another one 
+     * according to the {@link Comparable#compareTo(Object)} method.
+     * 
+     * @param obj	Object to compare to
+     * @return		GreaterEqualThan function
+     */
     public static final <T extends Comparable<T>> Predicate<T> greaterEqualThanPred(final T obj) {
     	return new Predicate<T>() {
     		private final T toComp = obj;

@@ -3,6 +3,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for absolute operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Absolute implements UnaryOperation {
 	public static final Absolute INSTANCE = new Absolute();
 	private Absolute() { }

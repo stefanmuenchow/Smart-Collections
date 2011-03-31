@@ -14,6 +14,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for division operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Division implements BinaryOperation {
 	public static final Division INSTANCE = new Division();	
 	private Division() { }

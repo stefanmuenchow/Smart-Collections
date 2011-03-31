@@ -225,6 +225,20 @@ public interface SmartList<E> extends List<E>, SmartCollection<E> {
      */
     int sizeWithoutNulls();
     
+    /**
+     * Zips this list with anotherList, so that the elements at corresponding
+     * positions form a tuple and and performs a map operation on the resulting 
+     * list of tuples. 
+     * 
+     * @see 				SmartList#zipWith(List)
+     * @see					SmartList#map(UnaryFunction)
+     * 
+     * @param anotherList	List to zip with
+     * @param function		Function for map operation
+     * @return				Resulting list
+     */
+    <R, T> SmartList<R> map(List<T> anotherList, UnaryFunction<R, Tuple<E, T>> function);
+    
     /** Overridden methods from SmartCollection */
     
     /**

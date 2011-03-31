@@ -14,13 +14,75 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Interface defining operations for unary functions. Each implementation
+ * defines one actual operation (like strategy pattern by the gang of four).
+ * 
+ * @author Stefan Münchow
+ */
 public interface UnaryOperation {
+	
+	/**
+	 * Applies this unary operation for an {@link Integer} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Integer apply(Integer a);
+	
+	/**
+	 * Applies this unary operation for a {@link Long} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Long apply(Long a);
+	
+	/**
+	 * Applies this unary operation for a {@link Short} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Short apply(Short a);
+	
+	/**
+	 * Applies this unary operation for a {@link Byte} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Byte apply(Byte a);
+	
+	/**
+	 * Applies this unary operation for a {@link Double} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Double apply(Double a);
+	
+	/**
+	 * Applies this unary operation for a {@link Float} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	Float apply(Float a);
+	
+	/**
+	 * Applies this unary operation for a {@link BigDecimal} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	BigDecimal apply(BigDecimal a);
+	
+	/**
+	 * Applies this unary operation for a {@link BigInteger} parameter.
+	 * 
+	 * @param a		Operand
+	 * @return		Result of operation
+	 */
 	BigInteger apply(BigInteger a);
 }

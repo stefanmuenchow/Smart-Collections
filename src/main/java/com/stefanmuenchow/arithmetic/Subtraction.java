@@ -14,6 +14,11 @@ package com.stefanmuenchow.arithmetic;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Strategy for subtraction operation.
+ * 
+ * @author Stefan Münchow
+ */
 public class Subtraction implements BinaryOperation {
 	public static final Subtraction INSTANCE = new Subtraction();	
 	private Subtraction() { }

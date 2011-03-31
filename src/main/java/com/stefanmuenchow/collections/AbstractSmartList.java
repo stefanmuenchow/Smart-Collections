@@ -295,6 +295,11 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
         return i;
     }
     
+    @Override
+    public <R, T> SmartList<R> map(List<T> anotherList, UnaryFunction<R, Tuple<E, T>> function) {
+    	return zipWith(anotherList).map(function);
+    }
+    
     /** Overridden methods from SmartCollection */
     
     public SmartList<E> addReturn(E elem) {

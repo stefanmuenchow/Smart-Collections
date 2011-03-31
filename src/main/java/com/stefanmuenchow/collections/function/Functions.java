@@ -12,9 +12,21 @@
 package com.stefanmuenchow.collections.function;
 
 import com.stefanmuenchow.arithmetic.Arithmetic;
+import com.stefanmuenchow.collections.Tuple;
 
-
+/**
+ * Factory class for often used functions.
+ * 
+ * @author Stefan Münchow
+ */
 public class Functions {
+	
+	/**
+	 * Function that converts an object to a string by calling its 
+	 * {@link Object#toString()} method.
+	 * 
+	 * @return		ToString function
+	 */
     public static final UnaryFunction<String, Object> toStringFn() {
         return new UnaryFunction<String, Object>() {
 
@@ -25,11 +37,22 @@ public class Functions {
         };
     }
     
-    public static final BinaryFunction<String, String> appendStringFn() {
-    	return joinStringsFn("");
+    /**
+     * Function that appends two strings.
+     * 
+     * @return		Append function
+     */
+    public static final BinaryFunction<String, String> appendFn() {
+    	return joinFn("");
     }
     
-    public static final BinaryFunction<String, String> joinStringsFn(final String str) {
+    /**
+     * Function that joins two strings with a given delimiter.
+     * 
+     * @param str	Delimiter to join strings with
+     * @return		Join function
+     */
+    public static final BinaryFunction<String, String> joinFn(final String str) {
     	return new BinaryFunction<String, String>() {
     		private final String joinStr = str;
     		
@@ -40,7 +63,13 @@ public class Functions {
 		};
     }
    
-    public static final <T extends Number> UnaryFunction<T, T> incrementFn(final T inc) {
+    /**
+     * Function to increment a number with.
+     * 
+     * @param inc	Incrementor to be used
+     * @return		Increment function
+     */
+    public static final <T extends Number> UnaryFunction<T, T> incFn(final T inc) {
     	return new UnaryFunction<T, T>() {
     		private final T toInc = inc;
     		
@@ -51,7 +80,13 @@ public class Functions {
 		};
     }
     
-    public static final <T extends Number> UnaryFunction<T, T> decrementFn(final T dec) {
+    /**
+     * Function to decrement a number with.
+     * 
+     * @param dec	Decrementor to be used
+     * @return		Decrement function
+     */
+    public static final <T extends Number> UnaryFunction<T, T> decFn(final T dec) {
     	return new UnaryFunction<T, T>() {
     		private final T toDec = dec;
     		
@@ -62,6 +97,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to add two numbers.
+     * 	 
+     * @return		Add function
+     */
     public static final <T extends Number> BinaryFunction<T, T> addFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -71,6 +111,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to subtract two numbers.
+     * 	 
+     * @return		Subtract function
+     */
     public static final <T extends Number> BinaryFunction<T, T> subtractFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -80,6 +125,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to multiply two numbers.
+	 *
+     * @return		Multiply function
+     */
     public static final <T extends Number> BinaryFunction<T, T> multiplyFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -89,6 +139,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to divide two numbers.
+     * 
+     * @return		Divide function
+     */
     public static final <T extends Number> BinaryFunction<T, T> divideFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -98,6 +153,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to get the minimum of two numbers.
+     * 
+     * @return		Minimum function
+     */
     public static final <T extends Number> BinaryFunction<T, T> minFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -107,6 +167,11 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to get the maximum of two numbers.
+     * 
+     * @return		Maximum function
+     */
     public static final <T extends Number> BinaryFunction<T, T> maxFn() {
     	return new BinaryFunction<T, T>() {
 			@Override
@@ -116,15 +181,11 @@ public class Functions {
 		};
     }
     
-    public static final <T extends Number> BinaryFunction<T, T> compareToFn() {
-    	return new BinaryFunction<T, T>() {
-			@Override
-			public T apply(T input1, T input2) {
-				return Arithmetic.compareTo(input1, input2);
-			}
-		};
-    }
-    
+    /**
+     * Function to get the absolute of a number.
+     * 
+     * @return		Absolute function
+     */
     public static final <T extends Number> UnaryFunction<T, T> absFn() {
     	return new UnaryFunction<T, T>() {
 			@Override
@@ -134,11 +195,31 @@ public class Functions {
 		};
     }
     
+    /**
+     * Function to negate a number.
+     * 
+     * @return		Negation function
+     */
     public static final <T extends Number> UnaryFunction<T, T> negateFn() {
     	return new UnaryFunction<T, T>() {
 			@Override
 			public T apply(T input) {
 				return Arithmetic.negate(input);
+			}
+		};
+    }
+    
+    /**
+     * Function to compare two Objects by using their {@link Comparable#compareTo(Object)}
+     * function.
+     * 
+     * @return		CompareTo function
+     */
+    public static final <T extends Comparable<T>> UnaryFunction<Integer, Tuple<T, T>> compareToFn() {
+    	return new UnaryFunction<Integer, Tuple<T,T>>() {
+			@Override
+			public Integer apply(Tuple<T, T> input) {
+				return input.getFirst().compareTo(input.getSecond());
 			}
 		};
     }

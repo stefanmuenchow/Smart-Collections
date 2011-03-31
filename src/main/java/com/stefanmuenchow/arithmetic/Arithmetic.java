@@ -15,34 +15,77 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.InvalidParameterException;
 
+/**
+ * Provides generic arithmetic for all subclasses of class {@link Number}.
+ *  
+ * @author Stefan Münchow
+ */
 public class Arithmetic {
 	
+	/**
+	 * Generic add function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Sum of both operands
+	 */
 	public static <T extends Number> T add(T a, T b) {
 		return binaryOperation(a, b, Addition.INSTANCE);
 	}
 	
+	/**
+	 * Generic subtraction function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Difference of both operands
+	 */
 	public static <T extends Number> T sub(T a, T b) {
 		return binaryOperation(a, b, Subtraction.INSTANCE);
 	}
 	
+	/**
+	 * Generic multiplication function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Product of both operands
+	 */
 	public static <T extends Number> T mul(T a, T b) {
 		return binaryOperation(a, b, Multiplication.INSTANCE);
 	}
 	
+	/**
+	 * Generic division function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Quotient of both operands
+	 */
 	public static <T extends Number> T div(T a, T b) {
 		return binaryOperation(a, b, Division.INSTANCE);
 	}
 
+	/**
+	 * Generic minimum function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Minimum of both operands
+	 */
 	public static <T extends Number> T min(T a, T b) {
 		return binaryOperation(a, b, Minimum.INSTANCE);
 	}
 	
+	/**
+	 * Generic maximum function.
+	 *  
+	 * @param a		First operand
+	 * @param b		Second operand
+	 * @return		Maximum of both operands
+	 */
 	public static <T extends Number> T max(T a, T b) {
 		return binaryOperation(a, b, Maximum.INSTANCE);
-	}
-	
-	public static <T extends Number> T compareTo(T a, T b) {
-		return binaryOperation(a, b, Comparison.INSTANCE);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -69,10 +112,22 @@ public class Arithmetic {
 		}
 	}
 	
+	/**
+	 * Generic negation function.
+	 * 
+	 * @param a		Operand
+	 * @return		Negated operand
+	 */
 	public static <T extends Number> T negate(T a) {
 		return unaryOperation(a, Negation.INSTANCE);
 	}
 	
+	/**
+	 * Generic absolute function.
+	 * 
+	 * @param a		Operand
+	 * @return		absolute value of operand
+	 */
 	public static <T extends Number> T abs(T a) {
 		return unaryOperation(a, Absolute.INSTANCE);
 	}

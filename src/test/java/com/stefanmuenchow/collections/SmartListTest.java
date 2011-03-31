@@ -23,6 +23,8 @@ import com.stefanmuenchow.collections.function.Predicate;
 public class SmartListTest {
 	private SmartList<Integer> smartList1 = null;
 	private SmartList<Integer> smartList2 = null;
+	
+	// TODO Test für map(List, Function)
 
 	@Before
 	public void setUp() throws Exception {
