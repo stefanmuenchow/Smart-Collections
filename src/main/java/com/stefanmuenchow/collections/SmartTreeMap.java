@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -17,6 +17,14 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * Implementation of the {@link SmartSortedMap} interface decorating a
+ * standard {@link TreeMap}.
+ * 
+ * @see TreeMap
+ * 
+ * @author Stefan Münchow
+ */
 public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartSortedMap<K, V> {
 
     public SmartTreeMap(final Map<K, V> map) {

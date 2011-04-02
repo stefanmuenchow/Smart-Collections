@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -9,10 +9,9 @@
  * You must not remove this notice, or any other, from this software.
  **/
 
-package com.stefanmuenchow.collections.function;
+package com.stefanmuenchow.functors;
 
 import com.stefanmuenchow.arithmetic.Arithmetic;
-import com.stefanmuenchow.collections.Tuple;
 
 /**
  * Factory class for often used functions.
@@ -22,7 +21,7 @@ import com.stefanmuenchow.collections.Tuple;
 public class Functions {
 	
 	/**
-	 * Function that converts an object to a string by calling its 
+	 * Function that converts an object to a string by calling its
 	 * {@link Object#toString()} method.
 	 * 
 	 * @return		ToString function
@@ -37,28 +36,26 @@ public class Functions {
         };
     }
     
-    /**
-     * Function that appends two strings.
-     * 
-     * @return		Append function
-     */
-    public static final BinaryFunction<String, String> appendFn() {
-    	return joinFn("");
+	/**
+	 * Function that concatenates two strings.
+	 * 
+	 * @return		concatStrings function
+	 */
+    public static final BinaryFunction<String, String> concatStringsFn() {
+    	return joinStringsFn("");
     }
     
-    /**
-     * Function that joins two strings with a given delimiter.
-     * 
-     * @param str	Delimiter to join strings with
-     * @return		Join function
-     */
-    public static final BinaryFunction<String, String> joinFn(final String str) {
+	/**
+	 * Function that concatenates two strings, inserting the specified delimiter
+	 * between them.
+	 * 
+	 * @return		joinStrings function
+	 */
+    public static final BinaryFunction<String, String> joinStringsFn(final String delimiter) {
     	return new BinaryFunction<String, String>() {
-    		private final String joinStr = str;
-    		
 			@Override
 			public String apply(String input1, String input2) {
-				return input1 + joinStr + input2;
+				return input1 + delimiter + input2;
 			}
 		};
     }
@@ -71,11 +68,9 @@ public class Functions {
      */
     public static final <T extends Number> UnaryFunction<T, T> incFn(final T inc) {
     	return new UnaryFunction<T, T>() {
-    		private final T toInc = inc;
-    		
 			@Override
 			public T apply(T input) {
-				return Arithmetic.add(input, toInc);
+				return Arithmetic.add(input, inc);
 			}
 		};
     }
@@ -88,11 +83,9 @@ public class Functions {
      */
     public static final <T extends Number> UnaryFunction<T, T> decFn(final T dec) {
     	return new UnaryFunction<T, T>() {
-    		private final T toDec = dec;
-    		
 			@Override
 			public T apply(T input) {
-				return Arithmetic.sub(input, toDec);
+				return Arithmetic.sub(input, dec);
 			}
 		};
     }
@@ -205,21 +198,6 @@ public class Functions {
 			@Override
 			public T apply(T input) {
 				return Arithmetic.negate(input);
-			}
-		};
-    }
-    
-    /**
-     * Function to compare two Objects by using their {@link Comparable#compareTo(Object)}
-     * function.
-     * 
-     * @return		CompareTo function
-     */
-    public static final <T extends Comparable<T>> UnaryFunction<Integer, Tuple<T, T>> compareToFn() {
-    	return new UnaryFunction<Integer, Tuple<T,T>>() {
-			@Override
-			public Integer apply(Tuple<T, T> input) {
-				return input.getFirst().compareTo(input.getSecond());
 			}
 		};
     }

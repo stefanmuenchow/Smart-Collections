@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -20,9 +20,14 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.stefanmuenchow.collections.function.Predicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.functors.Predicate;
+import com.stefanmuenchow.functors.UnaryFunction;
 
+/**
+ * Abstract base class for list types.
+ *  
+ * @author Stefan Münchow
+ */
 public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> implements SmartList<E> {
 
     protected AbstractSmartList(final Collection<E> innerList) {
@@ -242,7 +247,7 @@ public abstract class AbstractSmartList<E> extends AbstractSmartCollection<E> im
 
     @Override
     public <T> SmartList<Tuple<E, T>> zipWith(final List<T> anotherList) {
-    	SmartList<Tuple<E, T>> result = new SmartArrayList<Tuple<E, T>>();
+    	SmartList<Tuple<E, T>> result = createNewInstance(new ArrayList<Tuple<E, T>>());
         Iterator<E> left = iterator();
         Iterator<T> right = anotherList.iterator();
 

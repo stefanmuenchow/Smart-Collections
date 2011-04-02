@@ -17,9 +17,9 @@ import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.Predicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.Predicate;
+import com.stefanmuenchow.functors.UnaryFunction;
 
 public class SmartCollectionTest {
 	private SmartList<Integer> list;

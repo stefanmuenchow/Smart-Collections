@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -15,6 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Implementation of the {@link SmartList} interface decorating a
+ * standard {@link ArrayList}.
+ * 
+ * @see ArrayList
+ * 
+ * @author Stefan Münchow
+ */
 public class SmartArrayList<E> extends AbstractSmartList<E> implements SmartList<E> {
 
     public SmartArrayList(final Collection<E> internalColl) {

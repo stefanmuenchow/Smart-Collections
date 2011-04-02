@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -22,10 +22,10 @@ import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.MapBinaryFunction;
-import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.MapUnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.MapBinaryFunction;
+import com.stefanmuenchow.functors.MapPredicate;
+import com.stefanmuenchow.functors.MapUnaryFunction;
 
 public class SmartMapTest {
     private SmartMap<Integer, String> smartMap1 = null;

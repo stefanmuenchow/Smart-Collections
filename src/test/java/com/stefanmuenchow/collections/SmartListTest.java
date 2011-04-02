@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
  * which can be found in the file epl-v10.html at the root of this distribution.
@@ -18,14 +18,13 @@ import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stefanmuenchow.collections.function.Predicate;
+import com.stefanmuenchow.functors.Predicate;
+import com.stefanmuenchow.functors.UnaryFunction;
 
 public class SmartListTest {
 	private SmartList<Integer> smartList1 = null;
 	private SmartList<Integer> smartList2 = null;
 	
-	// TODO Test für map(List, Function)
-
 	@Before
 	public void setUp() throws Exception {
 		smartList1 = new SmartArrayList<Integer>(9, 56, 23, 9, 10);
@@ -299,5 +298,21 @@ public class SmartListTest {
 	public void testSizeWithoutNulls() {
 		assertEquals(3, new SmartArrayList<Integer>(1, null, 3, 2, null).sizeWithoutNulls());
 		assertEquals(3, new SmartLinkedList<Integer>(1, null, 3, 2, null).sizeWithoutNulls());
+	}
+	
+	@Test
+	public void testMap() {
+		UnaryFunction<Integer, Tuple<Integer, Integer>> addFn =
+			new UnaryFunction<Integer, Tuple<Integer,Integer>>() {
+				@Override
+				public Integer apply(Tuple<Integer, Integer> input) {
+					return input.getFirst() + input.getSecond();
+				}
+			};
+		
+		assertEquals(new SmartArrayList<Integer>(96, 69, 79, 94, 29), 
+					 smartList1.map(smartList2, addFn));
+		assertEquals(new SmartLinkedList<Integer>(96, 69, 79, 94, 29), 
+				 smartList2.map(smartList1, addFn));
 	}
 }

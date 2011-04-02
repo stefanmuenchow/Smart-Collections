@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.Predicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.Predicate;
+import com.stefanmuenchow.functors.UnaryFunction;
 
 /**
  * The root interface of the smart collection hierarchy. Extends the java
@@ -34,7 +34,7 @@ import com.stefanmuenchow.collections.function.UnaryFunction;
  * @see SmartSet
  * @see SmartSortedSet
  *
- * @author Stefan Muenchow
+ * @author Stefan Münchow
  */
 public interface SmartCollection<E> extends Collection<E> {
     

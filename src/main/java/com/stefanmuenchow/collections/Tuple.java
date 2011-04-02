@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -11,6 +11,13 @@
 
 package com.stefanmuenchow.collections;
 
+
+/**
+ * Simple tuple implementation. A tuple is a pair of two values of any desired 
+ * type.
+ *  
+ * @author Stefan Münchow
+ */
 public class Tuple<K, V> {
     private final K first;
     private final V second;
@@ -20,10 +27,20 @@ public class Tuple<K, V> {
         this.second = value;
     }
 
+    /**
+     * Get first value.
+     * 
+     * @return	First value
+     */
     public K getFirst() {
         return first;
     }
 
+    /**
+     * Get second value.
+     * 
+     * @return	Second value
+     */
     public V getSecond() {
         return second;
     }

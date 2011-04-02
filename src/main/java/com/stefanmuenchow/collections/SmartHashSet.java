@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -15,6 +15,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * Implementation of the {@link SmartSet} interface decorating a
+ * standard {@link HashSet}.
+ * 
+ * @see HashSet
+ * 
+ * @author Stefan Münchow
+ */
 public class SmartHashSet<E> extends AbstractSmartSet<E> implements SmartSet<E> {
 
     public SmartHashSet(final Collection<E> collection) {

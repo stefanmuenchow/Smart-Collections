@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -18,11 +18,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.MapBinaryFunction;
-import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.MapUnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.MapBinaryFunction;
+import com.stefanmuenchow.functors.MapPredicate;
+import com.stefanmuenchow.functors.MapUnaryFunction;
 
+/**
+ * Abstract base class for map types.
+ * 
+ * @author Stefan Münchow
+ */
 public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
     protected final Map<K, V> internalMap;
 

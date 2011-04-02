@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -9,16 +9,22 @@
  * You must not remove this notice, or any other, from this software.
  **/
 
-package com.stefanmuenchow.collections.function;
+package com.stefanmuenchow.functors;
 
 /**
- * Binary Function to be used by special operations on some smart collections,
- * e.g. reduce. For this purpose this interface is implemented by an anonymous
+ * Predicate used by smart collection functions. Checks a condition based on a
+ * single value. For this purpose this interface is implemented by an anonymous
  * class that is passed to the collection function.
  *
- * @author Stefan Muenchow
+ * @author Stefan Münchow
  */
-public interface MapBinaryFunction<R, K, V> {
+public interface Predicate<E> {
 
-    R apply(R input1, K input2key, V input2val);
+    /**
+     * Checks a predicate based on a single value.
+     *
+     * @param input     Input value
+     * @return true / false
+     */
+    boolean test(E input);
 }

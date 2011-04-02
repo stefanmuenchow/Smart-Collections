@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -9,23 +9,25 @@
  * You must not remove this notice, or any other, from this software.
  **/
 
-package com.stefanmuenchow.collections.function;
+package com.stefanmuenchow.functors;
 
 /**
- * Unary Function to be used by special operations on some smart collections,
- * e.g. map. For this purpose this interface is implemented by an anonymous
+ * Binary function to be used by special operations on some smart collections,
+ * e.g. reduce. For this purpose this interface is implemented by an anonymous
  * class that is passed to the collection function.
  *
- * @author Stefan Muenchow
+ * @author Stefan Münchow
  */
-public interface UnaryFunction<R, E> {
+public interface BinaryFunction<R, E> {
 
     /**
      * Executes this function.
      *
-     * @param input
-     *            Input parameter
+     * @param input1
+     *            Input parameter 1
+     * @param input2
+     *            Input parameter 2
      * @return Result
      */
-    R apply(E input);
+    R apply(R input1, E input2);
 }

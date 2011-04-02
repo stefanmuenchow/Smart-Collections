@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -14,10 +14,10 @@ package com.stefanmuenchow.collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.MapBinaryFunction;
-import com.stefanmuenchow.collections.function.MapPredicate;
-import com.stefanmuenchow.collections.function.MapUnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.MapBinaryFunction;
+import com.stefanmuenchow.functors.MapPredicate;
+import com.stefanmuenchow.functors.MapUnaryFunction;
 
 /**
  * A SmartMap is an object that maps keys to values. There can be no duplicate
@@ -27,7 +27,7 @@ import com.stefanmuenchow.collections.function.MapUnaryFunction;
  * @see SmartHashMap
  * @see SmartTreeMap
  *
- * @author Stefan Muenchow
+ * @author Stefan Münchow
  */
 public interface SmartMap<K, V> extends Map<K, V> {
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Stefan Muenchow. All rights reserved.
+ * Copyright (c) Stefan Münchow. All rights reserved.
  * 
  * The use and distribution terms for this software are covered by the
  * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
@@ -19,10 +19,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.stefanmuenchow.collections.function.BinaryFunction;
-import com.stefanmuenchow.collections.function.Predicate;
-import com.stefanmuenchow.collections.function.UnaryFunction;
+import com.stefanmuenchow.functors.BinaryFunction;
+import com.stefanmuenchow.functors.Predicate;
+import com.stefanmuenchow.functors.UnaryFunction;
 
+/**
+ * Abstract base class for all Collection types.
+ *  
+ * @author Stefan Münchow
+ */
 public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
     protected Collection<E> internalColl;
 
