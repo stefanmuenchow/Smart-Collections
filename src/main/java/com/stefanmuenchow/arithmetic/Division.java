@@ -20,8 +20,23 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Division implements BinaryOperation {
-	public static final Division INSTANCE = new Division();	
+	private static Division INSTANCE = null;
+	
 	private Division() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Division getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Division();
+		}
+		
+		return INSTANCE;
+	}
+
 
 	@Override
 	public Integer apply(Integer a, Integer b) {

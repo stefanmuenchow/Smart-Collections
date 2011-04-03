@@ -20,8 +20,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Multiplication implements BinaryOperation {
-	public static final Multiplication INSTANCE = new Multiplication();	
+	private static Multiplication INSTANCE = null;
+	
 	private Multiplication() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Multiplication getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Multiplication();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a, Integer b) {

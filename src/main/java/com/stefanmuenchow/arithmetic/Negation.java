@@ -9,8 +9,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Negation implements UnaryOperation {
-	public static final Negation INSTANCE = new Negation();
+	private static Negation INSTANCE = null;
+	
 	private Negation() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Negation getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Negation();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a) {

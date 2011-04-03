@@ -9,8 +9,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Minimum implements BinaryOperation {
-	public static final Minimum INSTANCE = new Minimum();
+	private static Minimum INSTANCE = null;
+	
 	private Minimum() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Minimum getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Minimum();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a, Integer b) {

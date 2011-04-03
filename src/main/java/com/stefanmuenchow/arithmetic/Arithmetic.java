@@ -30,7 +30,7 @@ public class Arithmetic {
 	 * @return		Sum of both operands
 	 */
 	public static <T extends Number> T add(T a, T b) {
-		return binaryOperation(a, b, Addition.INSTANCE);
+		return binaryOperation(a, b, Addition.getInstance());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class Arithmetic {
 	 * @return		Difference of both operands
 	 */
 	public static <T extends Number> T sub(T a, T b) {
-		return binaryOperation(a, b, Subtraction.INSTANCE);
+		return binaryOperation(a, b, Subtraction.getInstance());
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class Arithmetic {
 	 * @return		Product of both operands
 	 */
 	public static <T extends Number> T mul(T a, T b) {
-		return binaryOperation(a, b, Multiplication.INSTANCE);
+		return binaryOperation(a, b, Multiplication.getInstance());
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class Arithmetic {
 	 * @return		Quotient of both operands
 	 */
 	public static <T extends Number> T div(T a, T b) {
-		return binaryOperation(a, b, Division.INSTANCE);
+		return binaryOperation(a, b, Division.getInstance());
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Arithmetic {
 	 * @return		Minimum of both operands
 	 */
 	public static <T extends Number> T min(T a, T b) {
-		return binaryOperation(a, b, Minimum.INSTANCE);
+		return binaryOperation(a, b, Minimum.getInstance());
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Arithmetic {
 	 * @return		Maximum of both operands
 	 */
 	public static <T extends Number> T max(T a, T b) {
-		return binaryOperation(a, b, Maximum.INSTANCE);
+		return binaryOperation(a, b, Maximum.getInstance());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -119,7 +119,7 @@ public class Arithmetic {
 	 * @return		Negated operand
 	 */
 	public static <T extends Number> T negate(T a) {
-		return unaryOperation(a, Negation.INSTANCE);
+		return unaryOperation(a, Negation.getInstance());
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public class Arithmetic {
 	 * @return		absolute value of operand
 	 */
 	public static <T extends Number> T abs(T a) {
-		return unaryOperation(a, Absolute.INSTANCE);
+		return unaryOperation(a, Absolute.getInstance());
 	}
 	
 	@SuppressWarnings("unchecked")

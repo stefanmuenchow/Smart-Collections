@@ -26,14 +26,29 @@ import java.util.Map;
 public class SmartHashMap<K, V> extends AbstractSmartMap<K, V> implements
         SmartMap<K, V> {
 
+	/**
+	 * Creates a new instance containig all entries of the specified map.
+	 * 
+	 * @param map	Entries to be contained
+	 */
     public SmartHashMap(final Map<K, V> map) {
         super(new HashMap<K, V>(map));
     }
     
+    /**
+     * Creates a new empty map.
+     */
     public SmartHashMap() {
         this(new HashMap<K, V>());
     }
     
+    /**
+     * Creates a new map from a list of tuples. Each tuple is converted to a map
+     * entry by using the first value as entry key and the second value as entry 
+     * value.
+     * 
+     * @param tupleColl		Collection of tuples
+     */
     public SmartHashMap(Collection<Tuple<K, V>> tupleColl) {
     	this(new HashMap<K, V>());
     	
@@ -42,11 +57,17 @@ public class SmartHashMap<K, V> extends AbstractSmartMap<K, V> implements
     	}
     }
     
+    /**
+     * Creates a new map from two lists, using each element of the first list 
+     * as a key and the element at the corresponding position in the second 
+     * list as its value.
+     * 
+     * @param keys		List containing keys
+     * @param vals		List containing values
+     */
     public SmartHashMap(SmartList<K> keys, SmartList<V> vals) {
     	this(keys.zipWith(vals));
     }
-
-    /** Helper methods */
 
     @Override
     protected SmartMap<K, V> createNewInstance() {

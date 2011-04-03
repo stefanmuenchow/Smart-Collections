@@ -20,8 +20,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Subtraction implements BinaryOperation {
-	public static final Subtraction INSTANCE = new Subtraction();	
+	private static Subtraction INSTANCE = null;
+	
 	private Subtraction() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Subtraction getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Subtraction();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a, Integer b) {

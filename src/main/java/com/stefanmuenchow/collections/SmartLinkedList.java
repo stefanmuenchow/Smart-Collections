@@ -25,19 +25,31 @@ import java.util.LinkedList;
  */
 public class SmartLinkedList<E> extends AbstractSmartList<E> implements SmartList<E> {
 
-    public SmartLinkedList(final Collection<E> collection) {
-        super(new LinkedList<E>(collection));
+	/**
+	 * Creates a new instance containing all elements of the specified 
+	 * collection.
+	 * 
+	 * @param coll		Elements to be contained
+	 */
+    public SmartLinkedList(final Collection<E> coll) {
+        super(new LinkedList<E>(coll));
     }
     
+    /**
+     * Creates a new empty list.
+     */
     public SmartLinkedList() {
         this(new LinkedList<E>());
     }
 
+    /**
+     * Creates a new instance containing all specified elements.
+     * 
+     * @param elems		Elements to be contained
+     */
     public SmartLinkedList(final E... elems) {
         this(Arrays.asList(elems));
     }
-
-    /** Helper methods */
 
     @Override
     protected SmartList<E> createNewInstance() {

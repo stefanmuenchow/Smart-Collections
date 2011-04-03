@@ -27,19 +27,31 @@ import java.util.TreeSet;
  */
 public class SmartTreeSet<E> extends AbstractSmartSet<E> implements SmartSortedSet<E> {
 
-    public SmartTreeSet(final Collection<E> collection) {
-        super(new TreeSet<E>(collection));
+	/**
+	 * Creates a new instance containing all elements of the specified 
+	 * collection.
+	 * 
+	 * @param coll		Elements to be contained
+	 */
+    public SmartTreeSet(final Collection<E> coll) {
+        super(new TreeSet<E>(coll));
     }
     
+    /**
+     * Creates a new empty set.
+     */
     public SmartTreeSet() {
         this(new TreeSet<E>());
     }
 
+    /**
+     * Creates a new instance containing all specified elements.
+     * 
+     * @param elems		Elements to be contained
+     */
     public SmartTreeSet(final E... elems) {
         this(Arrays.asList(elems));
     }
-
-    /** Helper methods */
 
     private SortedSet<E> getInternalSet() {
         return (SortedSet<E>) internalColl;

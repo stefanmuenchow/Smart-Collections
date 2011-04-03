@@ -9,8 +9,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Maximum implements BinaryOperation {
-	public static final Maximum INSTANCE = new Maximum();
+	private static Maximum INSTANCE = null;
+	
 	private Maximum() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Maximum getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Maximum();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a, Integer b) {

@@ -9,8 +9,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Absolute implements UnaryOperation {
-	public static final Absolute INSTANCE = new Absolute();
+	private static Absolute INSTANCE = null;
+	
 	private Absolute() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Absolute getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Absolute();
+		}
+		
+		return INSTANCE;
+	}
 	
 	@Override
 	public Integer apply(Integer a) {

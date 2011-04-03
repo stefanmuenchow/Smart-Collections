@@ -25,19 +25,31 @@ import java.util.Collection;
  */
 public class SmartArrayList<E> extends AbstractSmartList<E> implements SmartList<E> {
 
-    public SmartArrayList(final Collection<E> internalColl) {
-        super(new ArrayList<E>(internalColl));
+	/**
+	 * Creates a new instance containing all elements of the specified 
+	 * collection.
+	 * 
+	 * @param coll		Elements to be contained
+	 */
+    public SmartArrayList(final Collection<E> coll) {
+        super(new ArrayList<E>(coll));
     }
     
+    /**
+     * Creates a new empty list.
+     */
     public SmartArrayList() {
         this(new ArrayList<E>());
     }
 
+    /**
+     * Creates a new instance containing all specified elements.
+     * 
+     * @param elems		Elements to be contained
+     */
     public SmartArrayList(final E... elems) {
         this(Arrays.asList(elems));
     }
-
-    /** Helper methods */
 
     @Override
     protected SmartList<E> createNewInstance() {

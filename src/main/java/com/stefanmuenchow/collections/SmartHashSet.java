@@ -25,19 +25,31 @@ import java.util.HashSet;
  */
 public class SmartHashSet<E> extends AbstractSmartSet<E> implements SmartSet<E> {
 
-    public SmartHashSet(final Collection<E> collection) {
-        super(new HashSet<E>(collection));
+	/**
+	 * Creates a new instance containing all elements of the specified 
+	 * collection.
+	 * 
+	 * @param coll		Elements to be contained
+	 */
+    public SmartHashSet(final Collection<E> coll) {
+        super(new HashSet<E>(coll));
     }
     
+    /**
+     * Creates a new empty set.
+     */
     public SmartHashSet() {
         this(new HashSet<E>());
     }
 
+    /**
+     * Creates a new instance containing all specified elements.
+     * 
+     * @param elems		Elements to be contained
+     */
     public SmartHashSet(final E... elems) {
         this(Arrays.asList(elems));
     }
-
-    /** Helper methods */
 
     @Override
     protected SmartSet<E> createNewInstance() {

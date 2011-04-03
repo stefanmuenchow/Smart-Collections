@@ -56,13 +56,11 @@ public class Predicates {
      * @param obj	String to be contained
      * @return		Contains predicate
      */
-    public static final Predicate<String> containsPred(final String obj) {
+    public static final Predicate<String> stringContainsPred(final String obj) {
     	return new Predicate<String>() {
-    		private final String toFind = obj;
-    		
 			@Override
 			public boolean test(String input) {
-				return input.contains(toFind);
+				return input.contains(obj);
 			}
 		};
     }
@@ -73,13 +71,11 @@ public class Predicates {
      * @param obj	Object to be contained
      * @return		Contains predicate
      */
-    public static final Predicate<Collection<Object>> containsPred(final Object obj) {
-    	return new Predicate<Collection<Object>>() {
-    		private final Object toFind = obj;
-    		
+    public static final Predicate<Collection<? extends Object>> containsPred(final Object obj) {
+    	return new Predicate<Collection<? extends Object>>() {
 			@Override
-			public boolean test(Collection<Object> input) {
-				return input.contains(toFind);
+			public boolean test(Collection<? extends Object> input) {
+				return input.contains(obj);
 			}
 		};
     }
@@ -93,11 +89,9 @@ public class Predicates {
      */
     public static final <T> Predicate<T> equalsPred(final T obj) {
     	return new Predicate<T>() {
-    		private final T toComp = obj;
-    		
 			@Override
 			public boolean test(T input) {
-				return input.equals(toComp);
+				return input.equals(obj);
 			}
 		};
     }
@@ -111,11 +105,9 @@ public class Predicates {
      */
     public static final <T extends Comparable<T>> Predicate<T> lessThanPred(final T obj) {
     	return new Predicate<T>() {
-    		private final T toComp = obj;
-    		
 			@Override
 			public boolean test(T input) {
-				return input.compareTo(toComp) < 0;
+				return input.compareTo(obj) < 0;
 			}
 		};
     }
@@ -129,11 +121,9 @@ public class Predicates {
      */
     public static final <T extends Comparable<T>> Predicate<T> lessEqualThanPred(final T obj) {
     	return new Predicate<T>() {
-    		private final T toComp = obj;
-    		
 			@Override
 			public boolean test(T input) {
-				return input.compareTo(toComp) <= 0;
+				return input.compareTo(obj) <= 0;
 			}
 		};
     }
@@ -147,11 +137,9 @@ public class Predicates {
      */
     public static final <T extends Comparable<T>> Predicate<T> greaterThanPred(final T obj) {
     	return new Predicate<T>() {
-    		private final T toComp = obj;
-    		
 			@Override
 			public boolean test(T input) {
-				return input.compareTo(toComp) > 0;
+				return input.compareTo(obj) > 0;
 			}
 		};
     }
@@ -165,11 +153,9 @@ public class Predicates {
      */
     public static final <T extends Comparable<T>> Predicate<T> greaterEqualThanPred(final T obj) {
     	return new Predicate<T>() {
-    		private final T toComp = obj;
-    		
 			@Override
 			public boolean test(T input) {
-				return input.compareTo(toComp) >= 0;
+				return input.compareTo(obj) >= 0;
 			}
 		};
     }

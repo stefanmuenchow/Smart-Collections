@@ -31,19 +31,31 @@ import com.stefanmuenchow.functors.UnaryFunction;
  */
 public class SmartLinkedQueue<E> extends AbstractSmartCollection<E> implements SmartQueue<E> {
 
-    public SmartLinkedQueue(final Collection<E> collection) {
-        super(new LinkedList<E>(collection));
+	/**
+	 * Creates a new instance containing all elements of the specified 
+	 * collection.
+	 * 
+	 * @param coll		Elements to be contained
+	 */
+    public SmartLinkedQueue(final Collection<E> coll) {
+        super(new LinkedList<E>(coll));
     }
     
+    /**
+     * Creates a new empty queue.
+     */
     public SmartLinkedQueue() {
         this(new LinkedList<E>());
     }
 
+    /**
+     * Creates a new instance containing all specified elements.
+     * 
+     * @param elems		Elements to be contained
+     */
     public SmartLinkedQueue(final E... elems) {
         this(Arrays.asList(elems));
     }
-
-    /** Helper methods */
 
     private Queue<E> getInternalQueue() {
         return (Queue<E>) internalColl;

@@ -20,8 +20,22 @@ import java.math.BigInteger;
  * @author Stefan Münchow
  */
 public class Addition implements BinaryOperation {
-	public static final Addition INSTANCE = new Addition();
+	private static Addition INSTANCE = null;
+	
 	private Addition() { }
+	
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return	Singleton instance
+	 */
+	public static Addition getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Addition();
+		}
+		
+		return INSTANCE;
+	}
 
 	@Override
 	public Integer apply(Integer a, Integer b) {
