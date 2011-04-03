@@ -32,16 +32,16 @@ import com.stefanmuenchow.functors.UnaryFunction;
  */
 public interface SmartQueue<E> extends Queue<E>, SmartCollection<E> {
 
-	/**
-	 * Inserts the specified element at the end of this queue. Changes the
-	 * original queue.
-	 * 
-	 * @param o		Element to insert
-	 * @return		Queue with element added.
-	 */
-	SmartQueue<E> offerReturn(E o);
-	
-	/** Overridden methods from SmartCollection */
+    /**
+     * Inserts the specified element at the end of this queue. Changes the
+     * original queue.
+     * 
+     * @param o        Element to insert
+     * @return         Queue with element added.
+     */
+    SmartQueue<E> offerReturn(E o);
+    
+    /** Overridden methods from SmartCollection */
     
     /**
      * @see SmartCollection#addReturn(Object)
