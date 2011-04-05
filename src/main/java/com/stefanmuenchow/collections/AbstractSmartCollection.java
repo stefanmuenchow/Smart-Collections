@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.Predicate;
 import com.stefanmuenchow.functors.UnaryFunction;
+import com.stefanmuenchow.functors.VoidFunction;
 
 /**
  * Abstract base class for all Collection types.
@@ -298,6 +299,13 @@ public abstract class AbstractSmartCollection<E> implements SmartCollection<E> {
         }
 
         return true;
+    }
+    
+    @Override
+	public void foreach(VoidFunction<? super E> function) {
+    	for (E elem : internalColl) {
+    		function.apply(elem);
+    	}
     }
 
     @Override

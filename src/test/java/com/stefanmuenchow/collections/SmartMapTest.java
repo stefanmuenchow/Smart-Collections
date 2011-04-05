@@ -26,6 +26,7 @@ import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.MapBinaryFunction;
 import com.stefanmuenchow.functors.MapPredicate;
 import com.stefanmuenchow.functors.MapUnaryFunction;
+import com.stefanmuenchow.functors.MapVoidFunction;
 
 public class SmartMapTest {
     private SmartMap<Integer, String> smartMap1 = null;
@@ -336,6 +337,21 @@ public class SmartMapTest {
     	
         assertTrue(smartMap1.forall(keyAndValLess10));
         assertTrue(smartMap2.forall(keyAndValLess10));
+    }
+    
+    @Test
+    public void testForeach() {
+    	final SmartList<String> names = new SmartArrayList<String>();
+    	
+    	MapVoidFunction<Integer, String> collectNamesFn = new MapVoidFunction<Integer, String>() {
+			@Override
+			public void apply(Integer key, String value) {
+				names.add(value);
+			}
+		};
+		
+		smartMap1.foreach(collectNamesFn);
+		assertEquals(names, new SmartArrayList<String>(smartMap1.values()));
     }
 
     @Test

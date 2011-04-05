@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.Predicate;
 import com.stefanmuenchow.functors.UnaryFunction;
+import com.stefanmuenchow.functors.VoidFunction;
 
 /**
  * The root interface of the smart collection hierarchy. Extends the java
@@ -221,6 +222,14 @@ public interface SmartCollection<E> extends Collection<E> {
      * @return                 	True if element exists, otherwise false
      */
     boolean forall(Predicate<? super E> pred);
+    
+    /**
+     * Applies a function to each element of the collection discarding the
+     * result value. Can be used for causing side-effects. 
+     * 
+     * @param function			Function to be applied
+     */
+    void foreach(VoidFunction<? super E> function);
 
     /**
      * Casts all elements of the collecion to the specified type. If that

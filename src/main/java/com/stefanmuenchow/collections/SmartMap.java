@@ -18,6 +18,7 @@ import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.MapBinaryFunction;
 import com.stefanmuenchow.functors.MapPredicate;
 import com.stefanmuenchow.functors.MapUnaryFunction;
+import com.stefanmuenchow.functors.MapVoidFunction;
 
 /**
  * A SmartMap is an object that maps keys to values. There can be no duplicate
@@ -204,6 +205,14 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * @return 					True if all elements matche, otherwise false.
      */
     boolean forall(MapPredicate<? super K, ? super V> predicate);
+    
+    /**
+     * Applies a function to each entry of the map discarding the
+     * result value. Can be used for causing side-effects. 
+     * 
+     * @param function			Function to be applied
+     */
+    void foreach(MapVoidFunction<? super K, ? super V> function);
 
     /**
      * Checks if this map describes a bijective function. This is the case when

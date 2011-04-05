@@ -22,6 +22,7 @@ import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.MapBinaryFunction;
 import com.stefanmuenchow.functors.MapPredicate;
 import com.stefanmuenchow.functors.MapUnaryFunction;
+import com.stefanmuenchow.functors.MapVoidFunction;
 
 /**
  * Abstract base class for map types.
@@ -286,6 +287,13 @@ public abstract class AbstractSmartMap<K, V> implements SmartMap<K, V> {
         }
 
         return true;
+    }
+    
+    @Override
+    public void foreach(MapVoidFunction<? super K, ? super V> function) {
+    	for (Map.Entry<K, V> entry : internalMap.entrySet()) {
+    		function.apply(entry.getKey(), entry.getValue());
+    	}
     }
 
     @Override

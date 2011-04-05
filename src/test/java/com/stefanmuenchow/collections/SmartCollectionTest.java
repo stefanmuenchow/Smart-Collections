@@ -20,6 +20,7 @@ import org.junit.Test;
 import com.stefanmuenchow.functors.BinaryFunction;
 import com.stefanmuenchow.functors.Predicate;
 import com.stefanmuenchow.functors.UnaryFunction;
+import com.stefanmuenchow.functors.VoidFunction;
 
 public class SmartCollectionTest {
 	private SmartList<Integer> list;
@@ -251,6 +252,24 @@ public class SmartCollectionTest {
 		assertFalse(list.forall(greaterThan3));
 		assertFalse(set.forall(greaterThan3));
 		assertFalse(queue.forall(greaterThan3));
+	}
+	
+	@Test
+	public void testForeach() {
+		SmartList<Integer> tempList = new SmartArrayList<Integer>(list);
+		
+		VoidFunction<Integer> remFromOtherFn = new VoidFunction<Integer>() {
+			@Override
+			public void apply(Integer input) {
+				set.remove(input);
+				queue.remove(input);
+			}
+		};
+		
+		list.foreach(remFromOtherFn);
+		assertEquals(tempList, list);
+		assertEquals(new SmartHashSet<Integer>(), set);
+		assertEquals(new SmartLinkedQueue<Integer>(), queue);
 	}
 
 	@Test
