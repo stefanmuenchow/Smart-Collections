@@ -12,7 +12,8 @@ public interface MapVoidFunction<K, V> {
 	/**
 	 * Executes this function.
 	 * 
-	 * @param input		Input parameter
+     * @param key		Key of Map.Entry
+     * @param value		Value of Map.Entry
 	 */
 	void apply(K key, V value);
 }

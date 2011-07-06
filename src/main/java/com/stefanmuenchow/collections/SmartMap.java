@@ -96,7 +96,7 @@ public interface SmartMap<K, V> extends Map<K, V> {
      * defaultVal.
      *
      * @param key				Key to get value to
-     * @param defaultVa			Default value
+     * @param defaultVal		Default value
      * @return 					Value to given key or defaultVal
      */
     V get(K key, V defaultVal);

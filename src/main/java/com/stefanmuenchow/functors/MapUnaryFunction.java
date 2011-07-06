@@ -23,8 +23,9 @@ public interface MapUnaryFunction<R, K, V> {
     /**
      * Executes this function.
      *
-     * @param input
-     *            Input parameter
+     * @param key		Key of Map.Entry
+     * @param val		Value of Map.Entry
+     * 
      * @return Result
      */
     R apply(K key, V val);

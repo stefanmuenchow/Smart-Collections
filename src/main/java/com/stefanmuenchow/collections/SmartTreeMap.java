@@ -48,7 +48,8 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
      * entry by using the first value as entry key and the second value as entry 
      * value.
      * 
-     * @param tupleColl		Collection of tuples
+     * @param keys		List containing keys
+     * @param vals		List containing values
      */
     public SmartTreeMap(SmartList<K> keys, SmartList<V> vals) {
     	this(keys.zipWith(vals));
@@ -59,8 +60,7 @@ public class SmartTreeMap<K, V> extends AbstractSmartMap<K, V> implements SmartS
      * as a key and the element at the corresponding position in the second 
      * list as its value.
      * 
-     * @param keys		List containing keys
-     * @param vals		List containing values
+     * @param tupleColl		Collection of tuples
      */
     public SmartTreeMap(Collection<Tuple<K, V>> tupleColl) {
     	this(new TreeMap<K, V>());
