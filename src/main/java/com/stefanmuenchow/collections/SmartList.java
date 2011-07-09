@@ -20,7 +20,7 @@ import com.stefanmuenchow.functors.Predicate;
 import com.stefanmuenchow.functors.UnaryFunction;
 
 /**
- * SmartLists are - like standard lists - ordered collections that can contain
+ * A SmartList is an ordered collection that can contain
  * duplicate elements. Elements can be accessed by their integer index and
  * can be inserted at a specific position of the list.
  * 

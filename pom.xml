@@ -7,9 +7,13 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>Smart-Collections</name>
-  <description>Smart decorators for the standard java collections api.</description>
+  <name>SmartCollections</name>
+  <description>Smart decorators for the java collections api.</description>
   <url>http://www.stefanmuenchow.com</url>
+  
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <build>
   	<plugins>
